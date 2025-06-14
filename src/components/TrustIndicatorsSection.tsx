@@ -44,16 +44,20 @@ const TrustIndicatorsSection: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="flex justify-center items-center animate-fade-in-up" style={{animationDelay: '0.3s'}}>
-            <img 
-              src="https://picsum.photos/seed/teamwork/600/400" 
-              alt="Diverse team collaborating, symbolizing expert guidance and community trust" 
-              className="rounded-lg shadow-xl w-full max-w-md h-auto object-cover max-h-[400px]" 
-            />
+          {/* Updated image container */}
+          <div 
+            className="animate-fade-in-up w-full min-h-[300px] md:min-h-[350px] rounded-lg shadow-xl bg-cover bg-center relative overflow-hidden" 
+            style={{ 
+              backgroundImage: "url('https://picsum.photos/seed/islamic-architecture/800/600')", 
+              animationDelay: '0.3s' 
+            }}
+            aria-label="Decorative image of Islamic architecture, symbolizing heritage and trust" // Added aria-label for accessibility
+          >
+            <div className="absolute inset-0 bg-brand-cream/20 dark:bg-black/30 rounded-lg"></div> {/* Overlay */}
           </div>
         </div>
          <p className="text-center text-sm text-muted-foreground">
-          Placeholder image. Consider replacing with a visual representing your team or community.
+          Placeholder image. Consider replacing with a specific visual that aligns with your brand.
         </p>
       </div>
     </section>
