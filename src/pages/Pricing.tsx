@@ -12,6 +12,7 @@ import ThemeToggleButton from '@/components/ThemeToggleButton';
 
 const navItems = [
   { name: 'Home', href: '/' },
+  { name: 'Chat', href: '/chat' },
   { name: 'Features', href: '/#features' },
   { name: 'Demo', href: '/#interactive-demo-section' },
   { name: 'Pricing', href: '/pricing' },

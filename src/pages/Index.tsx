@@ -1,4 +1,3 @@
-
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
@@ -18,7 +17,7 @@ import ThemeToggleButton from '@/components/ThemeToggleButton';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const navItems = [
-  // { name: 'Chat', href: '#chat-section' }, // Removed Chat nav item
+  { name: 'Chat', href: '/chat' },
   { name: 'Features', href: '#features' },
   { name: 'Demo', href: '#interactive-demo-section' },
   { name: 'Pricing', href: '/pricing' },
@@ -64,10 +63,10 @@ const Index = () => {
     }
   };
 
-  const handleMobileFooterClick = () => {
+  const handleMobileFooterClick = (path: string) => {
     setIsDrawerOpen(false);
     // Timeout to allow drawer to close before navigating
-    setTimeout(() => navigate('/pricing'), 150);
+    setTimeout(() => navigate(path), 150);
   };
 
   return (
@@ -133,12 +132,20 @@ const Index = () => {
                     </a>
                   ))}
                 </nav>
-                <DrawerFooter className="p-4 border-t border-brand-teal/20 dark:border-brand-teal-light/20">
+                <DrawerFooter className="p-4 border-t border-brand-teal/20 dark:border-brand-teal-light/20 flex flex-row gap-2">
+                   <Button
+                    variant="outline"
+                    size="lg"
+                    className="flex-1 border-brand-gold text-brand-teal hover:bg-brand-gold/10 rounded-full"
+                    onClick={() => handleMobileFooterClick('/chat')}
+                  >
+                    Try Chatbot
+                  </Button>
                   <Button
                     variant="default"
                     size="lg"
-                    className="w-full bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground dark:bg-brand-gold dark:hover:bg-brand-gold/90 dark:text-brand-gold-foreground rounded-full"
-                    onClick={handleMobileFooterClick}
+                    className="flex-1 bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground dark:bg-brand-gold dark:hover:bg-brand-gold/90 dark:text-brand-gold-foreground rounded-full"
+                    onClick={() => handleMobileFooterClick('/pricing')}
                   >
                     View Plans
                   </Button>

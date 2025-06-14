@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, PlayCircle } from 'lucide-react';
+import { ArrowRight, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const HeroSection: React.FC = () => {
@@ -39,7 +39,7 @@ const HeroSection: React.FC = () => {
           <Button 
             asChild 
             size="lg" 
-            className="bg-brand-teal hover:bg-brand-teal-light text-brand-teal-foreground px-8 py-3 text-lg rounded-lg shadow-lg transition-transform transform hover:scale-105"
+            className="bg-brand-teal hover:bg-brand-teal/90 text-brand-teal-foreground px-8 py-3 text-lg rounded-lg shadow-lg transition-transform transform hover:scale-105"
           >
             <Link to="/pricing">
               <ArrowRight className="mr-2 h-5 w-5" />
@@ -52,10 +52,10 @@ const HeroSection: React.FC = () => {
             size="lg" 
             className="border-brand-teal text-brand-teal hover:bg-brand-teal/10 px-8 py-3 text-lg rounded-lg shadow-lg transition-transform transform hover:scale-105"
           >
-            <a href="#interactive-demo-section">
-              <PlayCircle className="mr-2 h-5 w-5" />
-              Watch Demo
-            </a>
+            <Link to="/chat">
+              <MessageSquare className="mr-2 h-5 w-5" />
+              Try the Chatbot
+            </Link>
           </Button>
         </div>
         <p className="text-center mt-8 text-xs text-muted-foreground/70">
