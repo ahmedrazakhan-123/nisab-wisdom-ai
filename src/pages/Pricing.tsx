@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { cn } from '@/lib/utils';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowLeft } from 'lucide-react';
 import ThemeToggleButton from '@/components/ThemeToggleButton';
 
 const navItems = [
@@ -48,8 +48,9 @@ const PricingPage: React.FC = () => {
         <div className="flex flex-col min-h-screen bg-brand-cream dark:bg-background transition-colors duration-300">
             <header className="sticky top-0 z-50 bg-brand-cream/80 dark:bg-background/80 backdrop-blur-md shadow-sm transition-colors duration-300">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-                    <Link to="/" className="text-2xl font-bold text-brand-teal dark:text-brand-teal-light" style={{ fontFamily: "'Lora', serif" }}>
-                        Nisab<span className="text-brand-gold dark:text-brand-gold">.</span>AI
+                    <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-brand-teal dark:text-brand-teal-light hover:text-brand-teal-dark dark:hover:text-brand-teal-light/80 transition-colors" style={{ fontFamily: "'Lora', serif" }}>
+                        <ArrowLeft className="h-6 w-6" />
+                        <span>Nisab<span className="text-brand-gold dark:text-brand-gold">.</span>AI</span>
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -84,7 +85,10 @@ const PricingPage: React.FC = () => {
                         <DrawerContent className="bg-brand-cream dark:bg-background">
                           <DrawerHeader className="flex justify-between items-center p-4">
                             <DrawerTitle className="text-xl font-bold text-brand-teal dark:text-brand-teal-light" style={{ fontFamily: "'Lora', serif" }}>
-                              <Link to="/" onClick={() => setIsDrawerOpen(false)}>Nisab<span className="text-brand-gold dark:text-brand-gold">.</span>AI</Link>
+                              <Link to="/" onClick={() => setIsDrawerOpen(false)} className="flex items-center gap-2">
+                                <ArrowLeft className="h-5 w-5" />
+                                <span>Nisab<span className="text-brand-gold dark:text-brand-gold">.</span>AI</span>
+                              </Link>
                             </DrawerTitle>
                             <DrawerClose asChild>
                               <Button variant="ghost" size="icon" className="text-brand-teal dark:text-brand-teal-light hover:bg-brand-teal/10 dark:hover:bg-brand-teal-light/10">
