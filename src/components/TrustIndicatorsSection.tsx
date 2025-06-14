@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ShieldCheck, BookOpenText, Users } from 'lucide-react';
 import TrustBadge from './TrustBadge'; 
@@ -45,14 +46,14 @@ const TrustIndicatorsSection: React.FC = () => {
           </div>
           <div className="flex justify-center items-center animate-fade-in-up" style={{animationDelay: '0.3s'}}>
             <img 
-              src="https://picsum.photos/seed/stability/600/400" 
-              alt="Architectural detail symbolizing stability and trust" 
+              src="https://picsum.photos/seed/teamwork/600/400" 
+              alt="Diverse team collaborating, symbolizing expert guidance and community trust" 
               className="rounded-lg shadow-xl w-full max-w-md h-auto object-cover max-h-[400px]" 
             />
           </div>
         </div>
          <p className="text-center text-sm text-muted-foreground">
-          Please replace placeholder image with your desired visual in 'public/placeholder_images'.
+          Placeholder image. Consider replacing with a visual representing your team or community.
         </p>
       </div>
     </section>

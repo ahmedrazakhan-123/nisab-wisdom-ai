@@ -6,7 +6,6 @@ import Footer from '@/components/Footer';
 import ChatSection from '@/components/ChatSection';
 import InteractiveDemoSection from '@/components/InteractiveDemoSection';
 import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
-import VisualImpactSection from '@/components/VisualImpactSection'; // Import the new section
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerFooter } from "@/components/ui/drawer";
@@ -116,7 +115,6 @@ const Index = () => {
         <HeroSection />
         <ChatSection />
         <FeaturesSection />
-        <VisualImpactSection /> {/* Added the new section here */}
         <InteractiveDemoSection />
         <HowItWorksSection />
         <TrustIndicatorsSection />
