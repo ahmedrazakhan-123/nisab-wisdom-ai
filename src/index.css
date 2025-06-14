@@ -72,7 +72,7 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
+  .dark { /* This is our "Graphite" theme */
     /* Graphite Black Dark Theme */
     --background: 210 9% 13%; /* Graphite Black (e.g., hsl(210, 9%, 13%)) */
     --foreground: 0 0% 95%;     /* Light Gray / Off-white for text */
@@ -120,6 +120,54 @@
     --sidebar-border: 210 9% 20%;
     --sidebar-ring: var(--brand-gold); /* Use the updated --brand-gold */
   }
+
+  .black { /* This is our new "Black" (Pure Black) theme */
+    --background: 0 0% 0%; /* Pure Black */
+    --foreground: 0 0% 90%; /* Slightly adjusted from .dark's foreground */
+
+    --card: 0 0% 5%; /* Darker card for pure black theme */
+    --card-foreground: 0 0% 90%;
+
+    --popover: 0 0% 3%; /* Even darker popover */
+    --popover-foreground: 0 0% 90%;
+
+    --primary: var(--brand-teal-light); /* Re-using dark theme's brand colors */
+    --primary-foreground: 20 15% 10%;   
+
+    --secondary: 0 0% 15%; /* Darker secondary */
+    --secondary-foreground: 0 0% 90%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%; 
+
+    --accent: 0 0% 18%;
+    --accent-foreground: 0 0% 95%;
+
+    --border: 0 0% 10%; /* Darker border */
+    --input: 0 0% 5%; /* Same as card for inputs */
+    --ring: var(--brand-gold); /* Re-using dark theme's brand gold */
+
+    /* Nisab Custom Colors for Black Theme (mostly same as .dark for consistency) */
+    --brand-teal: 175 50% 60%; 
+    --brand-teal-light: 175 45% 70%; 
+    --brand-teal-foreground: 0 0% 10%; 
+    
+    --brand-cream: 0 0% 0%; /* Elements with bg-brand-cream become pure black */
+    --brand-cream-foreground: 0 0% 90%; 
+
+    --brand-gold: 43 74% 70%; 
+    --brand-gold-foreground: 210 9% 10%; 
+    
+    /* Sidebar colors for .black theme */
+    --sidebar-background: 0 0% 3%;
+    --sidebar-foreground: 0 0% 75%;
+    --sidebar-primary: var(--brand-teal-light);
+    --sidebar-primary-foreground: 20 15% 10%;
+    --sidebar-accent: 0 0% 8%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 10%;
+    --sidebar-ring: var(--brand-gold);
+  }
 }
 
 @layer base {
@@ -136,6 +184,10 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold text-gray-800 dark:text-gray-200; /* Adjust heading color for dark mode */
+  }
+  /* For .black theme, ensure headings are also light */
+  .black h1, .black h2, .black h3, .black h4, .black h5, .black h6 {
+    @apply text-gray-200;
   }
 }
 
@@ -155,4 +207,3 @@
     background-repeat: repeat;
   }
 }
-
