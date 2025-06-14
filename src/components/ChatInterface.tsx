@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -34,19 +33,19 @@ const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-xl border border-brand-teal/20">
+    <div className="w-full max-w-2xl mx-auto bg-card p-6 rounded-xl shadow-xl border"> {/* Changed bg-white to bg-card and border-brand-teal/20 to border (theme-aware) */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold text-brand-teal mb-2 flex items-center" style={{ fontFamily: "'Lora', serif" }}>
           <MessageSquareText className="w-6 h-6 mr-2 text-brand-gold" />
           Ask Nisab.AI
         </h3>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-muted-foreground">
           Type your Islamic finance question below. For best results, be clear and specific.
         </p>
       </div>
-      <div className="h-64 overflow-y-auto mb-4 p-4 border rounded-lg bg-gray-50 space-y-3">
+      <div className="h-64 overflow-y-auto mb-4 p-4 border rounded-lg bg-background/70 space-y-3"> {/* Changed bg-gray-50 to bg-background/70 for better theme adaptation */}
         {messages.length === 0 && (
-          <p className="text-center text-gray-400">No messages yet. Start by asking a question.</p>
+          <p className="text-center text-muted-foreground">No messages yet. Start by asking a question.</p>
         )}
         {messages.map((msg) => (
           <div
@@ -56,8 +55,8 @@ const ChatInterface: React.FC = () => {
             <div
               className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                 msg.sender === 'user'
-                  ? 'bg-brand-teal text-white'
-                  : 'bg-brand-gold/20 text-gray-800'
+                  ? 'bg-brand-teal text-brand-teal-foreground' // This should adapt due to brand-teal-foreground theme definitions
+                  : 'bg-brand-gold/20 text-brand-gold-foreground' // This should adapt due to brand-gold-foreground theme definitions
               }`}
             >
               {msg.text}

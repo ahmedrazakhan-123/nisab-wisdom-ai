@@ -25,7 +25,7 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({ icon: Icon, stepNumber,
       <h3 className="text-lg font-semibold text-brand-teal mb-1" style={{ fontFamily: "'Lora', serif" }}>
         {title}
       </h3>
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-muted-foreground">
         {description}
       </p>
     </div>

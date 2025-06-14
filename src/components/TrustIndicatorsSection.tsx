@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ShieldCheck, BookOpenText, Users } from 'lucide-react';
 import TrustBadge from './TrustBadge'; // Re-using TrustBadge for consistency
@@ -29,7 +28,7 @@ const TrustIndicatorsSection: React.FC = () => {
           <h2 className="text-3xl font-bold text-brand-teal mb-3" style={{ fontFamily: "'Lora', serif" }}>
             Built on Trust & Accuracy
           </h2>
-          <p className="text-gray-600 md:text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto">
             Nisab.AI is committed to providing reliable and Shariah-compliant financial guidance.
           </p>
         </div>

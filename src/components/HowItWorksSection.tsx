@@ -1,4 +1,3 @@
-
 import React from 'react';
 import HowItWorksCard from './HowItWorksCard';
 import { HelpCircle, Cpu, CheckCircle2 } from 'lucide-react';
@@ -29,7 +28,7 @@ const HowItWorksSection: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-brand-teal mb-4" style={{ fontFamily: "'Lora', serif" }}>
             Simple Steps to Financial Clarity
           </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Getting started with Nisab is easy. Follow these simple steps to gain valuable insights.
           </p>
         </div>

@@ -19,7 +19,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon: Icon, title, descriptio
       <h3 className="text-lg font-semibold text-brand-teal mb-2" style={{ fontFamily: "'Lora', serif" }}>
         {title}
       </h3>
-      <p className="text-sm text-gray-700">
+      <p className="text-sm text-muted-foreground">
         {description}
       </p>
     </div>

@@ -15,7 +15,7 @@ const TrustBadge: React.FC<TrustBadgeProps> = ({ icon: Icon, text, animationDela
       style={{ animationDelay }}
     >
       <Icon className="text-brand-gold h-6 w-6" strokeWidth={1.5} />
-      <span className="text-sm font-medium text-gray-700">{text}</span>
+      <span className="text-sm font-medium text-muted-foreground">{text}</span>
     </div>
   );
 };

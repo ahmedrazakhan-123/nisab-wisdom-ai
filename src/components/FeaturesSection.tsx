@@ -1,4 +1,3 @@
-
 import React from 'react';
 import FeatureCard from './FeatureCard';
 import { TrendingUp, Calculator, ShieldCheck, Scale } from 'lucide-react';
@@ -34,7 +33,7 @@ const FeaturesSection: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-brand-teal mb-4" style={{ fontFamily: "'Lora', serif" }}>
             Your Guide to Islamic Finance
           </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Nisab offers a suite of tools and knowledge to help you manage your finances in accordance with Islamic values.
           </p>
         </div>
@@ -55,4 +54,3 @@ const FeaturesSection: React.FC = () => {
 };
 
 export default FeaturesSection;
-
