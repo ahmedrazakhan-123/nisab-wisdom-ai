@@ -15,7 +15,7 @@ const App = () => (
     attribute="class" 
     defaultTheme="system" 
     enableSystem
-    themes={['light', 'dark', 'black', 'system']} // Added 'black' and 'system' for completeness
+    themes={['light', 'dark', 'system']} // Removed 'black'
   >
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

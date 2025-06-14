@@ -16,7 +16,7 @@ const ThemeToggleButton: React.FC = () => {
   const themes = [
     { name: 'Light', value: 'light', Icon: Sun },
     { name: 'Dark', value: 'dark', Icon: Moon }, // This is the ChatGPT-like dark theme
-    { name: 'Gray', value: 'black', Icon: Moon }, // Changed name to 'Gray', value 'black' maps to .black CSS class
+    // Removed: { name: 'Gray', value: 'black', Icon: Moon }, 
   ];
 
   // Determine which icon to display on the button itself.
