@@ -2,7 +2,7 @@
 import React from 'react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
-import { Palette, Sun, Moon, Check } from 'lucide-react';
+import { Palette, Sun, Moon, Check } from 'lucide-react'; // Palette can be kept or changed
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,13 +15,12 @@ const ThemeToggleButton: React.FC = () => {
 
   const themes = [
     { name: 'Light', value: 'light', Icon: Sun },
-    { name: 'Dark', value: 'dark', Icon: Moon }, // 'dark' is our Graphite theme
-    { name: 'Black', value: 'black', Icon: Moon }, // 'black' is the new pure black theme
+    { name: 'Dark', value: 'dark', Icon: Moon }, // This will now be the ChatGPT-like dark theme
+    { name: 'Graphite', value: 'black', Icon: Moon }, // This was 'Black', now 'Graphite', uses the previous .dark styles
   ];
 
   // Determine which icon to display on the button itself.
-  // It could be Palette, or change based on resolvedTheme.
-  // Let's use Palette for the trigger.
+  // Using Palette as a generic theme icon for the trigger.
   const TriggerIcon = Palette;
 
   return (
@@ -48,10 +47,6 @@ const ThemeToggleButton: React.FC = () => {
               <item.Icon className="mr-2 h-4 w-4" />
               <span>{item.name}</span>
             </div>
-            {/* Show checkmark for the currently active theme.
-                Note: `theme` can be 'system'. `resolvedTheme` gives actual 'light' or 'dark'.
-                We compare against `item.value`. If `theme` is 'system', `resolvedTheme` helps.
-            */}
             {(theme === item.value || (item.value === resolvedTheme && theme === 'system')) && <Check className="ml-2 h-4 w-4" />}
           </DropdownMenuItem>
         ))}

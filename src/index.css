@@ -72,8 +72,57 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark { /* This is our "Graphite" theme */
-    /* Graphite Black Dark Theme */
+  /* NEW: ChatGPT-like Dark Theme */
+  .dark { 
+    --background: 0 0% 8%; /* Very Dark Gray, e.g., #141414 */
+    --foreground: 0 0% 90%; /* Light Gray / Off-white for text, e.g., #E6E6E6 */
+
+    --card: 0 0% 12%; /* Slightly lighter dark gray for cards, e.g., #1F1F1F */
+    --card-foreground: 0 0% 90%;
+
+    --popover: 0 0% 5%; /* Even darker for popovers, e.g., #0D0D0D */
+    --popover-foreground: 0 0% 90%;
+
+    --primary: var(--brand-teal-light); /* Using existing brand-teal-light: 175 50% 60% */
+    --primary-foreground: 20 15% 10%;   /* Dark text for contrast on lighter teal */
+
+    --secondary: 0 0% 15%; /* A slightly lighter shade of dark gray */
+    --secondary-foreground: 0 0% 90%;
+
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 65%; /* Softer gray for muted text */
+
+    --accent: 0 0% 18%;
+    --accent-foreground: 0 0% 98%; /* Very light for accent text */
+
+    --border: 0 0% 14%; /* Darker border */
+    --input: 0 0% 12%; /* Same as card for inputs */
+    --ring: var(--brand-gold); /* Gold for ring highlight: 43 74% 70% */
+
+    /* Nisab Custom Colors for ChatGPT-like Dark Mode */
+    --brand-teal: 175 50% 60%; 
+    --brand-teal-light: 175 45% 70%; 
+    --brand-teal-foreground: 0 0% 10%; 
+    
+    --brand-cream: 0 0% 8%; /* Elements with bg-brand-cream use the main dark background */
+    --brand-cream-foreground: 0 0% 90%; /* Light text on those elements */
+
+    --brand-gold: 43 74% 70%; 
+    --brand-gold-foreground: 0 0% 10%; 
+    
+    /* Sidebar colors for ChatGPT-like dark mode */
+    --sidebar-background: 0 0% 5%; /* Even darker for sidebar */
+    --sidebar-foreground: 0 0% 80%;
+    --sidebar-primary: var(--brand-teal-light); 
+    --sidebar-primary-foreground: 20 15% 10%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: var(--brand-gold);
+  }
+
+  /* NEW: Graphite Theme (styles previously used by .dark) */
+  .black { 
     --background: 210 9% 13%; /* Graphite Black (e.g., hsl(210, 9%, 13%)) */
     --foreground: 0 0% 95%;     /* Light Gray / Off-white for text */
 
@@ -99,73 +148,25 @@
     --input: 210 9% 16%; /* Same as card for inputs */
     --ring: var(--brand-gold); /* Gold for ring highlight */
 
-    /* Nisab Custom Colors for Dark Mode */
-    --brand-teal: 175 50% 60%; /* Lighter/brighter Teal for text in dark mode */
-    --brand-teal-light: 175 45% 70%; /* Even lighter for hover/accent */
-    --brand-teal-foreground: 0 0% 10%; /* Dark text on this lighter teal if it's a background */
-    
-    --brand-cream: 210 9% 13%; /* This makes elements with bg-brand-cream use graphite */
-    --brand-cream-foreground: 0 0% 95%; /* Light text on those elements */
-
-    --brand-gold: 43 74% 70%; /* Brighter Gold for text in dark mode */
-    --brand-gold-foreground: 210 9% 10%; /* Dark text on gold if gold is bg */
-    
-    /* Sidebar colors for dark mode */
-    --sidebar-background: 210 9% 10%;
-    --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: var(--brand-teal-light); /* Use the updated --brand-teal-light */
-    --sidebar-primary-foreground: 20 15% 10%;
-    --sidebar-accent: 210 9% 15%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 210 9% 20%;
-    --sidebar-ring: var(--brand-gold); /* Use the updated --brand-gold */
-  }
-
-  .black { /* This is our new "Black" (Pure Black) theme */
-    --background: 0 0% 0%; /* Pure Black */
-    --foreground: 0 0% 90%; /* Slightly adjusted from .dark's foreground */
-
-    --card: 0 0% 5%; /* Darker card for pure black theme */
-    --card-foreground: 0 0% 90%;
-
-    --popover: 0 0% 3%; /* Even darker popover */
-    --popover-foreground: 0 0% 90%;
-
-    --primary: var(--brand-teal-light); /* Re-using dark theme's brand colors */
-    --primary-foreground: 20 15% 10%;   
-
-    --secondary: 0 0% 15%; /* Darker secondary */
-    --secondary-foreground: 0 0% 90%;
-
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 65%; 
-
-    --accent: 0 0% 18%;
-    --accent-foreground: 0 0% 95%;
-
-    --border: 0 0% 10%; /* Darker border */
-    --input: 0 0% 5%; /* Same as card for inputs */
-    --ring: var(--brand-gold); /* Re-using dark theme's brand gold */
-
-    /* Nisab Custom Colors for Black Theme (mostly same as .dark for consistency) */
+    /* Nisab Custom Colors for Graphite Theme (originally for Dark Mode) */
     --brand-teal: 175 50% 60%; 
     --brand-teal-light: 175 45% 70%; 
     --brand-teal-foreground: 0 0% 10%; 
     
-    --brand-cream: 0 0% 0%; /* Elements with bg-brand-cream become pure black */
-    --brand-cream-foreground: 0 0% 90%; 
+    --brand-cream: 210 9% 13%; /* Elements with bg-brand-cream use graphite */
+    --brand-cream-foreground: 0 0% 95%; /* Light text on those elements */
 
     --brand-gold: 43 74% 70%; 
     --brand-gold-foreground: 210 9% 10%; 
     
-    /* Sidebar colors for .black theme */
-    --sidebar-background: 0 0% 3%;
-    --sidebar-foreground: 0 0% 75%;
+    /* Sidebar colors for Graphite theme */
+    --sidebar-background: 210 9% 10%;
+    --sidebar-foreground: 0 0% 80%;
     --sidebar-primary: var(--brand-teal-light);
     --sidebar-primary-foreground: 20 15% 10%;
-    --sidebar-accent: 0 0% 8%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 10%;
+    --sidebar-accent: 210 9% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 210 9% 20%;
     --sidebar-ring: var(--brand-gold);
   }
 }
@@ -183,11 +184,12 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold text-gray-800 dark:text-gray-200; /* Adjust heading color for dark mode */
+    @apply font-semibold text-gray-800; /* Default for light */
   }
-  /* For .black theme, ensure headings are also light */
+  /* Ensure heading colors are correct for .dark (ChatGPT-like) and .black (Graphite) themes */
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
   .black h1, .black h2, .black h3, .black h4, .black h5, .black h6 {
-    @apply text-gray-200;
+    @apply text-foreground; /* Use the theme's main foreground color */
   }
 }
 
