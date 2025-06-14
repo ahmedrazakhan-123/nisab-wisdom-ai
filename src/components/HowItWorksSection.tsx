@@ -1,3 +1,4 @@
+
 import React from 'react';
 import HowItWorksCard from './HowItWorksCard';
 import { HelpCircle, Cpu, CheckCircle2 } from 'lucide-react';
@@ -24,11 +25,11 @@ const HowItWorksSection: React.FC = () => {
   return (
     <section className="bg-brand-cream section-padding">
       <div className="container mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-brand-teal mb-4" style={{ fontFamily: "'Lora', serif" }}>
+        <div className="text-center mb-16 md:mb-20"> {/* Increased mb-12 to mb-16 md:mb-20 */}
+          <h2 className="text-3xl md:text-4xl font-bold text-brand-teal mb-6" style={{ fontFamily: "'Lora', serif" }}> {/* Increased mb-4 to mb-6 */}
             Simple Steps to Financial Clarity
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto"> {/* Increased max-w-2xl to max-w-3xl */}
             Getting started with Nisab is easy. Follow these simple steps to gain valuable insights.
           </p>
         </div>
@@ -50,3 +51,4 @@ const HowItWorksSection: React.FC = () => {
 };
 
 export default HowItWorksSection;
+

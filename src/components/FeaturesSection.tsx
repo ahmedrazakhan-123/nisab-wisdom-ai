@@ -1,3 +1,4 @@
+
 import React from 'react';
 import FeatureCard from './FeatureCard';
 import { TrendingUp, Calculator, ShieldCheck, Scale } from 'lucide-react';
@@ -27,13 +28,13 @@ const features = [
 
 const FeaturesSection: React.FC = () => {
   return (
-    <section className="bg-slate-50 section-padding">
+    <section className="bg-slate-50 dark:bg-card section-padding"> {/* Ensured dark mode bg consistency */}
       <div className="container mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-brand-teal mb-4" style={{ fontFamily: "'Lora', serif" }}>
+        <div className="text-center mb-16 md:mb-20"> {/* Increased mb-12 to mb-16 md:mb-20 */}
+          <h2 className="text-3xl md:text-4xl font-bold text-brand-teal mb-6" style={{ fontFamily: "'Lora', serif" }}> {/* Increased mb-4 to mb-6 */}
             Your Guide to Islamic Finance
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto"> {/* Increased max-w-2xl to max-w-3xl */}
             Nisab offers a suite of tools and knowledge to help you manage your finances in accordance with Islamic values.
           </p>
         </div>
@@ -54,3 +55,4 @@ const FeaturesSection: React.FC = () => {
 };
 
 export default FeaturesSection;
+

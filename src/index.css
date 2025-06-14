@@ -182,13 +182,33 @@
     font-family: 'Inter', sans-serif; /* Using Inter as a modern sans-serif */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6; /* Added a slightly more generous base line-height */
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold; /* Removed text-foreground here, it will inherit from body or specific component */
+    @apply font-semibold; 
     /* For Lora headings, specific components will apply text-brand-teal or text-primary which are theme-aware */
   }
-  /* ... keep existing code (headings styles, etc.) */
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl leading-tight; }
+  h2 { @apply text-3xl md:text-4xl leading-snug; }
+  h3 { @apply text-2xl md:text-3xl leading-snug; }
+  p, li, span, div { /* Ensuring base paragraph and common text elements have good line height */
+    @apply leading-relaxed; /* Tailwind's leading-relaxed is 1.625 */
+  }
 }
 
-/* ... keep existing code (@layer components) */
+@layer components {
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+  .subtle-geometric-background {
+    background-image: 
+      linear-gradient(45deg, hsl(var(--brand-teal) / 0.02) 25%, transparent 25%), 
+      linear-gradient(-45deg, hsl(var(--brand-teal) / 0.02) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, hsl(var(--brand-teal) / 0.02) 75%),
+      linear-gradient(-45deg, transparent 75%, hsl(var(--brand-teal) / 0.02) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  }
+}
+

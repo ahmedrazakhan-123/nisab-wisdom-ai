@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { MessageSquareText, PlayCircle } from 'lucide-react';
@@ -15,15 +16,15 @@ const HeroSection: React.FC = () => {
 
       <div className="container mx-auto text-center relative z-10">
         <h1 
-          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-brand-teal animate-fade-in-up"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 text-brand-teal animate-fade-in-up" // Changed mb-6 to mb-8
           style={{ fontFamily: "'Lora', serif" }}
         >
           Ask Any Islamic Finance Question Instantly
         </h1>
-        <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+        <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}> {/* Changed mb-10 to mb-12, max-w-2xl to max-w-3xl for better line length */}
           Nisab is your trusted AI companion for Shariah-compliant financial guidance. Get clear answers and make informed decisions with confidence.
         </p>
-        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}> {/* Increased space-x-4 to space-x-6 */}
           <Button 
             asChild 
             size="lg" 
@@ -52,3 +53,4 @@ const HeroSection: React.FC = () => {
 };
 
 export default HeroSection;
+
