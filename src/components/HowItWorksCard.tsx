@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LucideIcon } from 'lucide-react';
 
 interface HowItWorksCardProps {
@@ -13,25 +12,23 @@ interface HowItWorksCardProps {
 
 const HowItWorksCard: React.FC<HowItWorksCardProps> = ({ icon: Icon, stepNumber, title, description, animationDelay = '0s' }) => {
   return (
-    <Card 
-      className="bg-white/70 backdrop-blur-sm shadow-lg rounded-xl p-6 text-center h-full hover:shadow-xl transition-shadow duration-300 animate-fade-in-up"
+    <div 
+      className="flex flex-col items-center text-center p-6 rounded-xl h-full transition-all duration-300 ease-in-out hover:bg-brand-gold/5 animate-fade-in-up"
       style={{ animationDelay }}
     >
-      <CardHeader className="pb-4 items-center">
-        <div className="relative mb-4">
-          <div className="mx-auto bg-brand-gold/10 text-brand-gold p-4 rounded-full w-16 h-16 flex items-center justify-center">
-            <Icon size={32} strokeWidth={1.5} />
-          </div>
-          <div className="absolute -top-2 -right-2 bg-brand-teal text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold shadow-md">
-            {stepNumber}
-          </div>
-        </div>
-        <CardTitle className="text-lg font-semibold text-gray-800" style={{ fontFamily: "'Lora', serif" }}>{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-gray-600 text-sm">{description}</p>
-      </CardContent>
-    </Card>
+      <div className="mb-3">
+        <span className="text-3xl font-bold text-brand-gold">
+          {String(stepNumber).padStart(2, '0')}
+        </span>
+      </div>
+      <Icon className="text-brand-teal mb-3 w-8 h-8" strokeWidth={1.5} />
+      <h3 className="text-lg font-semibold text-brand-teal mb-1" style={{ fontFamily: "'Lora', serif" }}>
+        {title}
+      </h3>
+      <p className="text-sm text-gray-600">
+        {description}
+      </p>
+    </div>
   );
 };
 
