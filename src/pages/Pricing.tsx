@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PricingSection from '@/components/PricingSection';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ import { Menu, X } from 'lucide-react';
 import ThemeToggleButton from '@/components/ThemeToggleButton';
 
 const navItems = [
+  { name: 'Home', href: '/' },
   { name: 'Features', href: '/#features' },
   { name: 'Demo', href: '/#interactive-demo-section' },
   { name: 'Pricing', href: '/pricing' },
@@ -20,6 +21,28 @@ const navItems = [
 
 const PricingPage: React.FC = () => {
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+    const navigate = useNavigate();
+
+    const handleLinkClick = (e: React.MouseEvent, href: string) => {
+        e.preventDefault();
+
+        const performNavigation = () => {
+            if (href.startsWith('/#')) {
+                const hash = href.substring(1); // e.g., '#features'
+                navigate('/', { state: { scrollTo: hash } });
+            } else {
+                navigate(href);
+            }
+        };
+
+        if (isDrawerOpen) {
+            setIsDrawerOpen(false);
+            // Timeout to allow drawer to close before navigating
+            setTimeout(performNavigation, 150);
+        } else {
+            performNavigation();
+        }
+    };
 
     return (
         <div className="flex flex-col min-h-screen bg-brand-cream dark:bg-background transition-colors duration-300">
@@ -35,7 +58,10 @@ const PricingPage: React.FC = () => {
                             <NavigationMenuList>
                                 {navItems.map((item) => (
                                     <NavigationMenuItem key={item.name}>
-                                        <NavigationMenuLink href={item.href} className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-brand-teal/10 text-brand-teal dark:text-brand-teal-light dark:hover:bg-brand-teal-light/10 hover:text-brand-teal-dark font-medium text-sm lg:text-base")}>
+                                        <NavigationMenuLink 
+                                            href={item.href} 
+                                            onClick={(e) => handleLinkClick(e, item.href)}
+                                            className={cn(navigationMenuTriggerStyle(), "cursor-pointer bg-transparent hover:bg-brand-teal/10 text-brand-teal dark:text-brand-teal-light dark:hover:bg-brand-teal-light/10 hover:text-brand-teal-dark font-medium text-sm lg:text-base")}>
                                             {item.name}
                                         </NavigationMenuLink>
                                     </NavigationMenuItem>
@@ -72,7 +98,7 @@ const PricingPage: React.FC = () => {
                               <a
                                 key={item.name}
                                 href={item.href}
-                                onClick={() => setIsDrawerOpen(false)}
+                                onClick={(e) => handleLinkClick(e, item.href)}
                                 className="py-2 px-3 text-brand-teal dark:text-brand-teal-light hover:bg-brand-teal/10 dark:hover:bg-brand-teal-light/10 rounded-md font-medium"
                               >
                                 {item.name}

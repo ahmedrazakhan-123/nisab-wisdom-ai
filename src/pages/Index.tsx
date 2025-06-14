@@ -13,9 +13,9 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerFooter } from "@/components/ui/drawer";
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ThemeToggleButton from '@/components/ThemeToggleButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const navItems = [
   // { name: 'Chat', href: '#chat-section' }, // Removed Chat nav item
@@ -29,6 +29,18 @@ const navItems = [
 const Index = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const element = document.querySelector(location.state.scrollTo);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        // Clean up state to avoid re-scrolling on refresh
+        window.history.replaceState({}, document.title);
+      }
+    }
+  }, [location]);
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
