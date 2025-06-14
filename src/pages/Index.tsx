@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 // import ChatSection from '@/components/ChatSection'; // Removed ChatSection import
 import InteractiveDemoSection from '@/components/InteractiveDemoSection';
 import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
+import PricingSection from '@/components/PricingSection';
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerFooter } from "@/components/ui/drawer";
@@ -19,6 +20,7 @@ const navItems = [
   // { name: 'Chat', href: '#chat-section' }, // Removed Chat nav item
   { name: 'Features', href: '#features' },
   { name: 'Demo', href: '#interactive-demo-section' },
+  { name: 'Pricing', href: '#pricing' },
   { name: 'How It Works', href: '#how-it-works' },
   { name: 'Trust', href: '#trust-indicators-section' },
 ];
@@ -26,13 +28,27 @@ const navItems = [
 const Index = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
-  const handleGetStartedClick = () => {
-    const featuresSection = document.getElementById('features');
-    if (featuresSection) {
-      featuresSection.scrollIntoView({ behavior: 'smooth' });
+  const handleLinkClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    const section = document.querySelector(href);
+    if (section) {
+      if (isDrawerOpen) {
+        setIsDrawerOpen(false);
+        // Timeout to allow drawer to close before scrolling
+        setTimeout(() => section.scrollIntoView({ behavior: 'smooth' }), 150);
+      } else {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
     }
-    // Close drawer if open (for mobile, though this button is desktop)
+  };
+
+  const handleMobileFooterClick = () => {
     setIsDrawerOpen(false);
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      // Timeout to allow drawer to close before scrolling
+      setTimeout(() => pricingSection.scrollIntoView({ behavior: 'smooth' }), 150);
+    }
   };
 
   return (
@@ -51,13 +67,7 @@ const Index = () => {
                   <NavigationMenuItem key={item.name}>
                     <NavigationMenuLink
                       href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const section = document.querySelector(item.href);
-                        if (section) {
-                          section.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }}
+                      onClick={(e) => handleLinkClick(e, item.href)}
                       className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-brand-teal/10 text-brand-teal dark:text-brand-teal-light dark:hover:bg-brand-teal-light/10 hover:text-brand-teal-dark font-medium text-sm lg:text-base")}
                     >
                       {item.name}
@@ -67,14 +77,7 @@ const Index = () => {
               </NavigationMenuList>
             </NavigationMenu>
             <ThemeToggleButton />
-            <Button 
-              variant="default" 
-              size="sm" 
-              className="bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground dark:bg-brand-gold dark:hover:bg-brand-gold/90 dark:text-brand-gold-foreground rounded-full px-5 lg:px-6 text-sm lg:text-base"
-              onClick={handleGetStartedClick}
-            >
-              Get Started
-            </Button>
+            {/* "Get Started" button removed */}
           </div>
 
           {/* Mobile Navigation Trigger */}
@@ -104,15 +107,7 @@ const Index = () => {
                     <a
                       key={item.name}
                       href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsDrawerOpen(false);
-                        const section = document.querySelector(item.href);
-                        if (section) {
-                          // Timeout to allow drawer to close before scrolling
-                          setTimeout(() => section.scrollIntoView({ behavior: 'smooth' }), 150);
-                        }
-                      }}
+                      onClick={(e) => handleLinkClick(e, item.href)}
                       className="py-2 px-3 text-brand-teal dark:text-brand-teal-light hover:bg-brand-teal/10 dark:hover:bg-brand-teal-light/10 rounded-md font-medium"
                     >
                       {item.name}
@@ -124,9 +119,9 @@ const Index = () => {
                     variant="default"
                     size="lg"
                     className="w-full bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground dark:bg-brand-gold dark:hover:bg-brand-gold/90 dark:text-brand-gold-foreground rounded-full"
-                    onClick={handleGetStartedClick}
+                    onClick={handleMobileFooterClick}
                   >
-                    Get Started
+                    View Plans
                   </Button>
                 </DrawerFooter>
               </DrawerContent>
@@ -139,6 +134,7 @@ const Index = () => {
         {/* <ChatSection /> Removed ChatSection component */}
         <FeaturesSection />
         <InteractiveDemoSection />
+        <PricingSection />
         <HowItWorksSection />
         <TrustIndicatorsSection />
         <TrustBadgesSection /> {/* Keeping this for now, can be merged/removed later */}
@@ -149,4 +145,3 @@ const Index = () => {
 };
 
 export default Index;
-
