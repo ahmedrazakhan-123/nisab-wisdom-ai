@@ -4,17 +4,22 @@ import FeaturesSection from '@/components/FeaturesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
 import TrustBadgesSection from '@/components/TrustBadgesSection';
 import Footer from '@/components/Footer';
+import ChatSection from '@/components/ChatSection';
+import InteractiveDemoSection from '@/components/InteractiveDemoSection';
+import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"; // Removed DrawerDescription as it's not used
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
 import React from 'react';
 
 const navItems = [
+  { name: 'Chat', href: '#chat-section' },
   { name: 'Features', href: '#features' },
+  { name: 'Demo', href: '#interactive-demo-section' },
   { name: 'How It Works', href: '#how-it-works' },
-  // { name: 'Pricing', href: '#pricing' }, // Example for future
+  { name: 'Trust', href: '#trust-indicators-section' },
 ];
 
 const Index = () => {
@@ -29,14 +34,14 @@ const Index = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
             <NavigationMenu>
               <NavigationMenuList>
                 {navItems.map((item) => (
                   <NavigationMenuItem key={item.name}>
                     <NavigationMenuLink
                       href={item.href}
-                      className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-brand-teal/10 text-brand-teal hover:text-brand-teal-dark font-medium")}
+                      className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-brand-teal/10 text-brand-teal hover:text-brand-teal-dark font-medium text-sm lg:text-base")}
                     >
                       {item.name}
                     </NavigationMenuLink>
@@ -44,8 +49,8 @@ const Index = () => {
                 ))}
               </NavigationMenuList>
             </NavigationMenu>
-            <Button variant="default" size="sm" className="bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground rounded-full px-6">
-              Get Started
+            <Button asChild variant="default" size="sm" className="bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground rounded-full px-5 lg:px-6 text-sm lg:text-base">
+              <a href="#chat-section">Get Started</a>
             </Button>
           </div>
 
@@ -87,7 +92,14 @@ const Index = () => {
                     variant="default"
                     size="lg"
                     className="w-full bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground rounded-full"
-                    onClick={() => setIsDrawerOpen(false)}
+                    onClick={() => {
+                      setIsDrawerOpen(false);
+                      // Smooth scroll to chat section after closing drawer
+                      const chatSection = document.getElementById('chat-section');
+                      if (chatSection) {
+                        chatSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
                   >
                     Get Started
                   </Button>
@@ -99,9 +111,12 @@ const Index = () => {
       </header>
       <main className="flex-grow">
         <HeroSection />
+        <ChatSection />
         <FeaturesSection />
+        <InteractiveDemoSection />
         <HowItWorksSection />
-        <TrustBadgesSection />
+        <TrustIndicatorsSection />
+        <TrustBadgesSection /> {/* Keeping this for now, can be merged/removed later */}
       </main>
       <Footer />
     </div>
