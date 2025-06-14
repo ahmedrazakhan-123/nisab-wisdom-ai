@@ -1,9 +1,10 @@
+
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
 import TrustBadgesSection from '@/components/TrustBadgesSection';
 import Footer from '@/components/Footer';
-import ChatSection from '@/components/ChatSection';
+// import ChatSection from '@/components/ChatSection'; // Removed ChatSection import
 import InteractiveDemoSection from '@/components/InteractiveDemoSection';
 import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,7 @@ import React from 'react';
 import ThemeToggleButton from '@/components/ThemeToggleButton';
 
 const navItems = [
-  { name: 'Chat', href: '#chat-section' },
+  // { name: 'Chat', href: '#chat-section' }, // Removed Chat nav item
   { name: 'Features', href: '#features' },
   { name: 'Demo', href: '#interactive-demo-section' },
   { name: 'How It Works', href: '#how-it-works' },
@@ -51,7 +52,7 @@ const Index = () => {
             </NavigationMenu>
             <ThemeToggleButton />
             <Button asChild variant="default" size="sm" className="bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground dark:bg-brand-gold dark:hover:bg-brand-gold/90 dark:text-brand-gold-foreground rounded-full px-5 lg:px-6 text-sm lg:text-base">
-              <a href="#chat-section">Get Started</a>
+              <a href="#features">Get Started</a> {/* Updated href to #features */}
             </Button>
           </div>
 
@@ -96,10 +97,10 @@ const Index = () => {
                     className="w-full bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground dark:bg-brand-gold dark:hover:bg-brand-gold/90 dark:text-brand-gold-foreground rounded-full"
                     onClick={() => {
                       setIsDrawerOpen(false);
-                      // Smooth scroll to chat section after closing drawer
-                      const chatSection = document.getElementById('chat-section');
-                      if (chatSection) {
-                        chatSection.scrollIntoView({ behavior: 'smooth' });
+                      // Smooth scroll to features section after closing drawer
+                      const featuresSection = document.getElementById('features'); // Updated ID to features
+                      if (featuresSection) {
+                        featuresSection.scrollIntoView({ behavior: 'smooth' });
                       }
                     }}
                   >
@@ -113,7 +114,7 @@ const Index = () => {
       </header>
       <main className="flex-grow">
         <HeroSection />
-        <ChatSection />
+        {/* <ChatSection /> Removed ChatSection component */}
         <FeaturesSection />
         <InteractiveDemoSection />
         <HowItWorksSection />
