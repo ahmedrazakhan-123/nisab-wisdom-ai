@@ -1,4 +1,3 @@
-
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
@@ -69,7 +68,7 @@ const Index = () => {
               <DrawerContent className="bg-brand-cream dark:bg-background">
                 <DrawerHeader className="flex justify-between items-center p-4">
                   <DrawerTitle className="text-xl font-bold text-brand-teal dark:text-brand-teal-light" style={{ fontFamily: "'Lora', serif" }}>
-                    Nisab<span className="text-brand-gold dark:text-brand-gold">.</span>AI
+                    <span>Nisab<span className="text-brand-gold dark:text-brand-gold">.</span>AI</span>
                   </DrawerTitle>
                   <DrawerClose asChild>
                     <Button variant="ghost" size="icon" className="text-brand-teal dark:text-brand-teal-light hover:bg-brand-teal/10 dark:hover:bg-brand-teal-light/10">
