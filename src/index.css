@@ -73,42 +73,52 @@
   }
 
   .dark {
-    /* Dark mode can be configured later if needed */
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Graphite Black Dark Theme */
+    --background: 210 9% 13%; /* Graphite Black (e.g., hsl(210, 9%, 13%)) */
+    --foreground: 0 0% 95%;     /* Light Gray / Off-white for text */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 210 9% 16%; /* Slightly lighter graphite for cards */
+    --card-foreground: 0 0% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 9% 10%; /* Darker for popovers */
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: var(--brand-teal-light); /* Use existing brand-teal-light as primary in dark */
+    --primary-foreground: 20 15% 10%;   /* Dark text for contrast on lighter teal */
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210 9% 25%; /* A slightly lighter shade of graphite */
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 9% 22%;
+    --muted-foreground: 0 0% 70%; /* Softer gray for muted text */
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 210 9% 28%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --border: 210 9% 20%; /* Darker border */
+    --input: 210 9% 16%; /* Same as card for inputs */
+    --ring: var(--brand-gold); /* Gold for ring highlight */
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Nisab Custom Colors for Dark Mode */
+    --brand-teal: 175 50% 60%; /* Lighter/brighter Teal for text in dark mode */
+    --brand-teal-light: 175 45% 70%; /* Even lighter for hover/accent */
+    --brand-teal-foreground: 0 0% 10%; /* Dark text on this lighter teal if it's a background */
+    
+    --brand-cream: 210 9% 13%; /* This makes elements with bg-brand-cream use graphite */
+    --brand-cream-foreground: 0 0% 95%; /* Light text on those elements */
+
+    --brand-gold: 43 74% 70%; /* Brighter Gold for text in dark mode */
+    --brand-gold-foreground: 210 9% 10%; /* Dark text on gold if gold is bg */
+    
+    /* Sidebar colors for dark mode */
+    --sidebar-background: 210 9% 10%;
+    --sidebar-foreground: 0 0% 80%;
+    --sidebar-primary: var(--brand-teal-light); /* Use the updated --brand-teal-light */
+    --sidebar-primary-foreground: 20 15% 10%;
+    --sidebar-accent: 210 9% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 210 9% 20%;
+    --sidebar-ring: var(--brand-gold); /* Use the updated --brand-gold */
   }
 }
 
@@ -125,10 +135,11 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold text-gray-800; /* Slightly darker for headings */
+    @apply font-semibold text-gray-800 dark:text-gray-200; /* Adjust heading color for dark mode */
   }
 }
 
+/* ... keep existing code (@layer components) */
 @layer components {
   .section-padding {
     @apply py-16 md:py-24 px-4 sm:px-6 lg:px-8;
