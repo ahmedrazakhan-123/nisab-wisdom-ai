@@ -1,12 +1,19 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button'; // Shadcn button
+import { Button } from '@/components/ui/button';
 import { MessageSquareText, PlayCircle } from 'lucide-react';
 
 const HeroSection: React.FC = () => {
   return (
     <section className="bg-brand-cream text-brand-cream-foreground section-padding relative overflow-hidden">
       <div className="absolute inset-0 opacity-50 subtle-geometric-background"></div>
+      
+      {/* Subtle visual elements for AI feel */}
+      <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-brand-teal/5 rounded-full animate-pulse-bg opacity-50"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-brand-gold/5 rounded-full animate-pulse-bg animation-delay-2000 opacity-40"></div>
+      <div className="absolute top-1/3 right-1/5 w-24 h-24 bg-brand-teal/10 rounded-full animate-pulse-bg animation-delay-4000 opacity-30"></div>
+
+
       <div className="container mx-auto text-center relative z-10">
         <h1 
           className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-brand-teal animate-fade-in-up"
@@ -33,4 +40,3 @@ const HeroSection: React.FC = () => {
 };
 
 export default HeroSection;
-
