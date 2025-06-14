@@ -1,65 +1,39 @@
 
 import React from 'react';
-import { ShieldCheck, BookOpenText, Users } from 'lucide-react';
-import TrustBadge from './TrustBadge'; 
+// Removed ShieldCheck, BookOpenText, Users as TrustBadge is removed
+// Removed TrustBadge import
 
 const TrustIndicatorsSection: React.FC = () => {
-  const indicators = [
-    {
-      icon: BookOpenText,
-      text: 'Knowledge based on authentic Islamic scholarship.',
-      delay: '0s',
-    },
-    {
-      icon: ShieldCheck,
-      text: 'Continuously verified for accuracy and compliance.',
-      delay: '0.1s',
-    },
-    {
-      icon: Users,
-      text: 'Guided by a panel of Islamic finance experts.',
-      delay: '0.2s',
-    },
-  ];
+  // Removed indicators array
 
   return (
-    <section id="trust-indicators-section" className="py-16 md:py-24 bg-brand-cream dark:bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 md:mb-16">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-brand-teal dark:text-brand-teal-light mb-4" style={{ fontFamily: "'Lora', serif" }}>
-              Built on Trust & Accuracy
-            </h2>
-            <p className="text-muted-foreground md:text-lg mb-6">
-              Nisab.AI is committed to providing reliable and Shariah-compliant financial guidance. Our platform is rooted in authentic scholarship and verified by experts.
-            </p>
-            <div className="mt-6 space-y-4">
-              {indicators.map((indicator, index) => (
-                <TrustBadge
-                  key={index}
-                  icon={indicator.icon}
-                  text={indicator.text}
-                  animationDelay={indicator.delay}
-                />
-              ))}
-            </div>
-          </div>
-          {/* Updated image container */}
-          <div 
-            className="animate-fade-in-up w-full min-h-[300px] md:min-h-[350px] rounded-lg shadow-xl bg-cover bg-center relative overflow-hidden" 
-            style={{ 
-              backgroundImage: "url('https://picsum.photos/seed/islamic-architecture/800/600')", 
-              animationDelay: '0.3s' 
-            }}
-            aria-label="Decorative image of Islamic architecture, symbolizing heritage and trust" // Added aria-label for accessibility
+    <section 
+      id="trust-indicators-section" 
+      className="py-16 md:py-24 bg-cover bg-center relative text-white" // Added text-white for better contrast, adjust as needed
+      style={{ 
+        backgroundImage: "url('https://images.unsplash.com/photo-1466442929976-97f336a657be?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600')", // Using one of the suggested images
+      }}
+      aria-label="Section highlighting trust and accuracy with a background of Islamic architecture"
+    >
+      <div className="absolute inset-0 bg-black/60 dark:bg-black/70"></div> {/* Overlay for text legibility */}
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center md:text-left"> {/* Added text-center md:text-left for responsiveness */}
+        {/* Content will be centered on small screens, left-aligned on medium and larger screens */}
+        <div className="max-w-2xl mx-auto md:mx-0"> {/* Constrain width and center on small screens, align left on larger */}
+          <h2 
+            className="text-3xl md:text-4xl font-bold text-brand-teal-light mb-4 animate-fade-in-up" 
+            style={{ fontFamily: "'Lora', serif" }}
           >
-            <div className="absolute inset-0 bg-brand-cream/20 dark:bg-black/30 rounded-lg"></div> {/* Overlay */}
-          </div>
+            Built on Trust & Accuracy
+          </h2>
+          <p className="text-gray-200 md:text-lg mb-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            Nisab.AI is committed to providing reliable and Shariah-compliant financial guidance. Our platform is rooted in authentic scholarship and verified by experts. We ensure our knowledge base is continuously updated and guided by a panel of Islamic finance specialists for accuracy and compliance.
+          </p>
+          {/* Removed the mapping of TrustBadge components */}
         </div>
-         <p className="text-center text-sm text-muted-foreground">
-          Placeholder image. Consider replacing with a specific visual that aligns with your brand.
-        </p>
+        {/* Removed the separate image div that was on the right */}
       </div>
+      {/* Removed the placeholder image text paragraph */}
     </section>
   );
 };
