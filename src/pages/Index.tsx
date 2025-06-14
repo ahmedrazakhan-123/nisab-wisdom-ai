@@ -1,3 +1,4 @@
+
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
@@ -25,6 +26,15 @@ const navItems = [
 const Index = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
+  const handleGetStartedClick = () => {
+    const featuresSection = document.getElementById('features');
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    // Close drawer if open (for mobile, though this button is desktop)
+    setIsDrawerOpen(false);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-brand-cream dark:bg-background transition-colors duration-300">
       <header className="sticky top-0 z-50 bg-brand-cream/80 dark:bg-background/80 backdrop-blur-md shadow-sm transition-colors duration-300">
@@ -41,6 +51,13 @@ const Index = () => {
                   <NavigationMenuItem key={item.name}>
                     <NavigationMenuLink
                       href={item.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const section = document.querySelector(item.href);
+                        if (section) {
+                          section.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
                       className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-brand-teal/10 text-brand-teal dark:text-brand-teal-light dark:hover:bg-brand-teal-light/10 hover:text-brand-teal-dark font-medium text-sm lg:text-base")}
                     >
                       {item.name}
@@ -50,8 +67,13 @@ const Index = () => {
               </NavigationMenuList>
             </NavigationMenu>
             <ThemeToggleButton />
-            <Button asChild variant="default" size="sm" className="bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground dark:bg-brand-gold dark:hover:bg-brand-gold/90 dark:text-brand-gold-foreground rounded-full px-5 lg:px-6 text-sm lg:text-base">
-              <a href="#features">Get Started</a> {/* Updated href to #features */}
+            <Button 
+              variant="default" 
+              size="sm" 
+              className="bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground dark:bg-brand-gold dark:hover:bg-brand-gold/90 dark:text-brand-gold-foreground rounded-full px-5 lg:px-6 text-sm lg:text-base"
+              onClick={handleGetStartedClick}
+            >
+              Get Started
             </Button>
           </div>
 
@@ -82,7 +104,15 @@ const Index = () => {
                     <a
                       key={item.name}
                       href={item.href}
-                      onClick={() => setIsDrawerOpen(false)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsDrawerOpen(false);
+                        const section = document.querySelector(item.href);
+                        if (section) {
+                          // Timeout to allow drawer to close before scrolling
+                          setTimeout(() => section.scrollIntoView({ behavior: 'smooth' }), 150);
+                        }
+                      }}
                       className="py-2 px-3 text-brand-teal dark:text-brand-teal-light hover:bg-brand-teal/10 dark:hover:bg-brand-teal-light/10 rounded-md font-medium"
                     >
                       {item.name}
@@ -94,14 +124,7 @@ const Index = () => {
                     variant="default"
                     size="lg"
                     className="w-full bg-brand-gold hover:bg-brand-gold/90 text-brand-gold-foreground dark:bg-brand-gold dark:hover:bg-brand-gold/90 dark:text-brand-gold-foreground rounded-full"
-                    onClick={() => {
-                      setIsDrawerOpen(false);
-                      // Smooth scroll to features section after closing drawer
-                      const featuresSection = document.getElementById('features'); // Updated ID to features
-                      if (featuresSection) {
-                        featuresSection.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }}
+                    onClick={handleGetStartedClick}
                   >
                     Get Started
                   </Button>
@@ -126,3 +149,4 @@ const Index = () => {
 };
 
 export default Index;
+
