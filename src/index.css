@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,7 +7,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 100%; /* Base background - will be overridden by brand-cream */
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -15,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 222.2 47.4% 11.2%; /* Default primary */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -36,24 +37,43 @@
 
     --radius: 0.5rem;
 
+    /* Nisab Custom Colors */
+    --brand-teal: 175 56% 42%; /* Main Teal: hsl(175, 56%, 42%) */
+    --brand-teal-light: 175 50% 55%; /* Lighter Teal for hover/accent: hsl(175, 50%, 55%) */
+    --brand-teal-foreground: 0 0% 100%; /* Text on Teal: white */
+    
+    --brand-cream: 39 56% 95%; /* Main Cream: hsl(39, 56%, 95%) */
+    --brand-cream-foreground: 20 15% 25%; /* Text on Cream: dark gray/charcoal */
+
+    --brand-gold: 43 74% 66%; /* Main Gold: hsl(43, 74%, 66%) */
+    --brand-gold-foreground: 20 15% 25%; /* Text on Gold: dark gray/charcoal */
+
+    /* Overriding shadcn defaults with brand colors where appropriate */
+    --background: var(--brand-cream); /* Main page background */
+    --foreground: var(--brand-cream-foreground); /* Main text color */
+
+    --primary: var(--brand-teal);
+    --primary-foreground: var(--brand-teal-foreground);
+
+    --card: 0 0% 100%; /* Cards remain white for contrast */
+    --card-foreground: var(--brand-cream-foreground);
+    
+    --input: 0 0% 100%; /* Input background white */
+    --border: 180 10% 85%; /* Softer border color */
+    --ring: var(--brand-teal-light); /* Ring color for focus states */
+
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
+    /* Dark mode can be configured later if needed */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
@@ -99,5 +119,29 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif; /* Using Inter as a modern sans-serif */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-gray-800; /* Slightly darker for headings */
   }
 }
+
+@layer components {
+  .section-padding {
+    @apply py-16 md:py-24 px-4 sm:px-6 lg:px-8;
+  }
+  .subtle-geometric-background {
+    background-image:
+      linear-gradient(135deg, hsla(var(--brand-cream), 0.03) 25%, transparent 25%),
+      linear-gradient(225deg, hsla(var(--brand-cream), 0.03) 25%, transparent 25%),
+      linear-gradient(45deg, hsla(var(--brand-cream), 0.03) 25%, transparent 25%),
+      linear-gradient(315deg, hsla(var(--brand-cream), 0.03) 25%, hsla(var(--brand-cream), 1) 25%);
+    background-position: 10px 0, 10px 0, 0 0, 0 0;
+    background-size: 20px 20px;
+    background-repeat: repeat;
+  }
+}
+
