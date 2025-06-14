@@ -35,7 +35,9 @@ const ChatInterface: React.FC = () => {
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
 
-        setMessages(prev => [...prev, userMessage]);
+        // If it's the first message, clear suggestions and add the user message
+        const newMessages = messages.length === 1 ? [messages[0], userMessage] : [...messages, userMessage];
+        setMessages(newMessages);
         setSuggestions([]);
         setIsTyping(true);
 
@@ -61,29 +63,49 @@ const ChatInterface: React.FC = () => {
         sendBotResponses();
     };
 
+    const hasStartedChat = messages.length > 1;
+
     return (
-        <div className="flex flex-col h-full bg-transparent">
-             <ScrollArea className="flex-grow p-4 md:p-6" ref={scrollAreaRef}>
-                <div className="space-y-6">
-                    {messages.map((msg) => (
-                        <ChatMessage key={msg.id} message={msg} />
-                    ))}
-                    {isTyping && (
-                        <div className="flex items-start gap-3 justify-start animate-fade-in">
-                             <div className="h-8 w-8 bg-brand-teal text-white rounded-full flex items-center justify-center shrink-0">
-                                <Bot size={18} />
-                             </div>
-                             <div className="max-w-md rounded-lg px-4 py-3 text-sm shadow-md bg-card text-card-foreground rounded-tl-none border border-brand-teal/20 flex items-center gap-2">
-                                <span className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:0s]"></span>
-                                <span className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:0.2s]"></span>
-                                <span className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:0.4s]"></span>
-                             </div>
+        <div className="flex flex-col h-full">
+            <ScrollArea className="flex-grow" ref={scrollAreaRef}>
+                <div className="max-w-3xl mx-auto px-4 py-8 w-full">
+                    {!hasStartedChat ? (
+                        <div className="text-center pt-10 sm:pt-16 animate-fade-in">
+                            <div className="inline-block p-4 bg-brand-teal/10 dark:bg-brand-teal/20 text-brand-teal dark:text-brand-teal-light rounded-full mb-6">
+                                <Bot size={40} />
+                            </div>
+                            <h1 className="text-3xl font-bold text-foreground mb-2" style={{ fontFamily: "'Lora', serif" }}>
+                                Hello! How can I assist?
+                            </h1>
+                            <p className="text-muted-foreground max-w-lg mx-auto">
+                               {initialMessages[0].text}
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="space-y-6">
+                            {messages.map((msg) => (
+                                <ChatMessage key={msg.id} message={msg} />
+                            ))}
+                             {isTyping && (
+                                <div className="flex items-start gap-3 justify-start animate-fade-in">
+                                     <div className="h-8 w-8 bg-muted text-muted-foreground rounded-full flex items-center justify-center shrink-0">
+                                        <Bot size={18} />
+                                     </div>
+                                     <div className="rounded-lg px-4 py-3 text-sm bg-card flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:0s]"></span>
+                                        <span className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:0.2s]"></span>
+                                        <span className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:0.4s]"></span>
+                                     </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
             </ScrollArea>
-            <ChatSuggestions suggestions={suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
-            <ChatInput onSendMessage={handleSendMessage} isSending={isTyping} />
+            <div className="max-w-3xl mx-auto w-full px-4 pb-4">
+                 <ChatSuggestions suggestions={hasStartedChat ? [] : suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
+                 <ChatInput onSendMessage={handleSendMessage} isSending={isTyping} />
+            </div>
         </div>
     );
 };

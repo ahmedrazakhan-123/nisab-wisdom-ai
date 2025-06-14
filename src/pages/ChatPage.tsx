@@ -2,16 +2,12 @@
 import React from 'react';
 import ChatHeader from '@/components/ChatHeader';
 import ChatInterface from '@/components/ChatInterface';
-import { cn } from '@/lib/utils';
 
 const ChatPage: React.FC = () => {
   return (
-    <div className={cn(
-      "flex flex-col h-screen bg-brand-cream dark:bg-background",
-      "subtle-geometric-background"
-    )}>
+    <div className="flex flex-col h-screen bg-background">
       <ChatHeader />
-      <main className="flex-grow overflow-hidden bg-transparent">
+      <main className="flex-grow overflow-hidden">
         <ChatInterface />
       </main>
     </div>

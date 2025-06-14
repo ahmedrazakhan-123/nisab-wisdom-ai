@@ -26,7 +26,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   return (
     <div className={cn('group flex items-start gap-3 w-full animate-fade-in', isBot ? 'justify-start' : 'justify-end')}>
       {isBot && (
-        <Avatar className="h-8 w-8 bg-brand-teal text-white shrink-0">
+        <Avatar className="h-8 w-8 bg-muted text-muted-foreground shrink-0">
           <AvatarFallback><Bot size={18} /></AvatarFallback>
         </Avatar>
       )}
@@ -35,9 +35,9 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         "flex flex-col max-w-md lg:max-w-xl",
         isBot ? "items-start" : "items-end"
       )}>
-        <div className={cn('relative rounded-xl px-4 py-3 text-sm', {
-          'bg-card text-card-foreground border': !isBot,
-          'bg-brand-teal text-white': isBot,
+        <div className={cn('relative rounded-xl px-4 py-3 text-base', {
+          'bg-card text-card-foreground border rounded-bl-none': isBot,
+          'bg-brand-teal text-white rounded-br-none': !isBot,
         })}>
           <p className="whitespace-pre-wrap">{message.text}</p>
           <Button
@@ -45,8 +45,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
             size="icon"
             onClick={handleCopy}
             className={cn(
-              "absolute -top-2 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity",
-              isBot ? "-right-2 text-brand-teal-light" : "-left-2 text-muted-foreground"
+              "absolute bottom-0 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity",
+              isBot ? "right-0 text-muted-foreground" : "left-0 text-brand-teal-light/70"
             )}
           >
             <Copy className="h-4 w-4" />
@@ -69,7 +69,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           </a>
         )}
 
-        <div className="text-xs mt-1.5 text-muted-foreground/80">
+        <div className="text-xs mt-1.5 text-muted-foreground/80 px-1">
           {message.timestamp}
         </div>
       </div>
