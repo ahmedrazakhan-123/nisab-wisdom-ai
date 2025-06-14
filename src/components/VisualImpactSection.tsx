@@ -19,7 +19,7 @@ const VisualImpactSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-center">
           <div className="rounded-lg overflow-hidden shadow-xl transform transition-all duration-300 hover:scale-105">
             <img 
-              src="/placeholder_images/photo-1494891848038-7bd202a2afeb.jpg" 
+              src="/placeholder_images/photo-1493397212122-2b85dda8106b.jpg" 
               alt="Modern architecture representing Islamic finance" 
               className="w-full h-72 md:h-96 object-cover animate-fade-in-up"
             />
@@ -33,7 +33,7 @@ const VisualImpactSection: React.FC = () => {
           </div>
         </div>
         <p className="text-center mt-8 text-sm text-muted-foreground">
-          Please replace these placeholder images with your desired visuals.
+          Please replace these placeholder images with your desired visuals. Ensure images are in the 'public/placeholder_images' folder.
         </p>
       </div>
     </section>
