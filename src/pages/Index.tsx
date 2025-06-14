@@ -1,4 +1,3 @@
-
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
@@ -9,7 +8,7 @@ import InteractiveDemoSection from '@/components/InteractiveDemoSection';
 import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
-import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"; // Removed DrawerDescription as it's not used
+import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerFooter } from "@/components/ui/drawer"; // Added DrawerFooter
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
 import React from 'react';
