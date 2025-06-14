@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check } from 'lucide-react';
+import { Check, BadgeDollarSign, Star } from 'lucide-react';
 
 const plans = [
   {
@@ -52,6 +52,18 @@ const plans = [
   },
 ];
 
+const TestimonialCard = ({ quote, author, title }: { quote: string, author: string, title: string }) => (
+    <Card className="bg-background/50 dark:bg-background/20 border-border/50 h-full">
+        <CardContent className="pt-6">
+            <div className="flex mb-2">
+                {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 text-brand-gold fill-current" />)}
+            </div>
+            <p className="italic text-muted-foreground">"{quote}"</p>
+            <p className="mt-4 font-semibold text-foreground">- {author}, <span className="text-muted-foreground font-normal">{title}</span></p>
+        </CardContent>
+    </Card>
+);
+
 const PricingSection: React.FC = () => {
   return (
     <section id="pricing" className="py-16 md:py-24 bg-brand-cream/50 dark:bg-background/50">
@@ -64,9 +76,14 @@ const PricingSection: React.FC = () => {
             Start for free and scale as you grow. No credit card required for the basic plan.
           </p>
         </div>
+
+        <div className="text-center mb-12">
+            <p className="text-md font-semibold text-muted-foreground">Trusted by over <span className="text-brand-teal dark:text-brand-teal-light">10,000+</span> finance professionals and students</p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {plans.map((plan) => (
-            <Card key={plan.name} className={`flex flex-col relative ${plan.recommended ? 'border-brand-gold dark:border-brand-gold ring-2 ring-brand-gold/50 dark:ring-brand-gold/50' : 'border-border'}`}>
+            <Card key={plan.name} className={`flex flex-col relative transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2 ${plan.recommended ? 'border-brand-gold dark:border-brand-gold ring-2 ring-brand-gold/50 dark:ring-brand-gold/50' : 'border-border'}`}>
               {plan.recommended && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-gold text-brand-gold-foreground px-3 py-1 text-sm font-semibold rounded-full">
                   Most Popular
@@ -81,6 +98,12 @@ const PricingSection: React.FC = () => {
                 <p className="text-muted-foreground pt-2 text-sm !mt-2">{plan.description}</p>
               </CardHeader>
               <CardContent className="flex-grow">
+                {plan.name === 'Pro' && (
+                    <div className="flex items-center text-sm text-brand-teal dark:text-brand-teal-light bg-brand-teal/10 dark:bg-brand-teal-light/10 p-2 rounded-md mb-4">
+                        <BadgeDollarSign className="h-5 w-5 mr-2 shrink-0" />
+                        <span>30-day money-back guarantee</span>
+                    </div>
+                )}
                 <ul className="space-y-3">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start">
@@ -98,6 +121,30 @@ const PricingSection: React.FC = () => {
             </Card>
           ))}
         </div>
+
+        <div className="mt-24">
+            <h3 className="text-2xl md:text-3xl font-bold text-center text-brand-teal dark:text-brand-teal-light mb-12" style={{ fontFamily: "'Lora', serif" }}>
+                Why Our Users Love Nisab.AI
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <TestimonialCard 
+                    quote="Nisab.AI has been a game changer for my studies in Islamic finance. The answers are clear, well-sourced, and trustworthy."
+                    author="Fatima A."
+                    title="Finance Student"
+                />
+                <TestimonialCard 
+                    quote="As a professional, I need quick and reliable answers. This tool saves me hours of research every week. The Pro plan is worth every penny."
+                    author="Ahmed K."
+                    title="Financial Advisor"
+                />
+                <TestimonialCard 
+                    quote="The simplicity and accuracy is unmatched. I can finally get Shariah-compliant guidance without getting lost in complex jargon."
+                    author="Yusuf M."
+                    title="Small Business Owner"
+                />
+            </div>
+        </div>
+
       </div>
     </section>
   );
