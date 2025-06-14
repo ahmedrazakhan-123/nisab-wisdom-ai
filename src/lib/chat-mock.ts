@@ -10,6 +10,7 @@ export interface ChatMessage {
 export interface ChatSuggestion {
   id: string;
   text: string;
+  icon: string;
 }
 
 export const initialMessages: ChatMessage[] = [
@@ -22,9 +23,9 @@ export const initialMessages: ChatMessage[] = [
 ];
 
 export const initialSuggestions: ChatSuggestion[] = [
-  { id: 's1', text: 'How do I calculate my Zakat?' },
-  { id: 's2', text: 'What are Halal investments?' },
-  { id: 's3', text: 'Explain Riba in simple terms.' },
+  { id: 's1', text: 'How do I calculate my Zakat?', icon: 'Calculator' },
+  { id: 's2', text: 'What are Halal investments?', icon: 'Landmark' },
+  { id: 's3', text: 'Explain Riba in simple terms.', icon: 'Scale' },
 ];
 
 export const chatResponses: Record<string, ChatMessage[]> = {

@@ -39,29 +39,30 @@ const ChatInterface: React.FC = () => {
         setSuggestions([]);
         setIsTyping(true);
 
-        setTimeout(() => {
-            const botResponses = chatResponses[text] || chatResponses['default'];
-            
-            botResponses.forEach((res, index) => {
-                setTimeout(() => {
-                     const botMessage: ChatMessageType = {
-                        ...res,
-                        id: `bot-${Date.now()}-${index}`,
-                        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    };
-                    setMessages(prev => [...prev, botMessage]);
+        const botResponses = chatResponses[text] || chatResponses['default'];
+        
+        const sendBotResponses = async () => {
+            for (const res of botResponses) {
+                const responseText = res.text;
+                // Calculate typing time based on message length for a more natural feel
+                const typingDuration = Math.min(Math.max(responseText.length * 25, 800), 3000);
+                await new Promise(resolve => setTimeout(resolve, typingDuration));
 
-                    if (index === botResponses.length - 1) {
-                        setIsTyping(false);
-                    }
-                }, 1000 * (index + 1));
-            });
-
-        }, 1200);
+                const botMessage: ChatMessageType = {
+                    ...res,
+                    id: `bot-${Date.now()}-${Math.random()}`,
+                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                };
+                setMessages(prev => [...prev, botMessage]);
+            }
+            setIsTyping(false);
+        };
+        
+        sendBotResponses();
     };
 
     return (
-        <div className="flex flex-col h-full bg-brand-cream dark:bg-background">
+        <div className="flex flex-col h-full bg-transparent">
              <ScrollArea className="flex-grow p-4 md:p-6" ref={scrollAreaRef}>
                 <div className="space-y-6">
                     {messages.map((msg) => (
