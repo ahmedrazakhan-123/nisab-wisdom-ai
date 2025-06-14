@@ -2,7 +2,7 @@
 import React from 'react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
-import { Palette, Sun, Moon, Check } from 'lucide-react'; // Palette can be kept or changed
+import { Palette, Sun, Moon, Check } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,8 +15,8 @@ const ThemeToggleButton: React.FC = () => {
 
   const themes = [
     { name: 'Light', value: 'light', Icon: Sun },
-    { name: 'Dark', value: 'dark', Icon: Moon }, // This will now be the ChatGPT-like dark theme
-    { name: 'Graphite', value: 'black', Icon: Moon }, // This was 'Black', now 'Graphite', uses the previous .dark styles
+    { name: 'Dark', value: 'dark', Icon: Moon }, // This is the ChatGPT-like dark theme
+    { name: 'Gray', value: 'black', Icon: Moon }, // Changed name to 'Gray', value 'black' maps to .black CSS class
   ];
 
   // Determine which icon to display on the button itself.

@@ -62,17 +62,18 @@
     --border: 180 10% 85%; /* Softer border color */
     --ring: var(--brand-teal-light); /* Ring color for focus states */
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar colors for light theme */
+    --sidebar-background: 0 0% 98%; /* Light gray for sidebar */
+    --sidebar-foreground: 240 5.3% 26.1%; /* Dark gray text */
+    --sidebar-primary: var(--brand-teal); /* Teal for primary elements */
+    --sidebar-primary-foreground: var(--brand-teal-foreground); /* White text on teal */
+    --sidebar-accent: 240 4.8% 95.9%; /* Very light gray for accents */
+    --sidebar-accent-foreground: 240 5.9% 10%; /* Dark text for accents */
+    --sidebar-border: 220 13% 91%; /* Light border */
+    --sidebar-ring: var(--brand-teal-light); /* Teal for ring */
   }
 
-  /* NEW: ChatGPT-like Dark Theme */
+  /* ChatGPT-like Dark Theme (remains unchanged) */
   .dark { 
     --background: 0 0% 8%; /* Very Dark Gray, e.g., #141414 */
     --foreground: 0 0% 90%; /* Light Gray / Off-white for text, e.g., #E6E6E6 */
@@ -121,52 +122,52 @@
     --sidebar-ring: var(--brand-gold);
   }
 
-  /* NEW: Graphite Theme (styles previously used by .dark) */
-  .black { /* This class name is used for the "Graphite" theme */
-    --background: 0 0% 10%;     /* True Dark Gray/Graphite e.g. #1A1A1A */
-    --foreground: 0 0% 95%;     /* Light Gray / Off-white for text */
+  /* NEW: Slate Gray Theme (replaces previous .black theme) */
+  .black { /* This class name is used for the "Gray" theme */
+    --background: 215 15% 28%;         /* Darker Slate Gray for main background, e.g., hsl(215, 15%, 28%) approx #3C4650 */
+    --foreground: 210 25% 90%;         /* Light Gray for text, e.g., hsl(210, 25%, 90%) approx #DCE7F0 */
 
-    --card: 0 0% 15%;           /* Slightly lighter graphite for cards e.g. #262626 */
-    --card-foreground: 0 0% 95%;
+    --card: 215 15% 22%;               /* Slightly darker slate for cards, e.g., hsl(215, 15%, 22%) approx #2E3740 */
+    --card-foreground: 210 25% 90%;
 
-    --popover: 0 0% 7%;         /* Darker for popovers e.g. #121212 */
-    --popover-foreground: 0 0% 95%;
+    --popover: 215 15% 18%;            /* Even darker slate for popovers, e.g., hsl(215, 15%, 18%) approx #242B33 */
+    --popover-foreground: 210 25% 90%;
 
-    --primary: var(--brand-teal-light); /* Use existing brand-teal-light as primary */
-    --primary-foreground: 20 15% 10%;   /* Dark text for contrast on lighter teal */
+    --primary: 175 50% 60%;            /* Teal (from dark theme, good contrast on slate) */
+    --primary-foreground: 20 15% 15%;  /* Dark text for contrast on primary, e.g., hsl(20, 15%, 15%) approx #2B2523 */
 
-    --secondary: 0 0% 20%;      /* A slightly lighter shade of graphite */
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 215 15% 35%;         /* Lighter Slate Gray for secondary elements, e.g., hsl(215, 15%, 35%) approx #4A5663 */
+    --secondary-foreground: 210 25% 90%;
 
-    --muted: 0 0% 18%;
-    --muted-foreground: 0 0% 70%; /* Softer gray for muted text */
+    --muted: 215 15% 25%;              /* Muted slate, e.g., hsl(215, 15%, 25%) approx #353F4A */
+    --muted-foreground: 210 20% 70%;   /* Softer gray for muted text, e.g., hsl(210, 20%, 70%) approx #A3B0BF */
 
-    --accent: 0 0% 22%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 215 15% 40%;             /* Accent slate, e.g., hsl(215, 15%, 40%) approx #566373 */
+    --accent-foreground: 210 25% 95%;  /* Very light text for accents, e.g., hsl(210, 25%, 95%) approx #EBF0F5 */
 
-    --border: 0 0% 14%;       /* Darker border */
-    --input: 0 0% 15%;        /* Same as card for inputs */
-    --ring: var(--brand-gold);  /* Gold for ring highlight */
+    --border: 215 10% 40%;             /* Subtle border, e.g., hsl(215, 10%, 40%) approx #5E6670 */
+    --input: 215 15% 22%;              /* Same as card for inputs */
+    --ring: 43 74% 65%;                /* Gold for ring highlight (slightly adjusted for slate), e.g., hsl(43, 74%, 65%) approx #E0B86B */
 
-    /* Nisab Custom Colors for Graphite Theme */
-    --brand-teal: 175 50% 60%; 
-    --brand-teal-light: 175 45% 70%; 
-    --brand-teal-foreground: 0 0% 10%; 
+    /* Nisab Custom Colors for Slate Gray Theme */
+    --brand-teal: 175 50% 55%;         /* Teal for brand elements, e.g., hsl(175, 50%, 55%) approx #5DC2B8 */
+    --brand-teal-light: 175 45% 65%;   /* Lighter Teal, e.g., hsl(175, 45%, 65%) approx #81CEC7 */
+    --brand-teal-foreground: 20 15% 15%;/* Dark text on teal */
     
-    --brand-cream: 0 0% 10%; /* Elements with bg-brand-cream use graphite background */
-    --brand-cream-foreground: 0 0% 95%; /* Light text on those elements */
+    --brand-cream: 215 15% 28%;        /* Elements with bg-brand-cream use the theme's main background */
+    --brand-cream-foreground: 210 25% 90%; /* Light text on those elements */
 
-    --brand-gold: 43 74% 70%; 
-    --brand-gold-foreground: 0 0% 10%; /* Darker text for brand gold in graphite */
+    --brand-gold: 43 74% 60%;          /* Gold for brand elements, e.g., hsl(43, 74%, 60%) approx #D9A951 */
+    --brand-gold-foreground: 20 15% 15%;/* Dark text on gold */
     
-    /* Sidebar colors for Graphite theme */
-    --sidebar-background: 0 0% 7%;
-    --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: var(--brand-teal-light);
-    --sidebar-primary-foreground: 20 15% 10%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 0 0% 14%;
+    /* Sidebar colors for Slate Gray theme */
+    --sidebar-background: 215 15% 18%;    /* Darker slate for sidebar, e.g., hsl(215, 15%, 18%) */
+    --sidebar-foreground: 210 20% 80%;    /* Lighter text for sidebar, e.g., hsl(210, 20%, 80%) */
+    --sidebar-primary: var(--brand-teal-light); 
+    --sidebar-primary-foreground: 20 15% 15%;
+    --sidebar-accent: 215 15% 25%;        /* Muted slate for sidebar accent, e.g., hsl(215, 15%, 25%) */
+    --sidebar-accent-foreground: 210 25% 95%;
+    --sidebar-border: 215 10% 35%;        /* Border for sidebar, e.g., hsl(215, 10%, 35%) */
     --sidebar-ring: var(--brand-gold);
   }
 }
@@ -184,11 +185,10 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold text-foreground; /* Default for all modes, will use the theme's foreground */
+    @apply font-semibold; /* Removed text-foreground here, it will inherit from body or specific component */
+    /* For Lora headings, specific components will apply text-brand-teal or text-primary which are theme-aware */
   }
-  /* Specific override for light mode if a slightly darker heading is desired, but text-foreground is safer for themes */
-  /* :root:not(.dark):not(.black) h1, :root:not(.dark):not(.black) h2, ... { @apply text-gray-800; } */
-  /* The above general rule for h1-h6 to use text-foreground is simpler and safer for theming. */
+  /* ... keep existing code (headings styles, etc.) */
 }
 
 /* ... keep existing code (@layer components) */
