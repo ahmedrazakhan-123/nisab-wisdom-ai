@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Send, MessageSquareText } from 'lucide-react';
+import { Send } from 'lucide-react'; // Removed MessageSquareText as it's no longer used
 
 interface Message {
   id: string;
@@ -33,12 +34,12 @@ const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto bg-card p-6 rounded-xl shadow-xl border"> {/* Changed bg-white to bg-card and border-brand-teal/20 to border (theme-aware) */}
+    <div className="w-full max-w-2xl mx-auto bg-card p-6 rounded-xl shadow-xl border">
       <div className="mb-4">
-        <h3 className="text-xl font-semibold text-brand-teal mb-2 flex items-center" style={{ fontFamily: "'Lora', serif" }}>
+        {/* <h3 className="text-xl font-semibold text-brand-teal mb-2 flex items-center" style={{ fontFamily: "'Lora', serif" }}>
           <MessageSquareText className="w-6 h-6 mr-2 text-brand-gold" />
           Ask Nisab.AI
-        </h3>
+        </h3> */}
         <p className="text-sm text-muted-foreground">
           Type your Islamic finance question below. For best results, be clear and specific.
         </p>
