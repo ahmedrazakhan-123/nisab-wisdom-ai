@@ -4,6 +4,7 @@ import HowItWorksSection from '@/components/HowItWorksSection';
 import TrustBadgesSection from '@/components/TrustBadgesSection';
 import Footer from '@/components/Footer';
 // import ChatSection from '@/components/ChatSection'; // Removed ChatSection import
+import FaqSection from '@/components/FaqSection';
 import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
 // import PricingSection from '@/components/PricingSection'; // Removed PricingSection import
 import { Button } from '@/components/ui/button';
@@ -18,6 +19,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 const navItems = [
   { name: 'Chat', href: '/chat' },
   { name: 'Features', href: '#features' },
+  { name: 'FAQ', href: '#faq-section' },
   { name: 'Pricing', href: '/pricing' },
   { name: 'How It Works', href: '#how-it-works' },
   { name: 'Trust', href: '#trust-indicators-section' },
@@ -157,6 +159,7 @@ const Index = () => {
         <HeroSection />
         {/* <ChatSection /> Removed ChatSection component */}
         <FeaturesSection />
+        <FaqSection />
         {/* <PricingSection /> Removed PricingSection component */}
         <HowItWorksSection />
         <TrustIndicatorsSection />
