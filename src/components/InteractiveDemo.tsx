@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Lightbulb, Zap, Image as ImageIcon } from 'lucide-react';
+import { Lightbulb, Zap } from 'lucide-react';
 
 interface DemoQuestion {
   id: string;
@@ -58,9 +58,13 @@ const InteractiveDemo: React.FC = () => {
             </div>
           ) : (
             <div className="text-sm text-muted-foreground flex-grow flex flex-col items-center justify-center text-center">
-              <img src="/placeholder.svg" alt="Nisab.AI chat interface mockup" className="w-48 h-32 object-contain mb-4 opacity-70" />
+              <img 
+                src="https://placehold.co/400x300/E2E8F0/4A5568?text=Nisab.AI+Chat+Mockup" 
+                alt="Nisab.AI chat interface mockup" 
+                className="w-48 h-32 object-contain mb-4 opacity-90 rounded" 
+              />
               <p>Click a question on the left to see a sample answer.</p>
-              <p className="text-xs mt-1">(Replace placeholder image with actual mockup)</p>
+              <p className="text-xs mt-1">(This is a placeholder image)</p>
             </div>
           )}
         </div>

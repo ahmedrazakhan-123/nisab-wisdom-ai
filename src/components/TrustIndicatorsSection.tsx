@@ -45,14 +45,14 @@ const TrustIndicatorsSection: React.FC = () => {
           </div>
           <div className="flex justify-center items-center animate-fade-in-up" style={{animationDelay: '0.3s'}}>
             <img 
-              src="/placeholder_images/photo-1460574283810-2aab119d8511.jpg" 
+              src="https://picsum.photos/seed/stability/600/400" 
               alt="Architectural detail symbolizing stability and trust" 
               className="rounded-lg shadow-xl w-full max-w-md h-auto object-cover max-h-[400px]" 
             />
           </div>
         </div>
          <p className="text-center text-sm text-muted-foreground">
-          Please replace placeholder image with your desired visual.
+          Please replace placeholder image with your desired visual in 'public/placeholder_images'.
         </p>
       </div>
     </section>

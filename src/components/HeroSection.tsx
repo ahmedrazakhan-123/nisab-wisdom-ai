@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { MessageSquareText, PlayCircle } from 'lucide-react';
@@ -8,7 +9,7 @@ const HeroSection: React.FC = () => {
       {/* Background Image and Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/placeholder_images/photo-1487958449943-2429e8be8625.jpg" 
+          src="https://picsum.photos/seed/hero/1920/1080" 
           alt="Modern financial district cityscape" 
           className="w-full h-full object-cover" 
         />
@@ -57,7 +58,7 @@ const HeroSection: React.FC = () => {
           </Button>
         </div>
         <p className="text-center mt-8 text-xs text-muted-foreground/70">
-          Background image is a placeholder. Please replace with your desired visual.
+          Background image is a placeholder. Replace with your desired visual.
         </p>
       </div>
     </section>
