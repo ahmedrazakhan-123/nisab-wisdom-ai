@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageSquareText, PlayCircle } from 'lucide-react';
+import { ArrowRight, PlayCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const HeroSection: React.FC = () => {
   return (
@@ -40,10 +41,10 @@ const HeroSection: React.FC = () => {
             size="lg" 
             className="bg-brand-teal hover:bg-brand-teal-light text-brand-teal-foreground px-8 py-3 text-lg rounded-lg shadow-lg transition-transform transform hover:scale-105"
           >
-            <a href="#chat-section">
-              <MessageSquareText className="mr-2 h-5 w-5" />
-              Start Free Chat
-            </a>
+            <Link to="/pricing">
+              <ArrowRight className="mr-2 h-5 w-5" />
+              View Plans
+            </Link>
           </Button>
           <Button 
             asChild

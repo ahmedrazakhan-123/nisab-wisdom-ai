@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 // import ChatSection from '@/components/ChatSection'; // Removed ChatSection import
 import InteractiveDemoSection from '@/components/InteractiveDemoSection';
 import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
-import PricingSection from '@/components/PricingSection';
+// import PricingSection from '@/components/PricingSection'; // Removed PricingSection import
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerFooter } from "@/components/ui/drawer";
@@ -15,21 +15,31 @@ import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
 import React from 'react';
 import ThemeToggleButton from '@/components/ThemeToggleButton';
+import { useNavigate } from 'react-router-dom';
 
 const navItems = [
   // { name: 'Chat', href: '#chat-section' }, // Removed Chat nav item
   { name: 'Features', href: '#features' },
   { name: 'Demo', href: '#interactive-demo-section' },
-  { name: 'Pricing', href: '#pricing' },
+  { name: 'Pricing', href: '/pricing' },
   { name: 'How It Works', href: '#how-it-works' },
   { name: 'Trust', href: '#trust-indicators-section' },
 ];
 
 const Index = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
+    if (href.startsWith('/')) {
+        navigate(href);
+        if (isDrawerOpen) {
+            setIsDrawerOpen(false);
+        }
+        return;
+    }
+
     const section = document.querySelector(href);
     if (section) {
       if (isDrawerOpen) {
@@ -44,11 +54,8 @@ const Index = () => {
 
   const handleMobileFooterClick = () => {
     setIsDrawerOpen(false);
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      // Timeout to allow drawer to close before scrolling
-      setTimeout(() => pricingSection.scrollIntoView({ behavior: 'smooth' }), 150);
-    }
+    // Timeout to allow drawer to close before navigating
+    setTimeout(() => navigate('/pricing'), 150);
   };
 
   return (
@@ -134,7 +141,7 @@ const Index = () => {
         {/* <ChatSection /> Removed ChatSection component */}
         <FeaturesSection />
         <InteractiveDemoSection />
-        <PricingSection />
+        {/* <PricingSection /> Removed PricingSection component */}
         <HowItWorksSection />
         <TrustIndicatorsSection />
         <TrustBadgesSection /> {/* Keeping this for now, can be merged/removed later */}
