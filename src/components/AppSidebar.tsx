@@ -1,7 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Settings, Plus, MessageSquare, Bot } from 'lucide-react';
+```tsx
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Settings, Plus, MessageSquare, Bot, Trash } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -13,6 +14,7 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarGroupContent,
+  SidebarMenuAction,
 } from '@/components/ui/sidebar';
 import ThemeToggleButton from './ThemeToggleButton';
 import { Button } from './ui/button';
@@ -26,6 +28,7 @@ interface AppSidebarProps {
 const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId }) => {
   const [chatHistory, setChatHistory] = useState<{ id: string; title: string }[]>([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     try {
@@ -39,17 +42,41 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId }) => {
     }
   }, []);
 
-  const handleNewChat = () => {
+  const handleNewChat = useCallback(() => {
     const newChatId = `chat-${Date.now()}`;
-    const newChat = {
-      id: newChatId,
-      title: `New Chat ${chatHistory.length + 1}`,
-    };
-    const updatedHistory = [newChat, ...chatHistory];
-    setChatHistory(updatedHistory);
-    localStorage.setItem('chatHistory', JSON.stringify(updatedHistory));
+    setChatHistory(prevHistory => {
+        const newChat = {
+          id: newChatId,
+          title: `New Chat ${prevHistory.length + 1}`,
+        };
+        const updatedHistory = [newChat, ...prevHistory];
+        localStorage.setItem('chatHistory', JSON.stringify(updatedHistory));
+        return updatedHistory;
+    });
     navigate(`/chat/${newChatId}`);
-  };
+  }, [navigate]);
+  
+  const handleRemoveChat = useCallback((chatIdToRemove: string) => {
+    setChatHistory(prevHistory => {
+        const updatedHistory = prevHistory.filter(chat => chat.id !== chatIdToRemove);
+        localStorage.setItem('chatHistory', JSON.stringify(updatedHistory));
+
+        if (activeChatId === chatIdToRemove) {
+            if (updatedHistory.length > 0) {
+                navigate(`/chat/${updatedHistory[0].id}`);
+            } else {
+                handleNewChat();
+            }
+        }
+        return updatedHistory;
+    });
+  }, [activeChatId, navigate, handleNewChat]);
+
+  useEffect(() => {
+    if (!activeChatId && location.pathname.startsWith('/chat')) {
+      handleNewChat();
+    }
+  }, [activeChatId, location.pathname, handleNewChat]);
 
   return (
     <Sidebar>
@@ -94,6 +121,16 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId }) => {
                           <span>{chat.title}</span>
                         </Link>
                       </SidebarMenuButton>
+                      <SidebarMenuAction
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleRemoveChat(chat.id);
+                        }}
+                        showOnHover
+                      >
+                        <Trash className="h-4 w-4" />
+                      </SidebarMenuAction>
                     </SidebarMenuItem>
                   ))}
                 </SidebarMenu>
@@ -114,3 +151,4 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId }) => {
 };
 
 export default AppSidebar;
+```
