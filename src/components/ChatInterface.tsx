@@ -1,11 +1,10 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import type { ChatMessage as ChatMessageType, ChatSuggestion, BotResponse } from '@/lib/chat-types';
 import { knowledgeBase, defaultResponse, initialSuggestions } from '@/lib/knowledge-base';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Compass } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import ChatSuggestions from './ChatSuggestions';
 import ChatHeader from './ChatHeader';
 
@@ -170,7 +169,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
                              {isTyping && (
                                 <div className="flex items-start gap-3 justify-start animate-fade-in">
                                      <div className="h-8 w-8 bg-muted text-muted-foreground rounded-full flex items-center justify-center shrink-0">
-                                        <Compass size={18} />
+                                        <Sparkles size={18} />
                                      </div>
                                      <div className="rounded-lg px-4 py-3 text-sm bg-card flex items-center gap-2">
                                         <span className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:0s]"></span>

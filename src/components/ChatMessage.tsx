@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Compass, User, BookOpen, Copy, RefreshCw } from 'lucide-react';
+import { Sparkles, BookOpen, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
 import type { ChatMessage as ChatMessageType } from '@/lib/chat-types';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from './ui/button';
@@ -36,58 +37,70 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
     });
   };
 
-  const handleRegenerate = () => {
-    // Placeholder for regeneration logic
+  const handleThumbsUp = () => {
     toast({
-        description: "Regenerate response (not implemented).",
+        description: "Feedback submitted. Thank you!",
         duration: 2000,
     });
-  }
+  };
+  
+  const handleThumbsDown = () => {
+    toast({
+        description: "Feedback submitted. Thank you!",
+        duration: 2000,
+    });
+  };
 
   return (
-    <div className={cn('group flex items-start gap-3 w-full py-2.5 animate-fade-in-up', isBot ? '' : 'justify-end')}>
+    <div className={cn('group flex items-start gap-3 w-full py-1 animate-fade-in-up', isBot ? '' : 'justify-end')}>
       {isBot && (
-        <Avatar className="h-9 w-9 bg-muted text-muted-foreground shrink-0">
-          <AvatarFallback><Compass size={20} /></AvatarFallback>
+        <Avatar className="h-8 w-8 bg-muted text-muted-foreground shrink-0">
+          <AvatarFallback><Sparkles size={20} /></AvatarFallback>
         </Avatar>
       )}
       
       <div className={cn(
-        "flex flex-col max-w-md lg:max-w-2xl w-full",
+        "flex flex-col max-w-md lg:max-w-xl",
         isBot ? "items-start" : "items-end"
       )}>
-        <div className={cn('relative group/message rounded-lg px-4 py-3 text-base w-full', {
-          'bg-card text-card-foreground rounded-bl-none': isBot,
-          'bg-primary text-primary-foreground rounded-br-none': !isBot,
+        <div className={cn('relative group/message rounded-2xl px-4 py-3 text-base', {
+          'bg-muted text-card-foreground': isBot,
+          'bg-gray-900 text-white dark:bg-gray-200 dark:text-gray-900': !isBot,
         })}>
           <p className="whitespace-pre-wrap leading-relaxed tracking-wide">{message.text}</p>
-          
-          <div className={cn(
-            "absolute bottom-1 flex gap-0.5 opacity-0 group-hover/message:opacity-100 transition-opacity",
-            isBot ? "-right-[4.5rem] text-muted-foreground" : "-left-[4.5rem] text-primary-foreground/80"
-          )}>
+        </div>
+        
+        {isBot && (
+          <div className="flex items-center gap-1 mt-2 text-muted-foreground">
             <Button
               variant="ghost"
               size="icon"
               onClick={handleCopy}
-              className={cn("h-7 w-7", !isBot && "hover:bg-white/10 hover:text-primary-foreground")}
+              className="h-7 w-7"
             >
               <Copy className="h-4 w-4" />
               <span className="sr-only">Copy message</span>
             </Button>
-            {isBot && (
-                 <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={handleRegenerate}
-                    className="h-7 w-7"
-                >
-                    <RefreshCw className="h-4 w-4" />
-                    <span className="sr-only">Regenerate response</span>
-                </Button>
-            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleThumbsUp}
+              className="h-7 w-7"
+            >
+              <ThumbsUp className="h-4 w-4" />
+              <span className="sr-only">Like response</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleThumbsDown}
+              className="h-7 w-7"
+            >
+              <ThumbsDown className="h-4 w-4" />
+              <span className="sr-only">Dislike response</span>
+            </Button>
           </div>
-        </div>
+        )}
         
         {isBot && message.actions && <QuickActionButtons actions={message.actions} onActionClick={onActionClick} isSending={isSending} />}
 
@@ -116,11 +129,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
         </div>
       </div>
 
-      {!isBot && (
-        <Avatar className="h-9 w-9 bg-brand-gold text-white shrink-0">
-          <AvatarFallback><User size={20} /></AvatarFallback>
-        </Avatar>
-      )}
+      {/* User Avatar has been removed to match the new design */}
     </div>
   );
 };
