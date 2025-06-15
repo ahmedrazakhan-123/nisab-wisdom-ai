@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
-import { SendHorizonal, Paperclip } from 'lucide-react';
+import { SendHorizontal, Paperclip } from 'lucide-react';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -60,7 +60,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isSending }) => {
               disabled={isSending || !inputValue.trim()}
               onClick={handleSendMessage}
             >
-              <SendHorizonal className="h-5 w-5" />
+              <SendHorizontal className="h-5 w-5" />
               <span className="sr-only">Send Message</span>
             </Button>
         </div>
