@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Bot, User, BookOpen, Copy, RefreshCw } from 'lucide-react';
@@ -45,7 +44,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       )}>
         <div className={cn('relative group/message rounded-xl px-4 py-3 text-base', {
           'bg-muted text-muted-foreground rounded-bl-none': isBot,
-          'bg-primary/10 text-foreground rounded-br-none': !isBot,
+          'text-foreground rounded-br-none': !isBot,
         })}>
           <p className="whitespace-pre-wrap leading-relaxed tracking-wide">{message.text}</p>
           
