@@ -1,5 +1,6 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import { ChatMessage, ChatSuggestion, BotResponse } from '@/lib/chat-types';
+import type { ChatMessage as ChatMessageType, ChatSuggestion, BotResponse } from '@/lib/chat-types';
 import { knowledgeBase, defaultResponse, initialSuggestions } from '@/lib/knowledge-base';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
@@ -15,7 +16,7 @@ interface ChatInterfaceProps {
 }
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpdateChatTitle }) => {
-    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [messages, setMessages] = useState<ChatMessageType[]>([]);
     const [suggestions, setSuggestions] = useState<ChatSuggestion[]>([]);
     const [isTyping, setIsTyping] = useState(false);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -25,7 +26,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
             try {
                 const storedMessages = localStorage.getItem(`chat-messages-${chatId}`);
                 if (storedMessages) {
-                    const parsedMessages = JSON.parse(storedMessages);
+                    const parsedMessages: ChatMessageType[] = JSON.parse(storedMessages);
                     setMessages(parsedMessages);
                     if (parsedMessages.length <= 1) {
                         setSuggestions(initialSuggestions);
@@ -33,7 +34,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
                         setSuggestions([]);
                     }
                 } else {
-                    const newChatInitialMessage: ChatMessage = {
+                    const newChatInitialMessage: ChatMessageType = {
                         id: `bot-initial-${Date.now()}`,
                         text: 'Hello! I am Nisab.AI, your personal guide to Islamic finance. How can I assist you today?',
                         sender: 'bot',
@@ -75,7 +76,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
             onUpdateChatTitle(newTitle);
         }
 
-        const userMessage: ChatMessage = {
+        const userMessage: ChatMessageType = {
             id: `user-${Date.now()}`,
             text,
             sender: 'user',
@@ -127,7 +128,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
                 const typingDuration = Math.min(Math.max(responseText.length * 25, 800), 3000);
                 await new Promise(resolve => setTimeout(resolve, typingDuration));
 
-                const botMessage: ChatMessage = {
+                const botMessage: ChatMessageType = {
                     ...res,
                     id: `bot-${Date.now()}-${Math.random()}`,
                     sender: 'bot',

@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Compass, User, BookOpen, Copy, RefreshCw } from 'lucide-react';
-import { ChatMessage } from '@/lib/chat-types';
+import type { ChatMessage } from '@/lib/chat-types';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from './ui/button';
 import { useToast } from './ui/use-toast';
