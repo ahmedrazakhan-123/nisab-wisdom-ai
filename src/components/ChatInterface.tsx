@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChatMessage as ChatMessageType, ChatSuggestion, initialMessages, initialSuggestions, chatResponses } from '@/lib/chat-mock';
+import { ChatMessage as ChatMessageType, initialMessages, chatResponses } from '@/lib/chat-mock';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
-import ChatSuggestions from './ChatSuggestions';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bot } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -13,7 +12,6 @@ interface ChatInterfaceProps {
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
     const [messages, setMessages] = useState<ChatMessageType[]>([]);
-    const [suggestions, setSuggestions] = useState<ChatSuggestion[]>(initialSuggestions);
     const [isTyping, setIsTyping] = useState(false);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -34,13 +32,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
                     setMessages(newMessages);
                     localStorage.setItem(`chat-messages-${chatId}`, JSON.stringify(newMessages));
                 }
-                setSuggestions(initialSuggestions);
             } catch (error) {
                 console.error("Failed to handle chat messages from localStorage", error);
             }
         } else {
             setMessages([]);
-            setSuggestions(initialSuggestions);
         }
     }, [chatId]);
 
@@ -71,7 +67,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
         const updatedMessages = [...messages, userMessage];
         setMessages(updatedMessages);
         localStorage.setItem(`chat-messages-${chatId}`, JSON.stringify(updatedMessages));
-        setSuggestions([]);
         setIsTyping(true);
 
         const botResponses = chatResponses[text] || chatResponses['default'];
@@ -143,7 +138,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
                 </div>
             </ScrollArea>
             <div className="max-w-3xl mx-auto w-full px-4 pt-2 pb-4 bg-background border-t">
-                 <ChatSuggestions suggestions={messages.length > 1 ? [] : suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
                  <ChatInput onSendMessage={handleSendMessage} isSending={isTyping} />
             </div>
         </div>
