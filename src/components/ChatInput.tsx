@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
-import { SendHorizontal, Paperclip } from 'lucide-react';
+import { ArrowUp, Paperclip } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -40,27 +41,34 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isSending }) => {
     <div className="pt-2">
       <div className="relative">
         <Textarea
-          placeholder="Ask about Zakat, Riba, Halal investments..."
+          placeholder="Send a message..."
           value={inputValue}
           onChange={handleTextareaChange}
           onKeyDown={handleKeyDown}
           disabled={isSending}
-          className="pr-24 text-base resize-none min-h-[52px] max-h-48 rounded-xl bg-muted border-0 focus-visible:ring-1 focus-visible:ring-brand-teal"
+          className="pl-12 pr-14 text-base resize-none min-h-[52px] max-h-48 rounded-xl bg-muted border-0 focus-visible:ring-1 focus-visible:ring-brand-teal"
           rows={1}
         />
-        <div className="absolute top-1/2 -translate-y-1/2 right-3 flex items-center gap-1">
-            <Button variant="ghost" size="icon" className="text-muted-foreground" disabled>
+        <div className="absolute bottom-2.5 left-3">
+            <Button variant="ghost" size="icon" className="text-muted-foreground h-8 w-8" disabled>
                 <Paperclip className="h-5 w-5" />
                 <span className="sr-only">Attach file</span>
             </Button>
+        </div>
+        <div className="absolute bottom-2.5 right-3">
             <Button
               type="button"
               size="icon"
-              className="h-9 w-9 shrink-0 bg-brand-teal hover:bg-brand-teal-dark rounded-full"
+              className={cn(
+                "h-8 w-8 shrink-0 rounded-full",
+                (inputValue.trim() && !isSending)
+                  ? "bg-brand-teal text-white hover:bg-brand-teal-dark"
+                  : "bg-black/10 dark:bg-white/10 text-foreground/50 cursor-not-allowed"
+              )}
               disabled={isSending || !inputValue.trim()}
               onClick={handleSendMessage}
             >
-              <SendHorizontal className="h-5 w-5" />
+              <ArrowUp className="h-5 w-5" />
               <span className="sr-only">Send Message</span>
             </Button>
         </div>
