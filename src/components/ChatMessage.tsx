@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Bot, User, BookOpen, Copy, RefreshCw } from 'lucide-react';
@@ -43,7 +44,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         isBot ? "items-start" : "items-end"
       )}>
         <div className={cn('relative group/message rounded-xl px-4 py-3 text-base', {
-          'bg-card text-card-foreground border rounded-bl-none': isBot,
+          'bg-muted text-muted-foreground rounded-bl-none': isBot,
           'bg-primary text-primary-foreground rounded-br-none': !isBot,
         })}>
           <p className="whitespace-pre-wrap leading-relaxed">{message.text}</p>
@@ -80,7 +81,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
             href={message.source.url} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="mt-2 w-full max-w-xs rounded-lg border bg-card/80 backdrop-blur-sm p-2 text-xs text-muted-foreground hover:bg-muted/50 transition-colors flex items-center gap-2"
+            className="mt-2 w-full max-w-xs rounded-lg bg-muted/50 p-2 text-xs text-muted-foreground hover:bg-muted transition-colors flex items-center gap-2"
           >
             <BookOpen size={16} className="text-brand-teal shrink-0" />
             <div className="flex-grow overflow-hidden">
