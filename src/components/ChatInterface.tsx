@@ -9,9 +9,10 @@ import ChatHeader from './ChatHeader';
 
 interface ChatInterfaceProps {
   chatId?: string;
+  onNewChat: () => void;
 }
 
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
     const [messages, setMessages] = useState<ChatMessageType[]>([]);
     const [suggestions, setSuggestions] = useState<ChatSuggestion[]>([]);
     const [isTyping, setIsTyping] = useState(false);
@@ -107,7 +108,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
 
     return (
         <div className="relative flex flex-col h-screen max-h-screen bg-background">
-            <ChatHeader />
+            <ChatHeader onNewChat={onNewChat} />
             <ScrollArea className="flex-grow" ref={scrollAreaRef}>
                 <div className="max-w-3xl mx-auto px-4 py-8 w-full">
                     {!chatId ? (
@@ -118,7 +119,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
                             <p className="text-lg lg:text-xl text-muted-foreground max-w-md">
                                How can I help you today?
                             </p>
-                            <ChatSuggestions suggestions={suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
+                            <ChatSuggestions suggestions={initialSuggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
                         </div>
                     ) : (
                         <div className="space-y-8">
