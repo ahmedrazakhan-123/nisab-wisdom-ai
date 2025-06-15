@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Settings, Plus, MessageSquare, Bot } from 'lucide-react';
 import {
@@ -25,8 +24,14 @@ const chatHistory = [
 ];
 
 const AppSidebar: React.FC = () => {
+  const [chatHistory, setChatHistory] = useState<{ id: string; title: string }[]>([]);
+
   const handleNewChat = () => {
-    window.location.reload();
+    const newChat = {
+      id: `chat-${Date.now()}`,
+      title: `New Chat ${chatHistory.length + 1}`,
+    };
+    setChatHistory(prevHistory => [newChat, ...prevHistory]);
   };
 
   return (
@@ -52,23 +57,25 @@ const AppSidebar: React.FC = () => {
             </Button>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Recent</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {chatHistory.map((chat) => (
-                <SidebarMenuItem key={chat.id}>
-                  <SidebarMenuButton asChild className="w-full justify-start text-sm">
-                    <a href="#">
-                      <MessageSquare />
-                      <span>{chat.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {chatHistory.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Recent</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {chatHistory.map((chat) => (
+                  <SidebarMenuItem key={chat.id}>
+                    <SidebarMenuButton asChild className="w-full justify-start text-sm">
+                      <a href="#">
+                        <MessageSquare />
+                        <span>{chat.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
       <SidebarFooter className="flex-col items-start gap-2 !p-2">
         <ThemeToggleButton />
