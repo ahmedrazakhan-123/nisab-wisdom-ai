@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Bot, User, BookOpen, Copy } from 'lucide-react';
+import { Bot, User, BookOpen, Copy, RefreshCw } from 'lucide-react';
 import { ChatMessage as ChatMessageType } from '@/lib/chat-mock';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from './ui/button';
@@ -23,8 +23,16 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     });
   };
 
+  const handleRegenerate = () => {
+    // Placeholder for regeneration logic
+    toast({
+        description: "Regenerate response (not implemented).",
+        duration: 2000,
+    });
+  }
+
   return (
-    <div className={cn('group flex items-start gap-3 w-full animate-fade-in', isBot ? 'justify-start' : 'justify-end')}>
+    <div className={cn('group flex items-start gap-3 w-full', isBot ? '' : 'justify-end')}>
       {isBot && (
         <Avatar className="h-8 w-8 bg-muted text-muted-foreground shrink-0">
           <AvatarFallback><Bot size={18} /></AvatarFallback>
@@ -32,26 +40,40 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       )}
       
       <div className={cn(
-        "flex flex-col max-w-md lg:max-w-xl",
+        "flex flex-col max-w-md lg:max-w-2xl",
         isBot ? "items-start" : "items-end"
       )}>
-        <div className={cn('relative rounded-xl px-4 py-3 text-base', {
+        <div className={cn('relative group/message rounded-xl px-4 py-3 text-base', {
           'bg-card text-card-foreground border rounded-bl-none': isBot,
-          'bg-brand-teal text-white rounded-br-none': !isBot,
+          'bg-primary text-primary-foreground rounded-br-none': !isBot,
         })}>
           <p className="whitespace-pre-wrap">{message.text}</p>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleCopy}
-            className={cn(
-              "absolute bottom-0 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity",
-              isBot ? "right-0 text-muted-foreground" : "left-0 text-brand-teal-light/70"
+          
+          <div className={cn(
+            "absolute bottom-1 flex gap-0.5 opacity-0 group-hover/message:opacity-100 transition-opacity",
+            isBot ? "-right-[4.5rem] text-muted-foreground" : "-left-[4.5rem] text-primary-foreground/70"
+          )}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleCopy}
+              className="h-7 w-7"
+            >
+              <Copy className="h-4 w-4" />
+              <span className="sr-only">Copy message</span>
+            </Button>
+            {isBot && (
+                 <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleRegenerate}
+                    className="h-7 w-7"
+                >
+                    <RefreshCw className="h-4 w-4" />
+                    <span className="sr-only">Regenerate response</span>
+                </Button>
             )}
-          >
-            <Copy className="h-4 w-4" />
-            <span className="sr-only">Copy message</span>
-          </Button>
+          </div>
         </div>
         
         {isBot && message.source && (
@@ -84,3 +106,4 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 };
 
 export default ChatMessage;
+

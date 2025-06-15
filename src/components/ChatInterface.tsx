@@ -6,6 +6,7 @@ import ChatInput from './ChatInput';
 import ChatSuggestions from './ChatSuggestions';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bot } from 'lucide-react';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
 const ChatInterface: React.FC = () => {
     const [messages, setMessages] = useState<ChatMessageType[]>(initialMessages);
@@ -66,12 +67,18 @@ const ChatInterface: React.FC = () => {
     const hasStartedChat = messages.length > 1;
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="relative flex flex-col h-screen max-h-screen bg-background">
+            <header className="sticky top-0 z-10 flex items-center h-16 px-4 border-b bg-background/80 backdrop-blur-sm md:hidden">
+                <SidebarTrigger />
+                <h1 className="text-lg font-semibold ml-4" style={{ fontFamily: "'Lora', serif" }}>
+                    Nisab<span className="text-brand-gold dark:text-brand-gold">.</span>AI
+                </h1>
+            </header>
             <ScrollArea className="flex-grow" ref={scrollAreaRef}>
                 <div className="max-w-3xl mx-auto px-4 py-8 w-full">
                     {!hasStartedChat ? (
                         <div className="text-center pt-10 sm:pt-16 animate-fade-in">
-                            <div className="inline-block p-4 bg-brand-teal/10 dark:bg-brand-teal/20 text-brand-teal dark:text-brand-teal-light rounded-full mb-6">
+                            <div className="inline-block p-4 bg-primary/10 dark:bg-primary/20 text-primary rounded-full mb-6">
                                 <Bot size={40} />
                             </div>
                             <h1 className="text-3xl font-bold text-foreground mb-2" style={{ fontFamily: "'Lora', serif" }}>
@@ -102,7 +109,7 @@ const ChatInterface: React.FC = () => {
                     )}
                 </div>
             </ScrollArea>
-            <div className="max-w-3xl mx-auto w-full px-4 pb-4">
+            <div className="max-w-3xl mx-auto w-full px-4 pt-2 pb-4 bg-background border-t">
                  <ChatSuggestions suggestions={hasStartedChat ? [] : suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
                  <ChatInput onSendMessage={handleSendMessage} isSending={isTyping} />
             </div>
@@ -111,3 +118,4 @@ const ChatInterface: React.FC = () => {
 };
 
 export default ChatInterface;
+
