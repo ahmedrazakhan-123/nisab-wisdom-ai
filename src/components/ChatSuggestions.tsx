@@ -13,13 +13,13 @@ const ChatSuggestions: React.FC<ChatSuggestionsProps> = ({ suggestions, onSugges
   if (suggestions.length === 0) return null;
 
   return (
-    <div className="pb-3 flex flex-col items-center gap-2.5 animate-fade-in w-full">
+    <div className="pt-8 flex flex-col items-start gap-3 animate-fade-in">
       {suggestions.map((suggestion) => (
         <Button
           key={suggestion.id}
           variant="outline"
           size="lg"
-          className="w-full text-left justify-start rounded-xl border-border/80 hover:bg-muted text-foreground/90 hover:text-foreground h-auto py-3 px-4 text-base font-normal"
+          className="text-left justify-start rounded-xl border-border/80 hover:bg-muted text-foreground/90 hover:text-foreground h-auto py-3 px-4 text-base font-normal"
           onClick={() => onSuggestionClick(suggestion.text)}
           disabled={isSending}
         >

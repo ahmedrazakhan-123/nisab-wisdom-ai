@@ -1,12 +1,11 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage as ChatMessageType, ChatSuggestion, initialSuggestions, chatResponses } from '@/lib/chat-mock';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bot } from 'lucide-react';
-import { SidebarTrigger } from '@/components/ui/sidebar';
 import ChatSuggestions from './ChatSuggestions';
+import ChatHeader from './ChatHeader';
 
 interface ChatInterfaceProps {
   chatId?: string;
@@ -47,7 +46,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
             }
         } else {
             setMessages([]);
-            setSuggestions([]);
+            setSuggestions(initialSuggestions);
         }
     }, [chatId]);
 
@@ -108,22 +107,18 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
 
     return (
         <div className="relative flex flex-col h-screen max-h-screen bg-background">
-            <header className="sticky top-0 z-10 flex items-center h-16 px-4 border-b bg-background/80 backdrop-blur-sm md:hidden">
-                <SidebarTrigger />
-                <h1 className="text-lg font-semibold ml-4" style={{ fontFamily: "'Lora', serif" }}>
-                    Nisab<span className="text-brand-gold dark:text-brand-gold">.</span>AI
-                </h1>
-            </header>
+            <ChatHeader />
             <ScrollArea className="flex-grow" ref={scrollAreaRef}>
                 <div className="max-w-3xl mx-auto px-4 py-8 w-full">
                     {!chatId ? (
-                        <div className="text-center pt-24 sm:pt-32 animate-fade-in">
+                        <div className="text-left pt-24 sm:pt-32 animate-fade-in">
                             <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-3">
                                 Hello there!
                             </h1>
-                            <p className="text-lg lg:text-xl text-muted-foreground max-w-md mx-auto">
+                            <p className="text-lg lg:text-xl text-muted-foreground max-w-md">
                                How can I help you today?
                             </p>
+                            <ChatSuggestions suggestions={suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
                         </div>
                     ) : (
                         <div className="space-y-8">
@@ -146,8 +141,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
                     )}
                 </div>
             </ScrollArea>
-            <div className="max-w-3xl mx-auto w-full px-4 pt-2 pb-4 bg-background border-t">
-                 <ChatSuggestions suggestions={suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
+            <div className="max-w-3xl mx-auto w-full px-4 pt-2 pb-4 bg-background">
                  <ChatInput onSendMessage={handleSendMessage} isSending={isTyping} />
             </div>
         </div>
