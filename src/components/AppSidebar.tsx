@@ -1,5 +1,4 @@
 
-```tsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Settings, Plus, MessageSquare, Bot, Trash } from 'lucide-react';
@@ -151,4 +150,3 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId }) => {
 };
 
 export default AppSidebar;
-```
