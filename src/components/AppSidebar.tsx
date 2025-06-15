@@ -58,7 +58,7 @@ const AppSidebar: React.FC = () => {
             <SidebarMenu>
               {chatHistory.map((chat) => (
                 <SidebarMenuItem key={chat.id}>
-                  <SidebarMenuButton asChild variant="ghost" className="w-full justify-start text-sm">
+                  <SidebarMenuButton asChild className="w-full justify-start text-sm">
                     <a href="#">
                       <MessageSquare />
                       <span>{chat.title}</span>
@@ -82,4 +82,3 @@ const AppSidebar: React.FC = () => {
 };
 
 export default AppSidebar;
-
