@@ -8,11 +8,42 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bot } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 
-const ChatInterface: React.FC = () => {
-    const [messages, setMessages] = useState<ChatMessageType[]>(initialMessages);
+interface ChatInterfaceProps {
+  chatId?: string;
+}
+
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
+    const [messages, setMessages] = useState<ChatMessageType[]>([]);
     const [suggestions, setSuggestions] = useState<ChatSuggestion[]>(initialSuggestions);
     const [isTyping, setIsTyping] = useState(false);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (chatId) {
+            try {
+                const storedMessages = localStorage.getItem(`chat-messages-${chatId}`);
+                if (storedMessages) {
+                    setMessages(JSON.parse(storedMessages));
+                } else {
+                    const newChatInitialMessage: ChatMessageType = {
+                        id: `bot-initial-${Date.now()}`,
+                        text: 'Hello! I am Nisab.AI, your personal guide to Islamic finance. How can I assist you today?',
+                        sender: 'bot',
+                        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    };
+                    const newMessages = [newChatInitialMessage];
+                    setMessages(newMessages);
+                    localStorage.setItem(`chat-messages-${chatId}`, JSON.stringify(newMessages));
+                }
+                setSuggestions(initialSuggestions);
+            } catch (error) {
+                console.error("Failed to handle chat messages from localStorage", error);
+            }
+        } else {
+            setMessages([]);
+            setSuggestions(initialSuggestions);
+        }
+    }, [chatId]);
 
     const scrollToBottom = () => {
         const viewport = scrollAreaRef.current?.querySelector('div[data-radix-scroll-area-viewport]');
@@ -29,6 +60,8 @@ const ChatInterface: React.FC = () => {
 
 
     const handleSendMessage = (text: string) => {
+        if (!chatId) return;
+
         const userMessage: ChatMessageType = {
             id: `user-${Date.now()}`,
             text,
@@ -36,15 +69,16 @@ const ChatInterface: React.FC = () => {
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
 
-        // If it's the first message, clear suggestions and add the user message
-        const newMessages = messages.length === 1 ? [messages[0], userMessage] : [...messages, userMessage];
-        setMessages(newMessages);
+        const updatedMessages = [...messages, userMessage];
+        setMessages(updatedMessages);
+        localStorage.setItem(`chat-messages-${chatId}`, JSON.stringify(updatedMessages));
         setSuggestions([]);
         setIsTyping(true);
 
         const botResponses = chatResponses[text] || chatResponses['default'];
         
         const sendBotResponses = async () => {
+            let currentMessages = updatedMessages;
             for (const res of botResponses) {
                 const responseText = res.text;
                 // Calculate typing time based on message length for a more natural feel
@@ -56,15 +90,15 @@ const ChatInterface: React.FC = () => {
                     id: `bot-${Date.now()}-${Math.random()}`,
                     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                 };
-                setMessages(prev => [...prev, botMessage]);
+                currentMessages = [...currentMessages, botMessage];
+                setMessages(currentMessages);
+                localStorage.setItem(`chat-messages-${chatId}`, JSON.stringify(currentMessages));
             }
             setIsTyping(false);
         };
         
         sendBotResponses();
     };
-
-    const hasStartedChat = messages.length > 1;
 
     return (
         <div className="relative flex flex-col h-screen max-h-screen bg-background">
@@ -76,7 +110,7 @@ const ChatInterface: React.FC = () => {
             </header>
             <ScrollArea className="flex-grow" ref={scrollAreaRef}>
                 <div className="max-w-3xl mx-auto px-4 py-8 w-full">
-                    {!hasStartedChat ? (
+                    {!chatId ? (
                         <div className="text-center pt-10 sm:pt-16 animate-fade-in">
                             <div className="inline-block p-4 bg-primary/10 dark:bg-primary/20 text-primary rounded-full mb-6">
                                 <Bot size={40} />
@@ -110,7 +144,7 @@ const ChatInterface: React.FC = () => {
                 </div>
             </ScrollArea>
             <div className="max-w-3xl mx-auto w-full px-4 pt-2 pb-4 bg-background border-t">
-                 <ChatSuggestions suggestions={hasStartedChat ? [] : suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
+                 <ChatSuggestions suggestions={messages.length > 1 ? [] : suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
                  <ChatInput onSendMessage={handleSendMessage} isSending={isTyping} />
             </div>
         </div>
@@ -118,4 +152,3 @@ const ChatInterface: React.FC = () => {
 };
 
 export default ChatInterface;
-

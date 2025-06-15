@@ -3,14 +3,17 @@ import React from 'react';
 import ChatInterface from '@/components/ChatInterface';
 import AppSidebar from '@/components/AppSidebar';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { useParams } from 'react-router-dom';
 
 const ChatPage: React.FC = () => {
+  const { chatId } = useParams<{ chatId?: string }>();
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-sidebar">
-        <AppSidebar />
+        <AppSidebar activeChatId={chatId} />
         <SidebarInset>
-          <ChatInterface />
+          <ChatInterface chatId={chatId} />
         </SidebarInset>
       </div>
     </SidebarProvider>
@@ -18,4 +21,3 @@ const ChatPage: React.FC = () => {
 };
 
 export default ChatPage;
-

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Settings, Plus, MessageSquare, Bot } from 'lucide-react';
 import {
   Sidebar,
@@ -15,23 +16,38 @@ import {
 } from '@/components/ui/sidebar';
 import ThemeToggleButton from './ThemeToggleButton';
 import { Button } from './ui/button';
+import { cn } from '@/lib/utils';
 
-const chatHistory = [
-  { id: '1', title: 'Zakat on Crypto Investments' },
-  { id: '2', title: 'Understanding Riba vs. Profit' },
-  { id: '3', title: 'Halal Stock Screening' },
-  { id: '4', title: 'Islamic Inheritance Laws' },
-];
+interface AppSidebarProps {
+  activeChatId?: string;
+}
 
-const AppSidebar: React.FC = () => {
+const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId }) => {
   const [chatHistory, setChatHistory] = useState<{ id: string; title: string }[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    try {
+      const storedHistory = localStorage.getItem('chatHistory');
+      if (storedHistory) {
+        setChatHistory(JSON.parse(storedHistory));
+      }
+    } catch (error) {
+      console.error("Failed to parse chat history from localStorage", error);
+      setChatHistory([]);
+    }
+  }, []);
 
   const handleNewChat = () => {
+    const newChatId = `chat-${Date.now()}`;
     const newChat = {
-      id: `chat-${Date.now()}`,
+      id: newChatId,
       title: `New Chat ${chatHistory.length + 1}`,
     };
-    setChatHistory(prevHistory => [newChat, ...prevHistory]);
+    const updatedHistory = [newChat, ...chatHistory];
+    setChatHistory(updatedHistory);
+    localStorage.setItem('chatHistory', JSON.stringify(updatedHistory));
+    navigate(`/chat/${newChatId}`);
   };
 
   return (
@@ -64,11 +80,14 @@ const AppSidebar: React.FC = () => {
               <SidebarMenu>
                 {chatHistory.map((chat) => (
                   <SidebarMenuItem key={chat.id}>
-                    <SidebarMenuButton asChild className="w-full justify-start text-sm">
-                      <a href="#">
+                    <SidebarMenuButton asChild className={cn(
+                      "w-full justify-start text-sm",
+                      chat.id === activeChatId && "bg-accent text-accent-foreground"
+                    )}>
+                      <Link to={`/chat/${chat.id}`}>
                         <MessageSquare />
                         <span>{chat.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
