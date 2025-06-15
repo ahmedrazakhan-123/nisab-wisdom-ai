@@ -1,5 +1,4 @@
-
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -60,20 +59,23 @@ const ZakatCalculator: React.FC = () => {
   const [calculation, setCalculation] = useState<{ totalAssets: number; zakatDue: number; aboveNisab: boolean; nisabValue: number } | null>(null);
   const { toast } = useToast();
 
-  const { data: metalPrices, isLoading: isLoadingPrices } = useQuery({
+  const { data: metalPrices, isLoading: isLoadingPrices, isError } = useQuery({
       queryKey: ['metalPrices'],
       queryFn: fetchMetalPrices,
       staleTime: 1000 * 60 * 15, // Refetch every 15 minutes
       retry: 2,
-      onError: () => {
-          toast({
-              variant: "destructive",
-              title: "Could not fetch live metal prices.",
-              description: "Using recent estimates for calculation.",
-              duration: 5000,
-          });
-      },
   });
+
+  useEffect(() => {
+    if (isError) {
+        toast({
+            variant: "destructive",
+            title: "Could not fetch live metal prices.",
+            description: "Using recent estimates for calculation.",
+            duration: 5000,
+        });
+    }
+  }, [isError, toast]);
 
   const goldPricePerGram = metalPrices?.goldPricePerGram || FALLBACK_GOLD_PRICE_PER_GRAM;
   const silverPricePerGram = metalPrices?.silverPricePerGram || FALLBACK_SILVER_PRICE_PER_GRAM;
