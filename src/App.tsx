@@ -8,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import PricingPage from "./pages/Pricing"; // Renamed to PricingPage for clarity
 import ChatPage from "./pages/ChatPage";
+import ZakatCalculatorPage from "./pages/ZakatCalculatorPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/chat/:chatId?" element={<ChatPage />} />
+            <Route path="/zakat-calculator" element={<ZakatCalculatorPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

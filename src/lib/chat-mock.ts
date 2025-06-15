@@ -59,10 +59,10 @@ export const chatResponses: Record<string, ChatMessage[]> = {
   'Yes, help me calculate it': [
     {
         id: 'r-zakat-calc',
-        text: "Of course. Please enter your assets in the calculator below. The values for Gold and Silver should be in grams. We'll use current market rates for calculation.",
+        text: "Great! Our dedicated Zakat Calculator page provides a comprehensive tool for this. Please use the link below to proceed.",
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        widget: 'zakat-calculator'
+        source: { title: 'Open Zakat Calculator', url: '/zakat-calculator' }
     }
   ],
   'No, thank you': [
