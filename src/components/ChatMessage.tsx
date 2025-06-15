@@ -32,7 +32,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
   }
 
   return (
-    <div className={cn('group flex items-start gap-3 w-full', isBot ? '' : 'justify-end')}>
+    <div className={cn('group flex items-start gap-3 w-full py-2.5', isBot ? '' : 'justify-end')}>
       {isBot && (
         <Avatar className="h-8 w-8 bg-muted text-muted-foreground shrink-0">
           <AvatarFallback><Bot size={18} /></AvatarFallback>
@@ -45,13 +45,13 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       )}>
         <div className={cn('relative group/message rounded-xl px-4 py-3 text-base', {
           'bg-muted text-muted-foreground rounded-bl-none': isBot,
-          'bg-primary text-primary-foreground rounded-br-none': !isBot,
+          'bg-primary/10 text-foreground rounded-br-none': !isBot,
         })}>
-          <p className="whitespace-pre-wrap leading-relaxed">{message.text}</p>
+          <p className="whitespace-pre-wrap leading-relaxed tracking-wide">{message.text}</p>
           
           <div className={cn(
             "absolute bottom-1 flex gap-0.5 opacity-0 group-hover/message:opacity-100 transition-opacity",
-            isBot ? "-right-[4.5rem] text-muted-foreground" : "-left-[4.5rem] text-primary-foreground/70"
+            isBot ? "-right-[4.5rem] text-muted-foreground" : "-left-[4.5rem] text-muted-foreground"
           )}>
             <Button
               variant="ghost"
