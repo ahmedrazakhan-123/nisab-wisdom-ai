@@ -20,7 +20,12 @@ export default {
 		},
 		extend: {
 			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
 				serif: ['Lora', 'serif'],
+				mono: ['Roboto Mono', 'monospace'],
+				roboto: ['Roboto', 'sans-serif'],
+				'open-sans': ['Open Sans', 'sans-serif'],
+				poppins: ['Poppins', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

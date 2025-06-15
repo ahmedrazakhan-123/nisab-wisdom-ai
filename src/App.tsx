@@ -11,8 +11,23 @@ import ChatPage from "./pages/ChatPage";
 import ZakatCalculatorPage from "./pages/ZakatCalculatorPage";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { useAppearance } from "./hooks/useAppearance";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  useAppearance(); // Initialize and apply appearance settings
+  return (
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/pricing" element={<PricingPage />} />
+      <Route path="/chat/:chatId?" element={<ChatPage />} />
+      <Route path="/zakat-calculator" element={<ZakatCalculatorPage />} />
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
 
 const App = () => (
   <ThemeProvider 
@@ -27,14 +42,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ErrorBoundary>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/chat/:chatId?" element={<ChatPage />} />
-              <Route path="/zakat-calculator" element={<ZakatCalculatorPage />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AppContent />
           </ErrorBoundary>
         </BrowserRouter>
       </TooltipProvider>

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Settings, Plus, MessageSquare, Bot, Trash } from 'lucide-react';
 import {
@@ -30,15 +30,6 @@ interface AppSidebarProps {
 
 const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId, chatHistory, onNewChat, onRemoveChat }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
-  useEffect(() => {
-    const savedFont = localStorage.getItem('app-font');
-    if (savedFont === 'serif') {
-      document.documentElement.classList.add('font-serif');
-    } else {
-      document.documentElement.classList.remove('font-serif');
-    }
-  }, []);
 
   return (
     <Sidebar>
