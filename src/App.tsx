@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,12 +10,10 @@ import ChatPage from "./pages/ChatPage";
 import ZakatCalculatorPage from "./pages/ZakatCalculatorPage";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { useAppearance } from "./hooks/useAppearance";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  useAppearance(); // Initialize and apply appearance settings
   return (
     <Routes>
       <Route path="/" element={<Index />} />

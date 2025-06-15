@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Sparkles, BookOpen, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
@@ -63,7 +62,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
         "flex flex-col max-w-md lg:max-w-xl",
         isBot ? "items-start" : "items-end"
       )}>
-        <div className={cn('relative group/message rounded-2xl px-4 py-3 text-base', {
+        <div className={cn('relative group/message rounded-2xl px-4 py-3', {
           'bg-muted text-card-foreground': isBot,
           'bg-gray-900 text-white dark:bg-gray-200 dark:text-gray-900': !isBot,
         })}>

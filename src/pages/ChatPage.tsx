@@ -1,9 +1,10 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import ChatInterface from '@/components/ChatInterface';
 import AppSidebar from '@/components/AppSidebar';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useAppearance, FONT_CLASSES, ACCENT_COLORS, TEXT_SIZE_CLASSES } from '@/hooks/useAppearance';
+import { cn } from '@/lib/utils';
 
 const ChatPage: React.FC = () => {
   const { chatId } = useParams<{ chatId?: string }>();
@@ -11,6 +12,7 @@ const ChatPage: React.FC = () => {
   const location = useLocation();
 
   const [chatHistory, setChatHistory] = useState<{ id: string; title: string }[]>([]);
+  const { font, color, textSize } = useAppearance();
 
   useEffect(() => {
     try {
@@ -74,7 +76,14 @@ const ChatPage: React.FC = () => {
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-sidebar">
+      <div 
+        className={cn(
+          "flex min-h-screen w-full bg-sidebar",
+          FONT_CLASSES[font],
+          TEXT_SIZE_CLASSES[textSize]
+        )}
+        style={ACCENT_COLORS[color] as React.CSSProperties}
+      >
         <AppSidebar
           activeChatId={chatId}
           chatHistory={chatHistory}

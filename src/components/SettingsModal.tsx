@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Dialog,
@@ -50,7 +49,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onOpenChange }) =
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
           <DialogDescription>
-            Customize the appearance of the application. Changes are saved automatically.
+            Customize the appearance of the chat interface. Changes are saved automatically.
           </DialogDescription>
         </DialogHeader>
         <div className="py-4 space-y-8">
