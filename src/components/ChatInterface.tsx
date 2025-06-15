@@ -1,5 +1,4 @@
 
-```tsx
 import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage as ChatMessageType, ChatSuggestion, initialSuggestions, chatResponses } from '@/lib/chat-mock';
 import ChatMessage from './ChatMessage';
@@ -155,4 +154,3 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
 };
 
 export default ChatInterface;
-```

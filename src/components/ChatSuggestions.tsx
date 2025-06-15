@@ -1,5 +1,4 @@
 
-```tsx
 import React from 'react';
 import { Button } from './ui/button';
 import { ChatSuggestion } from '@/lib/chat-mock';
@@ -32,4 +31,3 @@ const ChatSuggestions: React.FC<ChatSuggestionsProps> = ({ suggestions, onSugges
 };
 
 export default ChatSuggestions;
-```
