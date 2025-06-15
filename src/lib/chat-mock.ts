@@ -1,4 +1,3 @@
-
 export interface ChatMessage {
   id: string;
   text: string;
@@ -10,7 +9,6 @@ export interface ChatMessage {
 export interface ChatSuggestion {
   id: string;
   text: string;
-  icon: string;
 }
 
 export const initialMessages: ChatMessage[] = [
@@ -23,9 +21,8 @@ export const initialMessages: ChatMessage[] = [
 ];
 
 export const initialSuggestions: ChatSuggestion[] = [
-  { id: 's1', text: 'How do I calculate my Zakat?', icon: 'Calculator' },
-  { id: 's2', text: 'What are Halal investments?', icon: 'Landmark' },
-  { id: 's3', text: 'Explain Riba in simple terms.', icon: 'Scale' },
+  { id: 's1', text: 'What are the advantages of using Next.js?' },
+  { id: 's2', text: "Write code to demonstrate djikstra's algorithm" },
 ];
 
 export const chatResponses: Record<string, ChatMessage[]> = {

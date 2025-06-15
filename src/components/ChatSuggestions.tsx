@@ -13,17 +13,17 @@ const ChatSuggestions: React.FC<ChatSuggestionsProps> = ({ suggestions, onSugges
   if (suggestions.length === 0) return null;
 
   return (
-    <div className="py-4 flex flex-wrap justify-center gap-2 animate-fade-in">
+    <div className="pb-3 flex flex-col items-center gap-2.5 animate-fade-in w-full">
       {suggestions.map((suggestion) => (
         <Button
           key={suggestion.id}
           variant="outline"
-          size="sm"
-          className="rounded-full border-border hover:bg-muted text-foreground/80 hover:text-foreground"
+          size="lg"
+          className="w-full text-left justify-start rounded-xl border-border/80 hover:bg-muted text-foreground/90 hover:text-foreground h-auto py-3 px-4 text-base font-normal"
           onClick={() => onSuggestionClick(suggestion.text)}
           disabled={isSending}
         >
-          {suggestion.text}
+          <span className="whitespace-normal leading-tight">{suggestion.text}</span>
         </Button>
       ))}
     </div>

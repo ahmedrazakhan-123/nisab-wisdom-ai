@@ -1,10 +1,12 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import { ChatMessage as ChatMessageType, initialMessages, chatResponses } from '@/lib/chat-mock';
+import { ChatMessage as ChatMessageType, ChatSuggestion, initialSuggestions, chatResponses } from '@/lib/chat-mock';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bot } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import ChatSuggestions from './ChatSuggestions';
 
 interface ChatInterfaceProps {
   chatId?: string;
@@ -12,6 +14,7 @@ interface ChatInterfaceProps {
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
     const [messages, setMessages] = useState<ChatMessageType[]>([]);
+    const [suggestions, setSuggestions] = useState<ChatSuggestion[]>([]);
     const [isTyping, setIsTyping] = useState(false);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +23,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
             try {
                 const storedMessages = localStorage.getItem(`chat-messages-${chatId}`);
                 if (storedMessages) {
-                    setMessages(JSON.parse(storedMessages));
+                    const parsedMessages = JSON.parse(storedMessages);
+                    setMessages(parsedMessages);
+                    if (parsedMessages.length <= 1) {
+                        setSuggestions(initialSuggestions);
+                    } else {
+                        setSuggestions([]);
+                    }
                 } else {
                     const newChatInitialMessage: ChatMessageType = {
                         id: `bot-initial-${Date.now()}`,
@@ -31,12 +40,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
                     const newMessages = [newChatInitialMessage];
                     setMessages(newMessages);
                     localStorage.setItem(`chat-messages-${chatId}`, JSON.stringify(newMessages));
+                    setSuggestions(initialSuggestions);
                 }
             } catch (error) {
                 console.error("Failed to handle chat messages from localStorage", error);
             }
         } else {
             setMessages([]);
+            setSuggestions([]);
         }
     }, [chatId]);
 
@@ -67,6 +78,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
         const updatedMessages = [...messages, userMessage];
         setMessages(updatedMessages);
         localStorage.setItem(`chat-messages-${chatId}`, JSON.stringify(updatedMessages));
+        setSuggestions([]);
         setIsTyping(true);
 
         const botResponses = chatResponses[text] || chatResponses['default'];
@@ -105,15 +117,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
             <ScrollArea className="flex-grow" ref={scrollAreaRef}>
                 <div className="max-w-3xl mx-auto px-4 py-8 w-full">
                     {!chatId ? (
-                        <div className="text-center pt-10 sm:pt-16 animate-fade-in">
-                            <div className="inline-block p-4 bg-primary/10 dark:bg-primary/20 text-primary rounded-full mb-6">
-                                <Bot size={40} />
-                            </div>
-                            <h1 className="text-3xl font-bold text-foreground mb-2" style={{ fontFamily: "'Lora', serif" }}>
-                                Hello! How can I assist?
+                        <div className="text-center pt-24 sm:pt-32 animate-fade-in">
+                            <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-3">
+                                Hello there!
                             </h1>
-                            <p className="text-muted-foreground max-w-lg mx-auto">
-                               {initialMessages[0].text}
+                            <p className="text-lg lg:text-xl text-muted-foreground max-w-md mx-auto">
+                               How can I help you today?
                             </p>
                         </div>
                     ) : (
@@ -138,6 +147,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
                 </div>
             </ScrollArea>
             <div className="max-w-3xl mx-auto w-full px-4 pt-2 pb-4 bg-background border-t">
+                 <ChatSuggestions suggestions={suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
                  <ChatInput onSendMessage={handleSendMessage} isSending={isTyping} />
             </div>
         </div>
