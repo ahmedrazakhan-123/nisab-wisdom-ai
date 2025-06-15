@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Bot, User, BookOpen, Copy, RefreshCw } from 'lucide-react';
+import { Compass, User, BookOpen, Copy, RefreshCw } from 'lucide-react';
 import { ChatMessage as ChatMessageType } from '@/lib/chat-mock';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from './ui/button';
@@ -34,7 +35,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     <div className={cn('group flex items-start gap-3 w-full py-2.5', isBot ? '' : 'justify-end')}>
       {isBot && (
         <Avatar className="h-8 w-8 bg-muted text-muted-foreground shrink-0">
-          <AvatarFallback><Bot size={18} /></AvatarFallback>
+          <AvatarFallback><Compass size={18} /></AvatarFallback>
         </Avatar>
       )}
       
