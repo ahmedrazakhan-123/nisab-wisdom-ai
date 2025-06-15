@@ -29,7 +29,7 @@ const ChatPage: React.FC = () => {
     setChatHistory(prevHistory => {
         const newChat = {
           id: newChatId,
-          title: `New Chat ${prevHistory.length + 1}`,
+          title: `New Chat`, // Changed to a generic title
         };
         const updatedHistory = [newChat, ...prevHistory];
         localStorage.setItem('chatHistory', JSON.stringify(updatedHistory));
@@ -37,6 +37,18 @@ const ChatPage: React.FC = () => {
     });
     navigate(`/chat/${newChatId}`);
   }, [navigate]);
+
+  const handleUpdateChatTitle = useCallback((chatIdToUpdate: string, newTitle: string) => {
+    setChatHistory(prevHistory => {
+        const updatedHistory = prevHistory.map(chat => 
+            chat.id === chatIdToUpdate ? { ...chat, title: newTitle } : chat
+        );
+        if (JSON.stringify(prevHistory) !== JSON.stringify(updatedHistory)) {
+            localStorage.setItem('chatHistory', JSON.stringify(updatedHistory));
+        }
+        return updatedHistory;
+    });
+  }, []);
   
   const handleRemoveChat = useCallback((chatIdToRemove: string) => {
     setChatHistory(prevHistory => {
@@ -70,7 +82,11 @@ const ChatPage: React.FC = () => {
           onRemoveChat={handleRemoveChat}
         />
         <SidebarInset>
-          <ChatInterface chatId={chatId} onNewChat={handleNewChat} />
+          <ChatInterface 
+            chatId={chatId} 
+            onNewChat={handleNewChat} 
+            onUpdateChatTitle={(newTitle) => chatId && handleUpdateChatTitle(chatId, newTitle)}
+          />
         </SidebarInset>
       </div>
     </SidebarProvider>

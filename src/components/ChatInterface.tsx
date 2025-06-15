@@ -1,6 +1,6 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { ChatMessage as ChatMessageType, ChatSuggestion, initialSuggestions, chatResponses } from '@/lib/chat-mock';
+import { ChatMessage, ChatSuggestion, BotResponse } from '@/lib/chat-types';
+import { knowledgeBase, defaultResponse, initialSuggestions } from '@/lib/knowledge-base';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -11,10 +11,11 @@ import ChatHeader from './ChatHeader';
 interface ChatInterfaceProps {
   chatId?: string;
   onNewChat: () => void;
+  onUpdateChatTitle: (newTitle: string) => void;
 }
 
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
-    const [messages, setMessages] = useState<ChatMessageType[]>([]);
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpdateChatTitle }) => {
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [suggestions, setSuggestions] = useState<ChatSuggestion[]>([]);
     const [isTyping, setIsTyping] = useState(false);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -32,7 +33,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
                         setSuggestions([]);
                     }
                 } else {
-                    const newChatInitialMessage: ChatMessageType = {
+                    const newChatInitialMessage: ChatMessage = {
                         id: `bot-initial-${Date.now()}`,
                         text: 'Hello! I am Nisab.AI, your personal guide to Islamic finance. How can I assist you today?',
                         sender: 'bot',
@@ -69,7 +70,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
     const handleSendMessage = (text: string) => {
         if (!chatId) return;
 
-        const userMessage: ChatMessageType = {
+        if (messages.length === 1) {
+            const newTitle = text.length > 40 ? `${text.substring(0, 40)}...` : text;
+            onUpdateChatTitle(newTitle);
+        }
+
+        const userMessage: ChatMessage = {
             id: `user-${Date.now()}`,
             text,
             sender: 'user',
@@ -82,19 +88,49 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
         setSuggestions([]);
         setIsTyping(true);
 
-        const botResponses = chatResponses[text] || chatResponses['default'];
+        const findResponse = (): BotResponse[] => {
+            const lowerCaseText = text.toLowerCase();
+            
+            const exactMatchEntry = knowledgeBase.find(entry => entry.keywords.includes(lowerCaseText));
+            if(exactMatchEntry) {
+                return exactMatchEntry.responses;
+            }
+
+            let bestMatch: { entry: BotResponse[], score: number } | null = null;
+
+            for (const entry of knowledgeBase) {
+                let score = 0;
+                entry.keywords.forEach(keyword => {
+                    if (lowerCaseText.includes(keyword.toLowerCase())) {
+                        score++;
+                    }
+                });
+
+                if (score > (bestMatch?.score ?? 0)) {
+                    bestMatch = { entry: entry.responses, score };
+                }
+            }
+
+            if (bestMatch && bestMatch.score > 0) {
+                return bestMatch.entry;
+            }
+
+            return defaultResponse.responses;
+        };
+
+        const botResponses = findResponse();
         
         const sendBotResponses = async () => {
             let currentMessages = updatedMessages;
             for (const res of botResponses) {
                 const responseText = res.text;
-                // Calculate typing time based on message length for a more natural feel
                 const typingDuration = Math.min(Math.max(responseText.length * 25, 800), 3000);
                 await new Promise(resolve => setTimeout(resolve, typingDuration));
 
-                const botMessage: ChatMessageType = {
+                const botMessage: ChatMessage = {
                     ...res,
                     id: `bot-${Date.now()}-${Math.random()}`,
+                    sender: 'bot',
                     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                 };
                 currentMessages = [...currentMessages, botMessage];

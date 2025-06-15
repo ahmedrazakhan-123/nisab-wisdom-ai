@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from './ui/button';
-import { ChatSuggestion } from '@/lib/chat-mock';
+import { ChatSuggestion } from '@/lib/chat-types';
 
 interface ChatSuggestionsProps {
   suggestions: ChatSuggestion[];
