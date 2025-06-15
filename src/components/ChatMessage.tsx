@@ -48,8 +48,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
   return (
     <div className={cn('group flex items-start gap-3 w-full py-2.5 animate-fade-in-up', isBot ? '' : 'justify-end')}>
       {isBot && (
-        <Avatar className="h-8 w-8 bg-muted text-muted-foreground shrink-0">
-          <AvatarFallback><Compass size={18} /></AvatarFallback>
+        <Avatar className="h-9 w-9 bg-muted text-muted-foreground shrink-0">
+          <AvatarFallback><Compass size={20} /></AvatarFallback>
         </Avatar>
       )}
       
@@ -118,8 +118,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
       </div>
 
       {!isBot && (
-        <Avatar className="h-8 w-8 bg-brand-gold text-white shrink-0">
-          <AvatarFallback><User size={18} /></AvatarFallback>
+        <Avatar className="h-9 w-9 bg-brand-gold text-white shrink-0">
+          <AvatarFallback><User size={20} /></AvatarFallback>
         </Avatar>
       )}
     </div>

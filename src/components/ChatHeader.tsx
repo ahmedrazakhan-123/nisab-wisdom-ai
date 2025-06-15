@@ -16,13 +16,13 @@ interface ChatHeaderProps {
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ onNewChat }) => {
     return (
-        <header className="sticky top-0 z-10 flex items-center justify-between h-16 px-4 border-b bg-background">
+        <header className="sticky top-0 z-10 flex items-center justify-between h-14 px-4 border-b bg-background">
             <div className="flex items-center gap-2">
                 <SidebarTrigger />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="flex items-center gap-2">
-                            Chat model
+                        <Button variant="outline" className="flex items-center gap-2 rounded-full px-4">
+                            NisabAI-v1
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="start">
@@ -31,7 +31,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ onNewChat }) => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <Button variant="outline" onClick={onNewChat} className="flex items-center gap-2">
+            <Button variant="outline" onClick={onNewChat} className="flex items-center gap-2 rounded-full">
                 <Plus className="h-4 w-4" />
                 New Chat
             </Button>

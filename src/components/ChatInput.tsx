@@ -46,21 +46,21 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isSending }) => {
           onChange={handleTextareaChange}
           onKeyDown={handleKeyDown}
           disabled={isSending}
-          className="pl-12 pr-14 text-base resize-none min-h-[52px] max-h-48 rounded-xl bg-muted border-0 focus-visible:ring-1 focus-visible:ring-brand-teal"
+          className="pl-14 pr-14 py-3.5 text-base resize-none min-h-[56px] max-h-48 rounded-2xl bg-muted border-0 focus-visible:ring-1 focus-visible:ring-brand-teal"
           rows={1}
         />
-        <div className="absolute bottom-2.5 left-3">
-            <Button variant="ghost" size="icon" className="text-muted-foreground h-8 w-8" disabled>
+        <div className="absolute bottom-3 left-3">
+            <Button variant="ghost" size="icon" className="text-muted-foreground h-9 w-9 rounded-full" disabled>
                 <Paperclip className="h-5 w-5" />
                 <span className="sr-only">Attach file</span>
             </Button>
         </div>
-        <div className="absolute bottom-2.5 right-3">
+        <div className="absolute bottom-3 right-3">
             <Button
               type="button"
               size="icon"
               className={cn(
-                "h-8 w-8 shrink-0 rounded-full",
+                "h-9 w-9 shrink-0 rounded-full",
                 (inputValue.trim() && !isSending)
                   ? "bg-brand-teal text-white hover:bg-brand-teal-dark"
                   : "bg-black/10 dark:bg-white/10 text-foreground/50 cursor-not-allowed"
