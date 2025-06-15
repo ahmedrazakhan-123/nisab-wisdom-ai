@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Settings, Plus, MessageSquare, Bot, Trash } from 'lucide-react';
 import {
@@ -19,6 +19,7 @@ import ThemeToggleButton from './ThemeToggleButton';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
+import SettingsModal from './SettingsModal';
 
 interface AppSidebarProps {
   activeChatId?: string;
@@ -28,6 +29,17 @@ interface AppSidebarProps {
 }
 
 const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId, chatHistory, onNewChat, onRemoveChat }) => {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  useEffect(() => {
+    const savedFont = localStorage.getItem('app-font');
+    if (savedFont === 'serif') {
+      document.documentElement.classList.add('font-serif');
+    } else {
+      document.documentElement.classList.remove('font-serif');
+    }
+  }, []);
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -91,10 +103,11 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId, chatHistory, onNe
       </SidebarContent>
       <SidebarFooter className="flex-col items-start gap-2 !p-2">
         <ThemeToggleButton />
-         <Button variant="ghost" className="w-full justify-start gap-2">
+         <Button variant="ghost" className="w-full justify-start gap-2" onClick={() => setIsSettingsOpen(true)}>
             <Settings />
             <span>Settings</span>
         </Button>
+        <SettingsModal isOpen={isSettingsOpen} onOpenChange={setIsSettingsOpen} />
       </SidebarFooter>
     </Sidebar>
   );
