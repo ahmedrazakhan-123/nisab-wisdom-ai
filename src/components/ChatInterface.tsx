@@ -1,3 +1,5 @@
+
+```tsx
 import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage as ChatMessageType, ChatSuggestion, initialSuggestions, chatResponses } from '@/lib/chat-mock';
 import ChatMessage from './ChatMessage';
@@ -111,17 +113,20 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
             <ChatHeader onNewChat={onNewChat} />
             <ScrollArea className="flex-grow" ref={scrollAreaRef}>
                 <div className="max-w-3xl mx-auto px-4 py-8 w-full">
-                    {!chatId ? (
-                        <div className="text-left pt-24 sm:pt-32 animate-fade-in">
-                            <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-3">
-                                Hello there!
+                    {chatId && messages.length <= 1 && suggestions.length > 0 ? (
+                        <div className="text-left pt-24 sm:pt-32">
+                            <h1 className="text-4xl lg:text-5xl font-semibold text-foreground mb-3 animate-fade-in-up" style={{ fontFamily: "'Lora', serif" }}>
+                                Nisab<span className="text-brand-gold">.</span>AI
                             </h1>
-                            <p className="text-lg lg:text-xl text-muted-foreground max-w-md">
+                            <p className="text-lg lg:text-xl text-muted-foreground max-w-md animate-fade-in-up [animation-delay:0.2s]">
                                How can I help you today?
                             </p>
-                            <ChatSuggestions suggestions={initialSuggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
+                             <div className="animate-fade-in-up [animation-delay:0.4s]">
+                                <ChatSuggestions suggestions={suggestions} onSuggestionClick={handleSendMessage} isSending={isTyping} />
+                            </div>
                         </div>
                     ) : (
+                        chatId &&
                         <div className="space-y-8">
                             {messages.map((msg) => (
                                 <ChatMessage key={msg.id} message={msg} />
@@ -150,3 +155,4 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
 };
 
 export default ChatInterface;
+```

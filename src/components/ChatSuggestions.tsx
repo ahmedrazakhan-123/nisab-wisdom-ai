@@ -1,4 +1,5 @@
 
+```tsx
 import React from 'react';
 import { Button } from './ui/button';
 import { ChatSuggestion } from '@/lib/chat-mock';
@@ -13,7 +14,7 @@ const ChatSuggestions: React.FC<ChatSuggestionsProps> = ({ suggestions, onSugges
   if (suggestions.length === 0) return null;
 
   return (
-    <div className="pt-8 flex flex-col items-start gap-3 animate-fade-in">
+    <div className="pt-8 flex flex-col items-start gap-3">
       {suggestions.map((suggestion) => (
         <Button
           key={suggestion.id}
@@ -31,3 +32,4 @@ const ChatSuggestions: React.FC<ChatSuggestionsProps> = ({ suggestions, onSugges
 };
 
 export default ChatSuggestions;
+```
