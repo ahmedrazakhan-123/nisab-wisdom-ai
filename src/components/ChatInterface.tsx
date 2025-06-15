@@ -125,7 +125,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
                         </div>
                     ) : (
                         chatId &&
-                        <div className="space-y-8">
+                        <div className="space-y-4">
                             {messages.map((msg) => (
                                 <ChatMessage key={msg.id} message={msg} />
                             ))}

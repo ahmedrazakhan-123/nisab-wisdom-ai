@@ -43,21 +43,21 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         "flex flex-col max-w-md lg:max-w-2xl",
         isBot ? "items-start" : "items-end"
       )}>
-        <div className={cn('relative group/message rounded-xl px-4 py-3 text-base', {
-          'bg-muted text-muted-foreground rounded-bl-none': isBot,
-          'text-foreground rounded-br-none': !isBot,
+        <div className={cn('relative group/message rounded-xl px-4 py-3 text-base shadow-sm', {
+          'bg-card border text-card-foreground rounded-bl-none': isBot,
+          'bg-primary text-primary-foreground rounded-br-none': !isBot,
         })}>
           <p className="whitespace-pre-wrap leading-relaxed tracking-wide">{message.text}</p>
           
           <div className={cn(
             "absolute bottom-1 flex gap-0.5 opacity-0 group-hover/message:opacity-100 transition-opacity",
-            isBot ? "-right-[4.5rem] text-muted-foreground" : "-left-[4.5rem] text-muted-foreground"
+            isBot ? "-right-[4.5rem] text-muted-foreground" : "-left-[4.5rem] text-primary-foreground/80"
           )}>
             <Button
               variant="ghost"
               size="icon"
               onClick={handleCopy}
-              className="h-7 w-7"
+              className={cn("h-7 w-7", !isBot && "hover:bg-white/10 hover:text-primary-foreground")}
             >
               <Copy className="h-4 w-4" />
               <span className="sr-only">Copy message</span>
