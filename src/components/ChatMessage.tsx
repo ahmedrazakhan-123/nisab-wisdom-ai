@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Compass, User, BookOpen, Copy, RefreshCw } from 'lucide-react';
-import type { ChatMessage } from '@/lib/chat-types';
+import type { ChatMessage as ChatMessageType } from '@/lib/chat-types';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from './ui/button';
 import { useToast } from './ui/use-toast';
@@ -10,7 +10,7 @@ import QuickActionButtons from './QuickActionButtons';
 import { Link } from 'react-router-dom';
 
 interface ChatMessageProps {
-  message: ChatMessage;
+  message: ChatMessageType;
   onActionClick: (text: string) => void;
   isSending: boolean;
 }
@@ -46,7 +46,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
   }
 
   return (
-    <div className={cn('group flex items-start gap-3 w-full py-2.5', isBot ? '' : 'justify-end')}>
+    <div className={cn('group flex items-start gap-3 w-full py-2.5 animate-fade-in-up', isBot ? '' : 'justify-end')}>
       {isBot && (
         <Avatar className="h-8 w-8 bg-muted text-muted-foreground shrink-0">
           <AvatarFallback><Compass size={18} /></AvatarFallback>
@@ -57,8 +57,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
         "flex flex-col max-w-md lg:max-w-2xl w-full",
         isBot ? "items-start" : "items-end"
       )}>
-        <div className={cn('relative group/message rounded-xl px-4 py-3 text-base shadow-sm w-full', {
-          'bg-card border text-card-foreground rounded-bl-none': isBot,
+        <div className={cn('relative group/message rounded-lg px-4 py-3 text-base w-full', {
+          'bg-card text-card-foreground rounded-bl-none': isBot,
           'bg-primary text-primary-foreground rounded-br-none': !isBot,
         })}>
           <p className="whitespace-pre-wrap leading-relaxed tracking-wide">{message.text}</p>

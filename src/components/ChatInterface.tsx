@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import type { ChatMessage as ChatMessageType, ChatSuggestion, BotResponse } from '@/lib/chat-types';
 import { knowledgeBase, defaultResponse, initialSuggestions } from '@/lib/knowledge-base';
@@ -151,7 +150,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
                 <div className="max-w-3xl mx-auto px-4 py-8 w-full">
                     {chatId && messages.length <= 1 && suggestions.length > 0 ? (
                         <div className="text-left pt-24 sm:pt-32">
-                            <h1 className="text-4xl lg:text-5xl font-semibold text-foreground mb-3 animate-fade-in-up" style={{ fontFamily: "'Lora', serif" }}>
+                            <h1 className="text-4xl lg:text-5xl font-semibold text-foreground mb-3 animate-fade-in-up">
                                 Nisab<span className="text-brand-gold">.</span>AI
                             </h1>
                             <p className="text-lg lg:text-xl text-muted-foreground max-w-md animate-fade-in-up [animation-delay:0.2s]">
