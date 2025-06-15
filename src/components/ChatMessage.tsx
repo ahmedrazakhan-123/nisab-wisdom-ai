@@ -6,12 +6,16 @@ import { ChatMessage as ChatMessageType } from '@/lib/chat-mock';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from './ui/button';
 import { useToast } from './ui/use-toast';
+import ZakatCalculator from './widgets/ZakatCalculator';
+import QuickActionButtons from './QuickActionButtons';
 
 interface ChatMessageProps {
   message: ChatMessageType;
+  onActionClick: (text: string) => void;
+  isSending: boolean;
 }
 
-const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
+const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSending }) => {
   const isBot = message.sender === 'bot';
   const { toast } = useToast();
 
@@ -40,10 +44,10 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       )}
       
       <div className={cn(
-        "flex flex-col max-w-md lg:max-w-2xl",
+        "flex flex-col max-w-md lg:max-w-2xl w-full",
         isBot ? "items-start" : "items-end"
       )}>
-        <div className={cn('relative group/message rounded-xl px-4 py-3 text-base shadow-sm', {
+        <div className={cn('relative group/message rounded-xl px-4 py-3 text-base shadow-sm w-full', {
           'bg-card border text-card-foreground rounded-bl-none': isBot,
           'bg-primary text-primary-foreground rounded-br-none': !isBot,
         })}>
@@ -76,6 +80,9 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           </div>
         </div>
         
+        {isBot && message.widget === 'zakat-calculator' && <ZakatCalculator />}
+        {isBot && message.actions && <QuickActionButtons actions={message.actions} onActionClick={onActionClick} isSending={isSending} />}
+
         {isBot && message.source && (
           <a 
             href={message.source.url} 

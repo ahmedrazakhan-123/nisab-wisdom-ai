@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage as ChatMessageType, ChatSuggestion, initialSuggestions, chatResponses } from '@/lib/chat-mock';
 import ChatMessage from './ChatMessage';
@@ -127,7 +128,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat }) => {
                         chatId &&
                         <div className="space-y-4">
                             {messages.map((msg) => (
-                                <ChatMessage key={msg.id} message={msg} />
+                                <ChatMessage key={msg.id} message={msg} onActionClick={handleSendMessage} isSending={isTyping} />
                             ))}
                              {isTyping && (
                                 <div className="flex items-start gap-3 justify-start animate-fade-in">

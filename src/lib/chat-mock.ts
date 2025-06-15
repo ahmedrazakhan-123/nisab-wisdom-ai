@@ -1,9 +1,12 @@
+
 export interface ChatMessage {
   id: string;
   text: string;
   sender: 'user' | 'bot';
   timestamp: string;
   source?: { title: string; url: string };
+  widget?: 'zakat-calculator';
+  actions?: ChatSuggestion[];
 }
 
 export interface ChatSuggestion {
@@ -47,7 +50,28 @@ export const chatResponses: Record<string, ChatMessage[]> = {
       text: 'Would you like me to help you calculate it based on your assets like cash, gold, and investments?',
       sender: 'bot',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      actions: [
+        { id: 'zakat-yes', text: 'Yes, help me calculate it' },
+        { id: 'zakat-no', text: 'No, thank you' },
+      ],
     },
+  ],
+  'Yes, help me calculate it': [
+    {
+        id: 'r-zakat-calc',
+        text: "Of course. Please enter your assets in the calculator below. The values for Gold and Silver should be in grams. We'll use current market rates for calculation.",
+        sender: 'bot',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        widget: 'zakat-calculator'
+    }
+  ],
+  'No, thank you': [
+    {
+        id: 'r-zakat-no',
+        text: "Alright. If you change your mind, just let me know. Is there anything else I can help you with?",
+        sender: 'bot',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    }
   ],
   'What are Halal investments?': [
     {
