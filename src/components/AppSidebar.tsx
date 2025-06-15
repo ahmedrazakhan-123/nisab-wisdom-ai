@@ -17,6 +17,7 @@ import {
 import ThemeToggleButton from './ThemeToggleButton';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/separator';
 
 interface AppSidebarProps {
   activeChatId?: string;
@@ -74,26 +75,31 @@ const AppSidebar: React.FC<AppSidebarProps> = ({ activeChatId }) => {
           </SidebarGroupContent>
         </SidebarGroup>
         {chatHistory.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Recent</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {chatHistory.map((chat) => (
-                  <SidebarMenuItem key={chat.id}>
-                    <SidebarMenuButton asChild className={cn(
-                      "w-full justify-start text-sm",
-                      chat.id === activeChatId && "bg-accent text-accent-foreground"
-                    )}>
-                      <Link to={`/chat/${chat.id}`}>
-                        <MessageSquare />
-                        <span>{chat.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <>
+            <div className="px-3 my-2">
+              <Separator />
+            </div>
+            <SidebarGroup>
+              <SidebarGroupLabel>Recent</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {chatHistory.map((chat) => (
+                    <SidebarMenuItem key={chat.id}>
+                      <SidebarMenuButton asChild className={cn(
+                        "w-full justify-start text-sm",
+                        chat.id === activeChatId && "bg-accent text-accent-foreground"
+                      )}>
+                        <Link to={`/chat/${chat.id}`}>
+                          <MessageSquare />
+                          <span>{chat.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </>
         )}
       </SidebarContent>
       <SidebarFooter className="flex-col items-start gap-2 !p-2">

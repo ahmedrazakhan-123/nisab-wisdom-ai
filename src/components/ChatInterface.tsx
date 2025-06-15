@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage as ChatMessageType, ChatSuggestion, initialMessages, initialSuggestions, chatResponses } from '@/lib/chat-mock';
 import ChatMessage from './ChatMessage';
@@ -123,7 +122,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId }) => {
                             </p>
                         </div>
                     ) : (
-                        <div className="space-y-6">
+                        <div className="space-y-8">
                             {messages.map((msg) => (
                                 <ChatMessage key={msg.id} message={msg} />
                             ))}
