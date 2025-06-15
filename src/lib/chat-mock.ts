@@ -21,11 +21,19 @@ export const initialMessages: ChatMessage[] = [
 ];
 
 export const initialSuggestions: ChatSuggestion[] = [
-  { id: 's1', text: 'What are the advantages of using Next.js?' },
-  { id: 's2', text: "Write code to demonstrate djikstra's algorithm" },
+  { id: 's1', text: 'What are the advantages of using Nisab.AI?' },
+  { id: 's2', text: 'How do I calculate my Zakat?' },
 ];
 
 export const chatResponses: Record<string, ChatMessage[]> = {
+  'What are the advantages of using Nisab.AI?': [
+    {
+      id: 'r-nisab-1',
+      text: 'Nisab.AI is designed to provide you with clear and accessible information about Islamic finance. You can ask questions, get explanations of complex topics, and even get help with calculations like Zakat. My goal is to be your trusted guide in navigating your financial life according to Islamic principles.',
+      sender: 'bot',
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    }
+  ],
   'How do I calculate my Zakat?': [
     {
       id: 'r1-1',
