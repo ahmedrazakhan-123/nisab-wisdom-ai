@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { trackEvent } from '@/lib/analytics';
 
 const HeroSection: React.FC = () => {
   return (
@@ -41,7 +42,7 @@ const HeroSection: React.FC = () => {
             size="lg" 
             className="bg-brand-teal hover:bg-brand-teal/90 text-brand-teal-foreground px-8 py-3 text-lg rounded-lg shadow-lg transition-transform transform hover:scale-105"
           >
-            <Link to="/pricing">
+            <Link to="/pricing" onClick={() => trackEvent({ name: 'view_plans_cta', props: { location: 'hero' } })}>
               <ArrowRight className="mr-2 h-5 w-5" />
               View Plans
             </Link>
@@ -52,7 +53,7 @@ const HeroSection: React.FC = () => {
             size="lg" 
             className="border-brand-teal text-brand-teal hover:bg-brand-teal/10 px-8 py-3 text-lg rounded-lg shadow-lg transition-transform transform hover:scale-105"
           >
-            <Link to="/chat">
+            <Link to="/chat" onClick={() => trackEvent({ name: 'try_chatbot_cta', props: { location: 'hero' } })}>
               <MessageSquare className="mr-2 h-5 w-5" />
               Try the Chatbot
             </Link>

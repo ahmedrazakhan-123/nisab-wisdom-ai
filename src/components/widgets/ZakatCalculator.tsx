@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,6 +13,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Calculator } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 // Using fixed prices for calculation
 const GOLD_PRICE_PER_GRAM = 75;
@@ -51,6 +51,7 @@ const ZakatCalculator: React.FC = () => {
   });
 
   function onSubmit(data: ZakatFormValues) {
+    trackEvent({ name: 'calculate_zakat', props: { has_liabilities: data.liabilities > 0 } });
     const goldValue = data.goldInGrams * goldPricePerGram;
     const silverValue = data.silverInGrams * silverPricePerGram;
     const totalAssets = data.cash + goldValue + silverValue + data.investments;
