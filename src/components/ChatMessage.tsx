@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Sparkles, BookOpen, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
@@ -28,24 +29,33 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
   const isBot = message.sender === 'bot';
   const { toast } = useToast();
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(message.text);
-    toast({
-      description: "Message copied to clipboard!",
-      duration: 2000,
-    });
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(message.text);
+      toast({
+        description: "Message copied to clipboard!",
+        duration: 2000,
+      });
+    } catch (error) {
+      console.error('Failed to copy text:', error);
+      toast({
+        description: "Failed to copy message",
+        duration: 2000,
+        variant: "destructive",
+      });
+    }
   };
 
   const handleThumbsUp = () => {
     toast({
-        description: "Feedback submitted. Thank you!",
+        description: "JazakAllahu khair for your feedback!",
         duration: 2000,
     });
   };
   
   const handleThumbsDown = () => {
     toast({
-        description: "Feedback submitted. Thank you!",
+        description: "Feedback received. We'll work to improve!",
         duration: 2000,
     });
   };
@@ -75,7 +85,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
               variant="ghost"
               size="icon"
               onClick={handleCopy}
-              className="h-7 w-7"
+              className="h-7 w-7 hover:bg-muted"
             >
               <Copy className="h-4 w-4" />
               <span className="sr-only">Copy message</span>
@@ -84,7 +94,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
               variant="ghost"
               size="icon"
               onClick={handleThumbsUp}
-              className="h-7 w-7"
+              className="h-7 w-7 hover:bg-muted"
             >
               <ThumbsUp className="h-4 w-4" />
               <span className="sr-only">Like response</span>
@@ -93,7 +103,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
               variant="ghost"
               size="icon"
               onClick={handleThumbsDown}
-              className="h-7 w-7"
+              className="h-7 w-7 hover:bg-muted"
             >
               <ThumbsDown className="h-4 w-4" />
               <span className="sr-only">Dislike response</span>
@@ -127,8 +137,6 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, onActionClick, isSen
           {message.timestamp}
         </div>
       </div>
-
-      {/* User Avatar has been removed to match the new design */}
     </div>
   );
 };

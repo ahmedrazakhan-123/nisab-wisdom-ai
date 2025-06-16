@@ -2,7 +2,6 @@
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
-import TrustBadgesSection from '@/components/TrustBadgesSection';
 import Footer from '@/components/Footer';
 import FaqSection from '@/components/FaqSection';
 import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
@@ -29,13 +28,10 @@ const Index = () => {
       <Header />
       <main className="flex-grow">
         <HeroSection />
-        {/* <ChatSection /> Removed ChatSection component */}
         <FeaturesSection />
         <FaqSection />
-        {/* <PricingSection /> Removed PricingSection component */}
         <HowItWorksSection />
         <TrustIndicatorsSection />
-        <TrustBadgesSection /> {/* Keeping this for now, can be merged/removed later */}
       </main>
       <Footer />
     </div>
