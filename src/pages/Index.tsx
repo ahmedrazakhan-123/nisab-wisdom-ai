@@ -5,6 +5,7 @@ import HowItWorksSection from '@/components/HowItWorksSection';
 import Footer from '@/components/Footer';
 import FaqSection from '@/components/FaqSection';
 import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
+import SocialProofSection from '@/components/SocialProofSection';
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -28,6 +29,7 @@ const Index = () => {
       <Header />
       <main className="flex-grow">
         <HeroSection />
+        <SocialProofSection />
         <FeaturesSection />
         <FaqSection />
         <HowItWorksSection />
