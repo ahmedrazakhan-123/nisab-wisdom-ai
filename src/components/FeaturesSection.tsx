@@ -1,6 +1,8 @@
 
 import React from 'react';
 import FeatureCard from './FeatureCard';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import { Calculator, Shield, TrendingUp, Scale, BookOpen, Users } from 'lucide-react';
 
 const features = [
