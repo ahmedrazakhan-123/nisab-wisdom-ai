@@ -81,39 +81,22 @@ const HeroSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Right Visual */}
+          {/* Right Visual - Hero Image */}
           <div className="relative lg:block hidden animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <div className="relative bg-white dark:bg-card rounded-2xl shadow-2xl p-6 border border-brand-teal/10">
-              {/* Mock Chat Interface */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 pb-3 border-b border-brand-teal/10">
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="font-medium text-brand-teal">Nisab AI Assistant</span>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="bg-gray-100 dark:bg-muted rounded-lg p-3 text-sm">
-                    How much Zakat do I need to pay on my savings?
-                  </div>
-                  <div className="bg-brand-teal text-white rounded-lg p-3 text-sm">
-                    Based on the current nisab threshold, if your savings exceed $4,949 (585 grams of silver equivalent) for one lunar year, you owe 2.5% in Zakat. Would you like me to calculate the exact amount for you?
-                  </div>
-                  <div className="bg-gray-100 dark:bg-muted rounded-lg p-3 text-sm">
-                    Yes, I have $15,000 in savings
-                  </div>
-                  <div className="bg-brand-teal text-white rounded-lg p-3 text-sm">
-                    Your Zakat obligation is $375 (2.5% of $15,000). This should be paid to eligible recipients as outlined in Quran 9:60.
-                  </div>
-                </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <img 
+                src="/lovable-uploads/4a24330e-47f8-40dc-921f-21935fd1f7e0.png" 
+                alt="Islamic Architecture - Representing traditional Islamic values in modern finance"
+                className="w-full h-auto object-cover"
+              />
+              
+              {/* Floating Elements */}
+              <div className="absolute -top-4 -right-4 bg-brand-gold text-white p-3 rounded-full shadow-lg">
+                <MessageSquare className="w-6 h-6" />
               </div>
-            </div>
-            
-            {/* Floating Elements */}
-            <div className="absolute -top-4 -right-4 bg-brand-gold text-white p-3 rounded-full shadow-lg">
-              <MessageSquare className="w-6 h-6" />
-            </div>
-            <div className="absolute -bottom-4 -left-4 bg-brand-teal text-white p-3 rounded-full shadow-lg">
-              <CheckCircle className="w-6 h-6" />
+              <div className="absolute -bottom-4 -left-4 bg-brand-teal text-white p-3 rounded-full shadow-lg">
+                <CheckCircle className="w-6 h-6" />
+              </div>
             </div>
           </div>
         </div>
