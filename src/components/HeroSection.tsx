@@ -8,6 +8,20 @@ import { trackEvent } from '@/lib/analytics';
 const HeroSection: React.FC = () => {
   return (
     <section className="bg-gradient-to-br from-brand-cream via-brand-cream/95 to-brand-teal/5 dark:from-background dark:via-background/95 dark:to-brand-teal/5 section-padding relative overflow-hidden min-h-[90vh] flex items-center">
+      {/* Background Image with Overlay */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(/lovable-uploads/4a24330e-47f8-40dc-921f-21935fd1f7e0.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-cream/95 via-brand-cream/85 to-brand-cream/70 dark:from-background/95 dark:via-background/85 dark:to-background/70"></div>
+      </div>
+
       {/* Subtle visual elements */}
       <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-brand-teal/5 rounded-full animate-pulse-bg opacity-60 z-1"></div>
       <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-brand-gold/5 rounded-full animate-pulse-bg animation-delay-2000 opacity-50 z-1"></div>
@@ -81,21 +95,21 @@ const HeroSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Right Visual - Hero Image */}
+          {/* Right Visual - Floating Elements */}
           <div className="relative lg:block hidden animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src="/lovable-uploads/4a24330e-47f8-40dc-921f-21935fd1f7e0.png" 
-                alt="Islamic Architecture - Representing traditional Islamic values in modern finance"
-                className="w-full h-auto object-cover"
-              />
-              
+            <div className="relative min-h-[400px] flex items-center justify-center">
               {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 bg-brand-gold text-white p-3 rounded-full shadow-lg">
-                <MessageSquare className="w-6 h-6" />
+              <div className="absolute top-20 right-20 bg-brand-gold/90 backdrop-blur-sm text-white p-4 rounded-full shadow-xl">
+                <MessageSquare className="w-8 h-8" />
               </div>
-              <div className="absolute -bottom-4 -left-4 bg-brand-teal text-white p-3 rounded-full shadow-lg">
-                <CheckCircle className="w-6 h-6" />
+              <div className="absolute bottom-20 left-20 bg-brand-teal/90 backdrop-blur-sm text-white p-4 rounded-full shadow-xl">
+                <CheckCircle className="w-8 h-8" />
+              </div>
+              <div className="absolute top-40 left-40 bg-white/90 backdrop-blur-sm text-brand-teal p-3 rounded-lg shadow-lg">
+                <span className="text-sm font-medium">Islamic Finance</span>
+              </div>
+              <div className="absolute bottom-40 right-40 bg-white/90 backdrop-blur-sm text-brand-teal p-3 rounded-lg shadow-lg">
+                <span className="text-sm font-medium">Zakat Calculator</span>
               </div>
             </div>
           </div>
