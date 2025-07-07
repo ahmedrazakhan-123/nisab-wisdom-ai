@@ -13,11 +13,9 @@ import ThemeToggleButton from '@/components/ThemeToggleButton';
 const navItems = [
   { name: 'Home', href: '/' },
   { name: 'Chat', href: '/chat' },
+  { name: 'Zakat Calculator', href: '/zakat-calculator' },
   { name: 'Features', href: '/#features' },
-  { name: 'Demo', href: '/#interactive-demo-section' },
   { name: 'Pricing', href: '/pricing' },
-  { name: 'How It Works', href: '/#how-it-works' },
-  { name: 'Trust', href: '/#trust-indicators-section' },
 ];
 
 const PricingPage: React.FC = () => {

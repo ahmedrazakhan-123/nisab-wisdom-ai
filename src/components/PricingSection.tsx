@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Check, BadgeDollarSign, Star } from 'lucide-react';
+import { Check, BadgeDollarSign } from 'lucide-react';
 
 const plans = [
   {
@@ -51,18 +51,6 @@ const plans = [
     variant: 'outline' as const,
   },
 ];
-
-const TestimonialCard = ({ quote, author, title }: { quote: string, author: string, title: string }) => (
-    <Card className="bg-background/50 dark:bg-background/20 border-border/50 h-full">
-        <CardContent className="pt-6">
-            <div className="flex mb-2">
-                {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 text-brand-gold fill-current" />)}
-            </div>
-            <p className="italic text-muted-foreground">"{quote}"</p>
-            <p className="mt-4 font-semibold text-foreground">- {author}, <span className="text-muted-foreground font-normal">{title}</span></p>
-        </CardContent>
-    </Card>
-);
 
 const PricingSection: React.FC = () => {
   return (
@@ -120,29 +108,6 @@ const PricingSection: React.FC = () => {
               </CardFooter>
             </Card>
           ))}
-        </div>
-
-        <div className="mt-24">
-            <h3 className="text-2xl md:text-3xl font-bold text-center text-brand-teal dark:text-brand-teal-light mb-12" style={{ fontFamily: "'Lora', serif" }}>
-                Why Our Users Love Nisab.AI
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <TestimonialCard 
-                    quote="Nisab.AI has been a game changer for my studies in Islamic finance. The answers are clear, well-sourced, and trustworthy."
-                    author="Fatima A."
-                    title="Finance Student"
-                />
-                <TestimonialCard 
-                    quote="As a professional, I need quick and reliable answers. This tool saves me hours of research every week. The Pro plan is worth every penny."
-                    author="Ahmed K."
-                    title="Financial Advisor"
-                />
-                <TestimonialCard 
-                    quote="The simplicity and accuracy is unmatched. I can finally get Shariah-compliant guidance without getting lost in complex jargon."
-                    author="Yusuf M."
-                    title="Small Business Owner"
-                />
-            </div>
         </div>
 
       </div>

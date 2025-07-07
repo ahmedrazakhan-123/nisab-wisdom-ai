@@ -59,9 +59,6 @@ const HeroSection: React.FC = () => {
             </Link>
           </Button>
         </div>
-        <p className="text-center mt-8 text-xs text-muted-foreground/70">
-          Background image is a placeholder. Replace with your desired visual.
-        </p>
       </div>
     </section>
   );

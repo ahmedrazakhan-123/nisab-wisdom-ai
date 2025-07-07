@@ -12,10 +12,7 @@ const navItems = [
   { name: 'Chat', href: '/chat' },
   { name: 'Zakat Calculator', href: '/zakat-calculator' },
   { name: 'Features', href: '/#features' },
-  { name: 'FAQ', href: '/#faq-section' },
   { name: 'Pricing', href: '/pricing' },
-  { name: 'How It Works', href: '/#how-it-works' },
-  { name: 'Trust', href: '/#trust-indicators-section' },
 ];
 
 const Header = () => {
