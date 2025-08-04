@@ -16,10 +16,11 @@ interface ChatInterfaceProps {
 }
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpdateChatTitle }) => {
-    const [messages, setMessages] = useState<ChatMessageType[]>([]);
-    const [suggestions, setSuggestions] = useState<ChatSuggestion[]>([]);
-    const [isTyping, setIsTyping] = useState(false);
-    const [isSending, setIsSending] = useState(false);
+  const [messages, setMessages] = useState<ChatMessageType[]>([]);
+  const [suggestions, setSuggestions] = useState<ChatSuggestion[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [queryCount, setQueryCount] = useState(0);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const sendTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 

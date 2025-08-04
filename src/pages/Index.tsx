@@ -7,12 +7,23 @@ import Footer from '@/components/Footer';
 import FaqSection from '@/components/FaqSection';
 import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
 import TrustBadgesSection from '@/components/TrustBadgesSection';
-import React, { useEffect } from 'react';
+import InteractiveChatPreview from '@/components/InteractiveChatPreview';
+import ExitIntentModal from '@/components/ExitIntentModal';
+import ScholarTestimonials from '@/components/ScholarTestimonials';
+import HomepageZakatWidget from '@/components/HomepageZakatWidget';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '@/components/Header';
+import { useExitIntent } from '@/hooks/useExitIntent';
 
 const Index = () => {
   const location = useLocation();
+  const [showExitIntent, setShowExitIntent] = useState(false);
+  
+  const { isTriggered, markAsShown } = useExitIntent({
+    enabled: true,
+    onExitIntent: () => setShowExitIntent(true)
+  });
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -31,13 +42,23 @@ const Index = () => {
       <main className="flex-grow">
         <HeroSection />
         <TrustBadgesSection />
+        <HomepageZakatWidget />
         <FeaturesSection />
+        <ScholarTestimonials />
         <TestimonialsSection />
         <HowItWorksSection />
         <FaqSection />
         <TrustIndicatorsSection />
       </main>
       <Footer />
+      <InteractiveChatPreview />
+      <ExitIntentModal 
+        isVisible={showExitIntent} 
+        onClose={() => {
+          setShowExitIntent(false);
+          markAsShown();
+        }} 
+      />
     </div>
   );
 };
