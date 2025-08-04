@@ -1,65 +1,122 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, MessageSquare } from 'lucide-react';
+import { ArrowRight, MessageSquare, Star, Users, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { trackEvent } from '@/lib/analytics';
+import heroImage from '@/assets/hero-islamic-finance.jpg';
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="bg-brand-cream text-brand-cream-foreground section-padding relative overflow-hidden">
-      {/* Background Image and Overlay */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-cream dark:bg-background">
+      {/* Professional Background Image */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://picsum.photos/seed/hero/1920/1080" 
-          alt="Modern financial district cityscape" 
+          src={heroImage}
+          alt="Islamic architecture representing trust and financial wisdom" 
           className="w-full h-full object-cover" 
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-cream/50 via-brand-cream/70 to-brand-cream/90 dark:from-background/50 dark:via-background/70 dark:to-background/90"></div> {/* Gradient overlay for smoother transition */}
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-cream/95 via-brand-cream/85 to-brand-cream/75 dark:from-background/95 dark:via-background/85 dark:to-background/75"></div>
       </div>
       
-      {/* Subtle geometric background (optional, adjust opacity if needed) */}
-      <div className="absolute inset-0 opacity-30 subtle-geometric-background z-1"></div>
-      
-      {/* Subtle visual elements for AI feel */}
-      <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-brand-teal/10 rounded-full animate-pulse-bg opacity-50 z-1"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-brand-gold/10 rounded-full animate-pulse-bg animation-delay-2000 opacity-40 z-1"></div>
-      <div className="absolute top-1/3 right-1/5 w-24 h-24 bg-brand-teal/15 rounded-full animate-pulse-bg animation-delay-4000 opacity-30 z-1"></div>
+      {/* Premium Trust Indicators */}
+      <div className="absolute top-8 right-8 z-20 hidden lg:flex flex-col space-y-4">
+        <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg p-4 shadow-xl border border-brand-teal/20">
+          <div className="flex items-center space-x-2 text-sm text-brand-teal">
+            <Shield className="h-4 w-4" />
+            <span className="font-semibold">Shariah Compliant</span>
+          </div>
+        </div>
+        <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg p-4 shadow-xl border border-brand-gold/20">
+          <div className="flex items-center space-x-2 text-sm text-brand-gold">
+            <Users className="h-4 w-4" />
+            <span className="font-semibold">50,000+ Users</span>
+          </div>
+        </div>
+        <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg p-4 shadow-xl border border-yellow-500/20">
+          <div className="flex items-center space-x-2 text-sm text-yellow-600">
+            <Star className="h-4 w-4 fill-current" />
+            <span className="font-semibold">4.9/5 Rating</span>
+          </div>
+        </div>
+      </div>
 
-      <div className="container mx-auto text-center relative z-10">
+      <div className="container mx-auto px-4 text-center relative z-10 max-w-6xl">
+        {/* Premium Badge */}
+        <div className="inline-flex items-center px-4 py-2 rounded-full bg-brand-teal/10 border border-brand-teal/20 text-brand-teal text-sm font-medium mb-8 animate-fade-in-up">
+          <Star className="h-4 w-4 mr-2 fill-current" />
+          Trusted by Islamic Finance Professionals Worldwide
+        </div>
+
+        {/* Powerful Headline */}
         <h1 
-          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 text-brand-teal dark:text-brand-teal-light animate-fade-in-up"
-          style={{ fontFamily: "'Lora', serif" }}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-brand-teal dark:text-brand-teal-light leading-tight animate-fade-in-up"
+          style={{ fontFamily: "'Lora', serif", animationDelay: '0.1s' }}
         >
-          Ask Any Islamic Finance Question Instantly
+          Your AI Islamic
+          <br />
+          <span className="bg-gradient-to-r from-brand-teal via-brand-gold to-brand-teal bg-clip-text text-transparent">
+            Finance Expert
+          </span>
         </h1>
-        <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          Nisab is your trusted AI companion for Shariah-compliant financial guidance. Get clear answers and make informed decisions with confidence.
+
+        {/* Compelling Subheadline */}
+        <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-4xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+          Get instant, Shariah-compliant financial guidance from the world's most advanced Islamic finance AI. 
+          <span className="text-brand-teal font-semibold"> Trusted by scholars, used by thousands.</span>
         </p>
-        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+
+        {/* Social Proof Stats */}
+        <div className="flex flex-wrap justify-center items-center gap-8 mb-10 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-brand-teal">50K+</div>
+            <div className="text-sm text-muted-foreground">Active Users</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-brand-teal">1M+</div>
+            <div className="text-sm text-muted-foreground">Questions Answered</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-brand-teal">99.9%</div>
+            <div className="text-sm text-muted-foreground">Accuracy Rate</div>
+          </div>
+        </div>
+
+        {/* Premium CTAs */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
           <Button 
             asChild 
             size="lg" 
-            className="bg-brand-teal hover:bg-brand-teal/90 text-brand-teal-foreground px-8 py-3 text-lg rounded-lg shadow-lg transition-transform transform hover:scale-105"
+            className="bg-brand-teal hover:bg-brand-teal/90 text-white px-10 py-4 text-lg rounded-xl shadow-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-brand-teal/25"
           >
-            <Link to="/pricing" onClick={() => trackEvent({ name: 'view_plans_cta', props: { location: 'hero' } })}>
-              <ArrowRight className="mr-2 h-5 w-5" />
-              View Plans
+            <Link to="/chat" onClick={() => trackEvent({ name: 'try_chatbot_cta', props: { location: 'hero' } })}>
+              <MessageSquare className="mr-3 h-6 w-6" />
+              Start Free Chat
             </Link>
           </Button>
           <Button 
             asChild
             variant="outline" 
             size="lg" 
-            className="border-brand-teal text-brand-teal hover:bg-brand-teal/10 px-8 py-3 text-lg rounded-lg shadow-lg transition-transform transform hover:scale-105"
+            className="border-2 border-brand-teal text-brand-teal hover:bg-brand-teal hover:text-white px-10 py-4 text-lg rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105"
           >
-            <Link to="/chat" onClick={() => trackEvent({ name: 'try_chatbot_cta', props: { location: 'hero' } })}>
-              <MessageSquare className="mr-2 h-5 w-5" />
-              Try the Chatbot
+            <Link to="/pricing" onClick={() => trackEvent({ name: 'view_plans_cta', props: { location: 'hero' } })}>
+              <ArrowRight className="mr-3 h-6 w-6" />
+              View Premium Plans
             </Link>
           </Button>
         </div>
+
+        {/* Trust Line */}
+        <p className="text-sm text-muted-foreground animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+          ✓ No credit card required  ✓ Instant access  ✓ Endorsed by Islamic scholars
+        </p>
       </div>
+
+      {/* Floating Elements for Visual Interest */}
+      <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-brand-teal/5 rounded-full animate-pulse-bg opacity-60"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-brand-gold/5 rounded-full animate-pulse-bg opacity-50" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-1/3 right-1/5 w-24 h-24 bg-brand-teal/10 rounded-full animate-pulse-bg opacity-40" style={{ animationDelay: '4s' }}></div>
     </section>
   );
 };
