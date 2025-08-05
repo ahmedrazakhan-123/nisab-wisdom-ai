@@ -6,39 +6,39 @@ const TrustBadgesSection: React.FC = () => {
   const trustItems = [
     {
       icon: Shield,
-      title: "Shariah Certified",
-      description: "Verified by leading Islamic scholars",
+      title: "Shariah Compliance",
+      description: "Built on authentic Islamic finance principles",
       color: "text-emerald-600"
     },
     {
-      icon: Award,
-      title: "Award Winning",
-      description: "Best Islamic FinTech Solution 2024",
-      color: "text-brand-gold"
-    },
-    {
-      icon: Users,
-      title: "50,000+ Users",
-      description: "Trusted by professionals worldwide",
-      color: "text-brand-teal"
-    },
-    {
       icon: CheckCircle,
-      title: "100% Compliant",
-      description: "Every answer vetted for compliance",
+      title: "Verified Knowledge",
+      description: "Content sourced from trusted scholarly works",
       color: "text-green-600"
     },
     {
+      icon: Users,
+      title: "Easy to Use",
+      description: "Simple interface for complex financial questions",
+      color: "text-brand-teal"
+    },
+    {
       icon: Star,
-      title: "4.9/5 Rating",
-      description: "Highest rated Islamic finance AI",
+      title: "AI Powered",
+      description: "Advanced technology for instant answers",
       color: "text-yellow-500"
     },
     {
       icon: Globe,
-      title: "Global Reach",
-      description: "Available in 40+ countries",
+      title: "Always Available",
+      description: "24/7 access to Islamic finance guidance",
       color: "text-blue-600"
+    },
+    {
+      icon: Award,
+      title: "Free Trial",
+      description: "Try before you subscribe - no risk",
+      color: "text-brand-gold"
     }
   ];
 
@@ -85,29 +85,26 @@ const TrustBadgesSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Scholar Endorsement */}
+        {/* Value Guarantee */}
         <div className="mt-16 max-w-4xl mx-auto">
           <div className="bg-gradient-to-r from-brand-teal/10 via-brand-gold/10 to-brand-teal/10 rounded-2xl p-8 border border-brand-teal/20">
             <div className="text-center">
               <div className="flex justify-center mb-6">
-                <div className="flex space-x-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-6 w-6 text-yellow-500 fill-current" />
-                  ))}
+                <div className="w-16 h-16 bg-brand-teal/20 rounded-full flex items-center justify-center">
+                  <Shield className="h-8 w-8 text-brand-teal" />
                 </div>
               </div>
-              <blockquote className="text-xl text-gray-700 dark:text-gray-300 mb-6 italic">
-                "Nisab AI represents the perfect fusion of traditional Islamic scholarship and modern technology. 
-                Every response is carefully crafted to ensure complete Shariah compliance."
-              </blockquote>
-              <div className="flex items-center justify-center space-x-4">
-                <div className="w-12 h-12 bg-brand-teal rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold">DS</span>
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold text-gray-900 dark:text-white">Dr. Ahmad Al-Shura</div>
-                  <div className="text-sm text-muted-foreground">Senior Islamic Finance Scholar</div>
-                </div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Our Commitment to You
+              </h3>
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                Every answer is carefully vetted for Shariah compliance. If you're not satisfied with the accuracy 
+                of our guidance, we offer a full refund within 30 days.
+              </p>
+              <div className="flex items-center justify-center space-x-6 text-sm text-muted-foreground">
+                <span>✓ 30-day money-back guarantee</span>
+                <span>✓ Cancel anytime</span>
+                <span>✓ No hidden fees</span>
               </div>
             </div>
           </div>

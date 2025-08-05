@@ -15,33 +15,45 @@ const TestimonialCard = ({ quote, author, title }: { quote: string, author: stri
 );
 
 const TestimonialsSection: React.FC = () => {
+    const benefits = [
+        {
+            icon: "🎯",
+            title: "Instant Shariah Compliance Check",
+            description: "Get immediate answers about whether your financial decisions align with Islamic principles"
+        },
+        {
+            icon: "📚",
+            title: "Scholar-Verified Knowledge Base",
+            description: "Access thousands of authentic Islamic finance rulings and explanations"
+        },
+        {
+            icon: "💰",
+            title: "Advanced Zakat Calculator",
+            description: "Calculate your Zakat obligations accurately with our comprehensive calculator"
+        }
+    ];
+
     return (
         <section className="py-16 md:py-24 bg-slate-50 dark:bg-card/20">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold text-brand-teal dark:text-brand-teal-light mb-4" style={{ fontFamily: "'Lora', serif" }}>
-                        Trusted by 10,000+ Muslims Worldwide
+                        Why Choose Nisab.AI?
                     </h2>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                        Join thousands of Muslims who trust Nisab.AI for their Shariah-compliant financial guidance.
+                        Experience the power of authentic Islamic finance guidance with these proven capabilities
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <TestimonialCard 
-                        quote="Nisab.AI has been a game changer for my studies in Islamic finance. The answers are clear, well-sourced, and trustworthy."
-                        author="Fatima A."
-                        title="Finance Student"
-                    />
-                    <TestimonialCard 
-                        quote="As a professional, I need quick and reliable answers. This tool saves me hours of research every week. The Pro plan is worth every penny."
-                        author="Ahmed K."
-                        title="Financial Advisor"
-                    />
-                    <TestimonialCard 
-                        quote="The simplicity and accuracy is unmatched. I can finally get Shariah-compliant guidance without getting lost in complex jargon."
-                        author="Yusuf M."
-                        title="Small Business Owner"
-                    />
+                    {benefits.map((benefit, index) => (
+                        <Card key={index} className="bg-background/50 dark:bg-background/20 border-border/50 h-full">
+                            <CardContent className="pt-6 text-center">
+                                <div className="text-4xl mb-4">{benefit.icon}</div>
+                                <h3 className="text-xl font-semibold text-foreground mb-4">{benefit.title}</h3>
+                                <p className="text-muted-foreground">{benefit.description}</p>
+                            </CardContent>
+                        </Card>
+                    ))}
                 </div>
             </div>
         </section>

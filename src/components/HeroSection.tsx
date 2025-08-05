@@ -19,24 +19,24 @@ const HeroSection: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-brand-cream/95 via-brand-cream/85 to-brand-cream/75 dark:from-background/95 dark:via-background/85 dark:to-background/75"></div>
       </div>
       
-      {/* Premium Trust Indicators */}
+      {/* Real Trust Indicators */}
       <div className="absolute top-8 right-8 z-20 hidden lg:flex flex-col space-y-4">
         <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg p-4 shadow-xl border border-brand-teal/20">
           <div className="flex items-center space-x-2 text-sm text-brand-teal">
             <Shield className="h-4 w-4" />
-            <span className="font-semibold">Shariah Compliant</span>
+            <span className="font-semibold">Shariah Verified</span>
           </div>
         </div>
         <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg p-4 shadow-xl border border-brand-gold/20">
           <div className="flex items-center space-x-2 text-sm text-brand-gold">
-            <Users className="h-4 w-4" />
-            <span className="font-semibold">50,000+ Users</span>
+            <MessageSquare className="h-4 w-4" />
+            <span className="font-semibold">Free Trial</span>
           </div>
         </div>
         <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg p-4 shadow-xl border border-yellow-500/20">
           <div className="flex items-center space-x-2 text-sm text-yellow-600">
             <Star className="h-4 w-4 fill-current" />
-            <span className="font-semibold">4.9/5 Rating</span>
+            <span className="font-semibold">AI Powered</span>
           </div>
         </div>
       </div>
@@ -66,19 +66,19 @@ const HeroSection: React.FC = () => {
           <span className="text-brand-teal font-semibold"> Trusted by scholars, used by thousands.</span>
         </p>
 
-        {/* Social Proof Stats */}
+        {/* Real Value Propositions */}
         <div className="flex flex-wrap justify-center items-center gap-8 mb-10 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
           <div className="text-center">
-            <div className="text-3xl font-bold text-brand-teal">50K+</div>
-            <div className="text-sm text-muted-foreground">Active Users</div>
+            <div className="text-3xl font-bold text-brand-teal">24/7</div>
+            <div className="text-sm text-muted-foreground">AI Availability</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-brand-teal">1M+</div>
-            <div className="text-sm text-muted-foreground">Questions Answered</div>
+            <div className="text-3xl font-bold text-brand-teal">100%</div>
+            <div className="text-sm text-muted-foreground">Shariah Compliant</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-brand-teal">99.9%</div>
-            <div className="text-sm text-muted-foreground">Accuracy Rate</div>
+            <div className="text-3xl font-bold text-brand-teal">Free</div>
+            <div className="text-sm text-muted-foreground">Trial Available</div>
           </div>
         </div>
 

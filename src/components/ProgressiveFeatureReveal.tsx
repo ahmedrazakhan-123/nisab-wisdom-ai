@@ -38,10 +38,10 @@ const premiumFeatures = [
 ];
 
 const urgencyMessages = [
-  "50 users upgraded today",
-  "Limited time: Ramadan special pricing",
-  "Join 1,247 premium members",
-  "Save 40% on annual plans"
+  "Start your free trial today",
+  "No credit card required",
+  "Cancel anytime",
+  "30-day money-back guarantee"
 ];
 
 export default function ProgressiveFeatureReveal({ trigger, queryCount = 0 }: FeatureRevealProps) {
