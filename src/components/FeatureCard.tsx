@@ -12,14 +12,29 @@ interface FeatureCardProps {
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon: Icon, title, description, animationDelay = '0s' }) => {
   return (
     <div 
-      className="flex flex-col items-center text-center p-8 rounded-xl h-full transition-all duration-300 ease-in-out hover:bg-brand-teal/5 animate-fade-in-up" // Changed p-6 to p-8
+      className="group trust-card magnetic-hover flex flex-col items-center text-center p-10 rounded-2xl h-full glass-effect border border-brand-teal/10 animate-trust-indicator" 
       style={{ animationDelay }}
     >
-      <Icon className="text-brand-teal mb-5 w-10 h-10" strokeWidth={1.5} /> {/* Changed mb-4 to mb-5 */}
-      <h3 className="text-lg font-semibold text-brand-teal mb-3" style={{ fontFamily: "'Lora', serif" }}> {/* Changed mb-2 to mb-3 */}
+      {/* Animated Icon Container */}
+      <div className="relative mb-6">
+        <div className="w-16 h-16 bg-gradient-to-r from-brand-teal/20 to-brand-gold/20 rounded-2xl flex items-center justify-center group-hover:animate-glow-pulse transition-all duration-300">
+          <Icon 
+            className="text-brand-teal w-8 h-8 transition-all duration-300 group-hover:scale-110 group-hover:text-brand-teal-light" 
+            strokeWidth={1.5} 
+          />
+        </div>
+        {/* Floating Indicator */}
+        <div className="absolute -top-1 -right-1 w-4 h-4 bg-brand-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </div>
+
+      <h3 
+        className="text-xl font-bold text-brand-teal mb-4 group-hover:text-brand-teal-light transition-colors duration-300" 
+        style={{ fontFamily: "'Lora', serif" }}
+      >
         {title}
       </h3>
-      <p className="text-sm text-muted-foreground leading-relaxed"> {/* Added leading-relaxed for better readability if description is long */}
+      
+      <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-300">
         {description}
       </p>
     </div>

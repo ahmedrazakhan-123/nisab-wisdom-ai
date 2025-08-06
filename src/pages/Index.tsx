@@ -1,15 +1,13 @@
 
 import HeroSection from '@/components/HeroSection';
+import UnifiedTrustSection from '@/components/UnifiedTrustSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
 import Footer from '@/components/Footer';
 import FaqSection from '@/components/FaqSection';
-import TrustIndicatorsSection from '@/components/TrustIndicatorsSection';
-import TrustBadgesSection from '@/components/TrustBadgesSection';
 import InteractiveChatPreview from '@/components/InteractiveChatPreview';
 import ExitIntentModal from '@/components/ExitIntentModal';
-import ScholarTestimonials from '@/components/ScholarTestimonials';
 import HomepageZakatWidget from '@/components/HomepageZakatWidget';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -41,14 +39,12 @@ const Index = () => {
       <Header />
       <main className="flex-grow">
         <HeroSection />
-        <TrustBadgesSection />
         <HomepageZakatWidget />
+        <UnifiedTrustSection />
         <FeaturesSection />
-        <ScholarTestimonials />
         <TestimonialsSection />
         <HowItWorksSection />
         <FaqSection />
-        <TrustIndicatorsSection />
       </main>
       <Footer />
       <InteractiveChatPreview />

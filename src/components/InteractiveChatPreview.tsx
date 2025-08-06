@@ -72,17 +72,18 @@ export default function InteractiveChatPreview() {
       <div className="fixed bottom-6 right-6 z-50">
         <Button
           onClick={() => setIsExpanded(true)}
-          className="rounded-full h-14 w-14 bg-brand-teal hover:bg-brand-teal-light text-white shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
+          className="magnetic-hover rounded-full h-16 w-16 bg-brand-teal hover:bg-brand-teal-light text-white shadow-2xl cta-button animate-glow-pulse group"
         >
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className="h-7 w-7 transition-transform duration-300 group-hover:scale-110" />
+          <span className="sr-only">Try Nisab AI Chat</span>
         </Button>
       </div>
     );
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-80 max-w-[calc(100vw-2rem)]">
-      <Card className="bg-white dark:bg-card shadow-2xl border-0 overflow-hidden">
+    <div className="fixed bottom-6 right-6 z-50 w-80 max-w-[calc(100vw-2rem)] animate-scale-in">
+      <Card className="glass-effect shadow-2xl border border-brand-teal/20 overflow-hidden backdrop-blur-xl">
         <div className="flex items-center justify-between p-4 border-b bg-brand-teal text-white">
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
@@ -133,13 +134,13 @@ export default function InteractiveChatPreview() {
           )}
         </div>
         
-        <div className="p-4 border-t bg-slate-50 dark:bg-muted/20">
+        <div className="p-4 border-t bg-brand-cream/50 dark:bg-muted/20">
           <Button
             onClick={handleTryFullVersion}
-            className="w-full bg-brand-teal hover:bg-brand-teal-light text-white rounded-lg"
+            className="cta-button magnetic-hover w-full bg-brand-teal hover:bg-brand-teal-light text-white rounded-xl group"
           >
-            Try Full Version
-            <ArrowUp className="h-4 w-4 ml-2 rotate-45" />
+            <span className="font-semibold">Try Full Version</span>
+            <ArrowUp className="h-4 w-4 ml-2 rotate-45 transition-transform duration-300 group-hover:scale-110" />
           </Button>
         </div>
       </Card>

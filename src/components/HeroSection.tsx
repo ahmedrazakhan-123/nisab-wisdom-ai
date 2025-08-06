@@ -82,27 +82,30 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Premium CTAs */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+        {/* Magnetic CTAs with Apple-level Polish */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-8 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
           <Button 
             asChild 
             size="lg" 
-            className="bg-brand-teal hover:bg-brand-teal/90 text-white px-10 py-4 text-lg rounded-xl shadow-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-brand-teal/25"
+            className="cta-button magnetic-hover bg-brand-teal hover:bg-brand-teal/90 text-white px-12 py-5 text-lg rounded-2xl shadow-2xl group relative overflow-hidden"
           >
             <Link to="/chat" onClick={() => trackEvent({ name: 'try_chatbot_cta', props: { location: 'hero' } })}>
-              <MessageSquare className="mr-3 h-6 w-6" />
-              Start Free Chat
+              <div className="absolute inset-0 bg-gradient-to-r from-brand-teal-light to-brand-teal opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <MessageSquare className="mr-3 h-6 w-6 relative z-10 transition-transform duration-300 group-hover:scale-110" />
+              <span className="relative z-10 font-semibold">Start Free Chat</span>
             </Link>
           </Button>
+          
           <Button 
             asChild
             variant="outline" 
             size="lg" 
-            className="border-2 border-brand-teal text-brand-teal hover:bg-brand-teal hover:text-white px-10 py-4 text-lg rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105"
+            className="magnetic-hover border-2 border-brand-teal text-brand-teal hover:bg-brand-teal hover:text-white px-12 py-5 text-lg rounded-2xl shadow-xl bg-white/80 backdrop-blur-sm group relative overflow-hidden"
           >
             <Link to="/pricing" onClick={() => trackEvent({ name: 'view_plans_cta', props: { location: 'hero' } })}>
-              <ArrowRight className="mr-3 h-6 w-6" />
-              View Premium Plans
+              <div className="absolute inset-0 bg-brand-teal opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <ArrowRight className="mr-3 h-6 w-6 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+              <span className="relative z-10 font-semibold">View Premium Plans</span>
             </Link>
           </Button>
         </div>
@@ -113,10 +116,10 @@ const HeroSection: React.FC = () => {
         </p>
       </div>
 
-      {/* Floating Elements for Visual Interest */}
-      <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-brand-teal/5 rounded-full animate-pulse-bg opacity-60"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-brand-gold/5 rounded-full animate-pulse-bg opacity-50" style={{ animationDelay: '2s' }}></div>
-      <div className="absolute top-1/3 right-1/5 w-24 h-24 bg-brand-teal/10 rounded-full animate-pulse-bg opacity-40" style={{ animationDelay: '4s' }}></div>
+      {/* Cinematic Floating Elements */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-brand-teal/8 rounded-full blur-3xl animate-glow-pulse opacity-60"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-brand-gold/8 rounded-full blur-3xl animate-glow-pulse opacity-50" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-1/3 right-1/5 w-48 h-48 bg-brand-teal/10 rounded-full blur-2xl animate-glow-pulse opacity-40" style={{ animationDelay: '4s' }}></div>
     </section>
   );
 };
