@@ -1,0 +1,144 @@
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const { query, user_id } = await req.json();
+    
+    console.log('Islamic chatbot query:', query);
+
+    // Log audit event
+    if (user_id) {
+      await supabase.from('audit_logs').insert({
+        user_id,
+        action: 'compliance_check',
+        resource_type: 'chatbot',
+        metadata: { query }
+      });
+    }
+
+    // Generate embedding for the query
+    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'text-embedding-ada-002',
+        input: query,
+      }),
+    });
+
+    const embeddingData = await embeddingResponse.json();
+    const embedding = embeddingData.data[0].embedding;
+
+    // Search knowledge base using vector similarity
+    const { data: knowledgeEntries, error: searchError } = await supabase.rpc(
+      'search_knowledge_base',
+      {
+        query_embedding: embedding,
+        match_threshold: 0.8,
+        match_count: 5
+      }
+    );
+
+    if (searchError) {
+      console.error('Knowledge base search error:', searchError);
+    }
+
+    // Prepare context for AI response
+    let context = '';
+    if (knowledgeEntries && knowledgeEntries.length > 0) {
+      context = knowledgeEntries
+        .map((entry: any) => `Source: ${entry.source} - ${entry.source_reference}\n${entry.content}`)
+        .join('\n\n');
+    }
+
+    // Generate AI response with Islamic finance context
+    const systemPrompt = `You are an expert Islamic finance advisor and scholar. You provide guidance based on:
+
+1. The Quran and authentic Hadith
+2. AAOIFI (Accounting and Auditing Organization for Islamic Financial Institutions) standards
+3. Scholarly consensus (Ijma') from reputable Islamic finance scholars
+4. Modern Islamic banking and finance principles
+
+IMPORTANT GUIDELINES:
+- Always cite your sources (Quran verses, Hadith references, AAOIFI standards)
+- Be clear about what is halal, haram, or doubtful (mashkook)
+- Provide practical, actionable advice
+- When uncertain, recommend consulting local Islamic scholars
+- Focus on substance over form in financial transactions
+- Consider the spirit of Islamic law (Maqasid al-Shariah)
+
+Available knowledge base context:
+${context}
+
+Please provide a comprehensive, well-sourced answer to the user's question.`;
+
+    const chatResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4-turbo-preview',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: query }
+        ],
+        max_tokens: 1000,
+        temperature: 0.3,
+      }),
+    });
+
+    const chatData = await chatResponse.json();
+    const response = chatData.choices[0].message.content;
+
+    // Extract sources from knowledge base entries
+    const sources = knowledgeEntries?.map((entry: any) => ({
+      title: entry.title,
+      source: entry.source,
+      reference: entry.source_reference
+    })) || [];
+
+    return new Response(
+      JSON.stringify({
+        response,
+        sources,
+        confidence: knowledgeEntries?.length > 0 ? 'high' : 'medium'
+      }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+
+  } catch (error) {
+    console.error('Islamic chatbot error:', error);
+    return new Response(
+      JSON.stringify({ 
+        error: 'Failed to process query',
+        details: error.message 
+      }),
+      { 
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
+    );
+  }
+});
