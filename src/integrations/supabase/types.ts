@@ -529,6 +529,22 @@ export type Database = {
         }
         Returns: undefined
       }
+      search_knowledge_base: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+        }
+        Returns: {
+          category: string
+          content: string
+          id: string
+          similarity: number
+          source: string
+          source_reference: string
+          title: string
+        }[]
+      }
       sparsevec_out: {
         Args: { "": unknown }
         Returns: unknown
