@@ -71,26 +71,31 @@ serve(async (req) => {
         .join('\n\n');
     }
 
-    // Generate AI response with Islamic finance context
-    const systemPrompt = `You are an expert Islamic finance advisor and scholar. You provide guidance based on:
+    // Check if we have relevant knowledge base results
+    if (!knowledgeEntries || knowledgeEntries.length === 0 || 
+        (knowledgeEntries[0] && knowledgeEntries[0].similarity < 0.8)) {
+      return new Response(
+        JSON.stringify({
+          response: "I don't know the answer to that based on verified Islamic finance sources.",
+          sources: [],
+          confidence: 'low'
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
-1. The Quran and authentic Hadith
-2. AAOIFI (Accounting and Auditing Organization for Islamic Financial Institutions) standards
-3. Scholarly consensus (Ijma') from reputable Islamic finance scholars
-4. Modern Islamic banking and finance principles
-
-IMPORTANT GUIDELINES:
-- Always cite your sources (Quran verses, Hadith references, AAOIFI standards)
-- Be clear about what is halal, haram, or doubtful (mashkook)
-- Provide practical, actionable advice
-- When uncertain, recommend consulting local Islamic scholars
-- Focus on substance over form in financial transactions
-- Consider the spirit of Islamic law (Maqasid al-Shariah)
+    // Generate AI response with strict RAG-only context
+    const systemPrompt = `You are Nisab, an Islamic finance advisor. Always:
+- Answer ONLY from the verified RAG knowledge base provided below.
+- If information is not in the knowledge base, say 'I don't know.'
+- Never invent or add unrelated explanations.
+- Keep answers short, clear, and directly related to the user's question.
+- Only answer what was specifically asked - no extra definitions unless requested.
 
 Available knowledge base context:
 ${context}
 
-Please provide a comprehensive, well-sourced answer to the user's question.`;
+Answer the user's question using only the information above.`;
 
     const chatResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
