@@ -184,6 +184,39 @@ export type Database = {
         }
         Relationships: []
       }
+      conversations: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          model: string
+          provider: string
+          response: string
+          timestamp: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          model?: string
+          provider?: string
+          response: string
+          timestamp?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          model?: string
+          provider?: string
+          response?: string
+          timestamp?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       knowledge_base: {
         Row: {
           category: string
