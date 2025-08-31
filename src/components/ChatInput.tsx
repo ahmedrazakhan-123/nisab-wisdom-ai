@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { ArrowUp, Paperclip } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -12,6 +12,7 @@ interface ChatInputProps {
 
 const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isSending }) => {
   const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
@@ -39,6 +40,15 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isSending }) => {
 
   return (
     <div className="pt-2">
+      <div className="flex justify-between items-center mb-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate('/')}
+        >
+          Home
+        </Button>
+      </div>
       <div className="relative">
         <Textarea
           placeholder="Send a message..."
@@ -76,5 +86,6 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isSending }) => {
     </div>
   );
 };
+
 
 export default ChatInput;

@@ -10,6 +10,9 @@ import ChatPage from "./pages/ChatPage";
 import ZakatCalculatorPage from "./pages/ZakatCalculatorPage";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "./components/ErrorBoundary";
+// ...existing code...
+
+
 
 const queryClient = new QueryClient();
 
@@ -27,11 +30,11 @@ const AppContent = () => {
 };
 
 const App = () => (
-  <ThemeProvider 
-    attribute="class" 
-    defaultTheme="system" 
+  <ThemeProvider
+    attribute="class"
+    defaultTheme="system"
     enableSystem
-    themes={['light', 'dark', 'system']} // Removed 'black'
+    themes={['light', 'dark', 'system']}
   >
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
