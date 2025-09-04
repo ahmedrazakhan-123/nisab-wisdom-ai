@@ -99,41 +99,10 @@
     --input: 0 0% 12%; /* Same as card for inputs */
     --ring: var(--brand-gold); /* Gold for ring highlight: 43 74% 70% */
 
-    /* Nisab Custom Colors for ChatGPT-like Dark Mode */
-    --brand-teal: 175 50% 60%; 
-    --brand-teal-light: 175 45% 70%; 
-    --brand-teal-foreground: 0 0% 10%; 
-    
-    --brand-cream: 0 0% 8%; /* Elements with bg-brand-cream use the main dark background */
-    --brand-cream-foreground: 0 0% 90%; /* Light text on those elements */
-
-    --brand-gold: 43 74% 70%; 
-    --brand-gold-foreground: 0 0% 10%; 
-    
-    /* Sidebar colors for ChatGPT-like dark mode */
-    --sidebar-background: 0 0% 5%; /* Even darker for sidebar */
-    --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: var(--brand-teal-light); 
-    --sidebar-primary-foreground: 20 15% 10%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 0 0% 14%;
-    --sidebar-ring: var(--brand-gold);
-  }
-
-  /* NEW: Slate Gray Theme (replaces previous .black theme) */
-  .black { /* This class name is used for the "Gray" theme */
-    --background: 215 15% 28%;         /* Darker Slate Gray for main background, e.g., hsl(215, 15%, 28%) approx #3C4650 */
-    --foreground: 210 25% 90%;         /* Light Gray for text, e.g., hsl(210, 25%, 90%) approx #DCE7F0 */
-
-    --card: 215 15% 22%;               /* Slightly darker slate for cards, e.g., hsl(215, 15%, 22%) approx #2E3740 */
-    --card-foreground: 210 25% 90%;
-
-    --popover: 215 15% 18%;            /* Even darker slate for popovers, e.g., hsl(215, 15%, 18%) approx #242B33 */
-    --popover-foreground: 210 25% 90%;
-
-    --primary: 175 50% 60%;            /* Teal (from dark theme, good contrast on slate) */
-    --primary-foreground: 20 15% 15%;  /* Dark text for contrast on primary, e.g., hsl(20, 15%, 15%) approx #2B2523 */
+    /* Nisab Custom Colors for Dark Theme */
+    --brand-teal: 175 50% 60%;            /* Teal (from dark theme, good contrast on slate) */
+    --brand-teal-light: 175 45% 70%;      /* Lighter Teal for dark theme */
+    --brand-teal-foreground: 20 15% 15%;  /* Dark text for contrast on primary, e.g., hsl(20, 15%, 15%) approx #2B2523 */
 
     --secondary: 215 15% 35%;         /* Lighter Slate Gray for secondary elements, e.g., hsl(215, 15%, 35%) approx #4A5663 */
     --secondary-foreground: 210 25% 90%;
@@ -194,6 +163,49 @@
   p, li, span, div { /* Ensuring base paragraph and common text elements have good line height */
     @apply leading-relaxed; /* Tailwind's leading-relaxed is 1.625 */
   }
+
+  /* Mobile-specific improvements */
+  @media (max-width: 640px) {
+    /* Improve touch targets */
+    button, a, input, select, textarea {
+      min-height: 44px; /* Apple's recommended minimum touch target size */
+    }
+    
+    /* Better spacing for mobile */
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    /* Improve text readability on mobile */
+    body {
+      font-size: 16px; /* Prevent zoom on iOS */
+    }
+    
+    /* Better form inputs on mobile */
+    input, textarea, select {
+      font-size: 16px; /* Prevent zoom on iOS */
+      border-radius: 0.5rem;
+    }
+    
+    /* Improve button spacing */
+    .btn-group > * + * {
+      margin-left: 0.5rem;
+    }
+    
+    /* Better card spacing on mobile */
+    .card {
+      margin-bottom: 1rem;
+    }
+  }
+
+  /* Tablet improvements */
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
 }
 
 @layer components {
@@ -228,5 +240,62 @@
   
   .magnetic-hover:hover {
     transform: translateY(-4px) scale(1.02);
+  }
+
+  /* Mobile-specific component utilities */
+  .mobile-friendly-input {
+    @apply h-12 text-base px-4 rounded-lg;
+  }
+  
+  .mobile-friendly-button {
+    @apply h-12 px-6 text-base font-medium rounded-lg;
+  }
+  
+  .mobile-card {
+    @apply p-4 sm:p-6 rounded-lg shadow-sm;
+  }
+  
+  .mobile-text {
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+  
+  .mobile-heading {
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold leading-tight;
+  }
+  
+  .mobile-spacing {
+    @apply space-y-4 sm:space-y-6;
+  }
+  
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+  }
+  
+  /* Touch-friendly improvements */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+  
+  /* Mobile navigation improvements */
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 z-50;
+  }
+  
+  /* Mobile form improvements */
+  .mobile-form {
+    @apply space-y-4 sm:space-y-6;
+  }
+  
+  .mobile-form-group {
+    @apply space-y-2 sm:space-y-3;
+  }
+  
+  /* Mobile responsive containers */
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
+  }
+  
+  .mobile-section {
+    @apply py-8 sm:py-12 lg:py-16;
   }
 }
