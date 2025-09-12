@@ -102,23 +102,34 @@ const FormLabel = React.forwardRef<
 FormLabel.displayName = "FormLabel"
 
 const FormControl = React.forwardRef<
-  React.ElementRef<typeof Slot>,
-  React.ComponentPropsWithoutRef<typeof Slot>
->(({ ...props }, ref) => {
+  HTMLElement,
+  React.HTMLAttributes<HTMLElement> & { children?: React.ReactNode }
+>(({ children, ...rest }, ref) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
+  const a11yProps = {
+    id: formItemId,
+    "aria-describedby": !error
+      ? `${formDescriptionId}`
+      : `${formDescriptionId} ${formMessageId}`,
+    "aria-invalid": !!error,
+  } as const
+
+  const childArray = React.Children.toArray(children)
+  if (childArray.length === 1 && React.isValidElement(childArray[0])) {
+    // Clone the single valid child and inject a11y props and ref
+    return React.cloneElement(childArray[0] as React.ReactElement<any>, {
+      ...a11yProps,
+      ref,
+      ...((childArray[0] as any).props || {}),
+    })
+  }
+
+  // Fallback: wrap multiple or non-element children in a span to avoid Slot single-child crash
   return (
-    <Slot
-      ref={ref}
-      id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
-      aria-invalid={!!error}
-      {...props}
-    />
+    <span ref={ref as any} {...a11yProps} {...rest}>
+      {children}
+    </span>
   )
 })
 FormControl.displayName = "FormControl"

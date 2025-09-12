@@ -4,8 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { 
   Calculator, Wallet, CircleDollarSign, Briefcase, Home, 
-  Download, AlertCircle, TrendingUp, Landmark, RotateCcw, Sparkles,
-  CheckCircle, Clock
+  Download, AlertCircle, TrendingUp, Landmark, RotateCcw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -56,45 +55,6 @@ const currencySymbols = {
   PKR: 'Rs', INR: '₹', BDT: '৳'
 };
 
-// Animated Counter Component
-const AnimatedCounter: React.FC<{ 
-  value: number; 
-  symbol?: string; 
-  suffix?: string;
-  className?: string;
-  duration?: number;
-}> = ({ value, symbol = "", suffix = "", className = "", duration = 800 }) => {
-  const [displayValue, setDisplayValue] = useState(0);
-  
-  useEffect(() => {
-    let startTime: number;
-    let startValue = displayValue;
-    
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      
-      // Easing function for smooth animation
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-      const currentValue = startValue + (value - startValue) * easeOut;
-      
-      setDisplayValue(currentValue);
-      
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-    
-    requestAnimationFrame(animate);
-  }, [value, duration]);
-  
-  return (
-    <span className={className}>
-      {symbol}{fmt(displayValue)}{suffix}
-    </span>
-  );
-};
-
 // --- Main Component ---
 const ZakatCalculator: React.FC = () => {
   const { toast } = useToast();
@@ -142,50 +102,21 @@ const ZakatCalculator: React.FC = () => {
   
   const symbol = currencySymbols[watchedValues.currency as keyof typeof currencySymbols] || '$';
 
-  // Fetch live prices from Gold API (reliable and accurate)
+  // Fetch live prices
   useEffect(() => {
     (async () => {
       try {
-        // Use Gold API for real-time precious metal prices
-        const goldResponse = await fetch('https://www.goldapi.io/api/XAU/USD', {
-          headers: {
-            'x-access-token': 'goldapi-1jjcsmf8d8u4u-io'
-          }
-        });
-        
-        const silverResponse = await fetch('https://www.goldapi.io/api/XAG/USD', {
-          headers: {
-            'x-access-token': 'goldapi-1jjcsmf8d8u4u-io'
-          }
-        });
-        
-        if (goldResponse.ok && silverResponse.ok) {
-          const goldData = await goldResponse.json();
-          const silverData = await silverResponse.json();
-          
-          // Use the price_gram_24k field for accurate per-gram pricing
-          if (goldData.price_gram_24k && silverData.price_gram_24k) {
-            setPrices({
-              gold: Number(goldData.price_gram_24k.toFixed(2)),
-              silver: Number(silverData.price_gram_24k.toFixed(4))
-            });
-            setPriceError(null);
-            console.log('✅ Live gold/silver prices updated from Gold API');
-            return;
-          }
-        }
-        
-        throw new Error('Gold API request failed');
-        
-      } catch (error) {
-        console.warn('Gold API failed, using fallback prices:', error);
-        
-        // Fallback to current market estimates
-        setPrices({
-          gold: 117.34,  // Current approximate gold price per gram
-          silver: 1.35   // Current approximate silver price per gram
-        });
-        setPriceError('Using fallback prices - live data temporarily unavailable');
+        const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=gold,silver&vs_currencies=usd');
+        if (!r.ok) throw new Error('API request failed');
+        const d = await r.json();
+        const OZ = 31.1035;
+        const g = d.gold?.usd ? d.gold.usd / OZ : null;
+        const s = d.silver?.usd ? d.silver.usd / OZ : null;
+        if (!g || !s) throw new Error('Invalid price data');
+        setPrices({ gold: g, silver: s });
+        setPriceError(null);
+      } catch {
+        setPriceError('Using fallback prices - live data unavailable');
       }
     })();
   }, []);
@@ -244,103 +175,108 @@ const ZakatCalculator: React.FC = () => {
 
   return (
     <Form {...form}>
-      <div className="min-h-screen bg-gradient-to-br from-brand-cream via-white to-brand-cream/50 relative">
-        {/* Subtle animated background pattern */}
-        <div className="absolute inset-0 opacity-[0.02] bg-gradient-to-br from-brand-teal/10 to-brand-gold/10 animate-pulse"></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
-          {/* Enhanced Header with animations */}
-          <div className="animate-in fade-in slide-in-from-top duration-700">
-            <Card className="shadow-xl border-0 bg-gradient-to-r from-white via-brand-cream/30 to-white backdrop-blur-sm hover:shadow-2xl transition-all duration-500 group">
-              <CardHeader className="pb-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <Calculator className="h-8 w-8 sm:h-10 sm:w-10 text-brand-teal transition-transform duration-300 group-hover:scale-110" />
-                      <Sparkles className="h-4 w-4 text-brand-gold absolute -top-1 -right-1 animate-pulse" />
-                    </div>
-                    <div className="min-w-0">
-                      <CardTitle className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-brand-teal to-brand-teal-light bg-clip-text text-transparent">
-                        Zakat Calculator
-                      </CardTitle>
-                      <p className="text-sm sm:text-base text-muted-foreground mt-1 hidden sm:block">
-                        Calculate your Islamic obligation with confidence and precision
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                    <FormField
-                      control={form.control}
-                      name="currency"
-                      render={({ field }) => (
-                        <Select value={field.value} onValueChange={field.onChange}>
-                          <SelectTrigger className="w-[100px] sm:w-[120px] border-brand-teal/20 hover:border-brand-teal/40 transition-colors duration-200 focus:ring-brand-teal/20">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="USD">USD ($)</SelectItem>
-                            <SelectItem value="EUR">EUR (€)</SelectItem>
-                            <SelectItem value="GBP">GBP (£)</SelectItem>
-                            <SelectItem value="SAR">SAR (﷼)</SelectItem>
-                            <SelectItem value="AED">AED (د.إ)</SelectItem>
-                            <SelectItem value="PKR">PKR (Rs)</SelectItem>
-                            <SelectItem value="INR">INR (₹)</SelectItem>
-                            <SelectItem value="BDT">BDT (৳)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      )}
-                    />
-                    
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      size="sm"
-                      onClick={resetForm}
-                      className="border-brand-teal/20 text-brand-teal hover:bg-brand-teal/5 hover:border-brand-teal/40 transition-all duration-200 hover:scale-105 active:scale-95"
-                    >
-                      <RotateCcw className="h-4 w-4 sm:mr-1" />
-                      <span className="hidden sm:inline">Reset</span>
-                    </Button>
-                    
-                    <Button 
-                      type="button" 
-                      size="sm"
-                      onClick={generatePDF}
-                      disabled={isGeneratingPDF}
-                      className="bg-gradient-to-r from-brand-teal to-brand-teal-light hover:from-brand-teal-light hover:to-brand-teal text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95"
-                    >
-                      {isGeneratingPDF ? (
-                        <div className="animate-spin h-4 w-4 border-2 border-white/30 border-t-white rounded-full sm:mr-1" />
-                      ) : (
-                        <Download className="h-4 w-4 sm:mr-1" />
-                      )}
-                      <span className="hidden sm:inline">PDF</span>
-                    </Button>
+      <div className="min-h-screen bg-gray-50/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6">
+          {/* Header */}
+          <Card className="shadow-sm">
+            <CardHeader className="pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <Calculator className="h-6 w-6 sm:h-8 sm:w-8 text-primary flex-shrink-0" />
+                  <div className="min-w-0">
+                    <CardTitle className="text-xl sm:text-2xl">Zakat Calculator</CardTitle>
+                    <p className="text-sm text-muted-foreground hidden sm:block">Calculate your Islamic obligation with confidence</p>
                   </div>
                 </div>
-              </CardHeader>
-            </Card>
-          </div>
+                
+                <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                  <FormField
+                    control={form.control}
+                    name="currency"
+                    render={({ field }) => (
+                      <Select value={field.value} onValueChange={field.onChange}>
+                        <SelectTrigger className="w-[100px] sm:w-[120px]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="USD">USD ($)</SelectItem>
+                          <SelectItem value="EUR">EUR (€)</SelectItem>
+                          <SelectItem value="GBP">GBP (£)</SelectItem>
+                          <SelectItem value="SAR">SAR (﷼)</SelectItem>
+                          <SelectItem value="AED">AED (د.إ)</SelectItem>
+                          <SelectItem value="PKR">PKR (Rs)</SelectItem>
+                          <SelectItem value="INR">INR (₹)</SelectItem>
+                          <SelectItem value="BDT">BDT (৳)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm"
+                    onClick={resetForm}
+                    className="hidden sm:flex"
+                  >
+                    <RotateCcw className="h-4 w-4 mr-1" />
+                    Reset
+                  </Button>
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm"
+                    onClick={resetForm}
+                    className="sm:hidden"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                  </Button>
+                  
+                  <Button 
+                    type="button" 
+                    size="sm"
+                    onClick={generatePDF}
+                    disabled={isGeneratingPDF}
+                    className="hidden sm:flex"
+                  >
+                    {isGeneratingPDF ? (
+                      <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full mr-1" />
+                    ) : (
+                      <Download className="h-4 w-4 mr-1" />
+                    )}
+                    PDF
+                  </Button>
+                  <Button 
+                    type="button" 
+                    size="sm"
+                    onClick={generatePDF}
+                    disabled={isGeneratingPDF}
+                    className="sm:hidden"
+                  >
+                    {isGeneratingPDF ? (
+                      <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full" />
+                    ) : (
+                      <Download className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
 
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 sm:gap-8">
-            {/* Main Form with staggered animations */}
-            <div className="xl:col-span-2 space-y-6 sm:space-y-8 order-2 xl:order-1">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
+            {/* Main Form */}
+            <div className="xl:col-span-2 space-y-4 sm:space-y-6 order-2 xl:order-1">
               {/* Assets Section */}
-              <div className="animate-in fade-in slide-in-from-left duration-700 delay-200">
-                <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-brand-cream/20 backdrop-blur-sm hover:shadow-xl transition-all duration-500 group hover:scale-[1.02]">
-                  <CardHeader className="pb-4">
-                    <CardTitle className="flex items-center gap-3 text-xl font-bold">
-                      <div className="p-2 rounded-lg bg-gradient-to-br from-brand-teal/10 to-brand-teal/20 group-hover:from-brand-teal/20 group-hover:to-brand-teal/30 transition-all duration-300">
-                        <Wallet className="h-6 w-6 text-brand-teal" />
-                      </div>
-                      <span className="bg-gradient-to-r from-brand-teal to-brand-teal-light bg-clip-text text-transparent">
-                        Assets & Wealth
-                      </span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6 sm:space-y-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <Card className="shadow-sm">
+                <CardHeader className="pb-4">
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Wallet className="h-5 w-5 flex-shrink-0" />
+                    Assets & Wealth
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4 sm:space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
                       name="cashInHand"
@@ -560,20 +496,14 @@ const ZakatCalculator: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
-              </div>
 
               {/* Liabilities Section */}
-              <div className="animate-in fade-in slide-in-from-left duration-700 delay-300">
-                <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-brand-cream/20 backdrop-blur-sm hover:shadow-xl transition-all duration-500 group hover:scale-[1.02]">
+              <Card className="shadow-sm">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-bold">
-                    <div className="p-2 rounded-lg bg-gradient-to-br from-red-50 to-red-100 group-hover:from-red-100 group-hover:to-red-150 transition-all duration-300">
-                      <CircleDollarSign className="h-6 w-6 text-red-600" />
-                    </div>
-                    <span className="bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
-                      Debts & Liabilities
-                    </span>
-                    <span className="text-sm font-normal text-muted-foreground ml-auto">(Optional)</span>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <CircleDollarSign className="h-5 w-5 flex-shrink-0" />
+                    Debts & Liabilities
+                    <span className="text-sm font-normal text-muted-foreground">(Optional)</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -656,11 +586,9 @@ const ZakatCalculator: React.FC = () => {
                   />
                 </CardContent>
               </Card>
-              </div>
 
               {/* Time Period Confirmation */}
-              <div className="animate-in fade-in slide-in-from-left duration-700 delay-400">
-                <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-brand-cream/20 backdrop-blur-sm hover:shadow-xl transition-all duration-500 group hover:scale-[1.02]">
+              <Card className="shadow-sm">
                 <CardContent className="pt-6">
                   <FormField
                     control={form.control}
@@ -687,106 +615,71 @@ const ZakatCalculator: React.FC = () => {
                   />
                 </CardContent>
               </Card>
-              </div>
             </div>
 
-            {/* Enhanced Live Calculation Sidebar with animations */}
-            <div className="xl:col-span-1 order-1 xl:order-2 animate-in fade-in slide-in-from-right duration-700 delay-100">
-              <Card className="shadow-xl border-0 bg-gradient-to-br from-white via-brand-cream/20 to-brand-gold/10 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 xl:sticky xl:top-6">
+            {/* Live Calculation Sidebar */}
+            <div className="xl:col-span-1 order-1 xl:order-2">
+              <Card className="shadow-sm xl:sticky xl:top-6">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-bold">
-                    <div className="p-2 rounded-lg bg-gradient-to-br from-brand-gold/10 to-brand-gold/20 transition-all duration-300">
-                      <TrendingUp className="h-6 w-6 text-brand-gold" />
-                    </div>
-                    <span className="bg-gradient-to-r from-brand-gold to-amber-600 bg-clip-text text-transparent">
-                      Live Calculation
-                    </span>
-                  </CardTitle>
+                  <CardTitle className="text-lg font-semibold">Live Calculation</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-6 sm:space-y-8">
-                  {/* Enhanced Nisab Progress with animation */}
-                  <div className="group">
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-sm font-medium text-muted-foreground">Nisab Progress</span>
-                      <span className="text-sm font-bold bg-gradient-to-r from-brand-teal to-brand-teal-light bg-clip-text text-transparent">
-                        <AnimatedCounter value={nisabProgress} suffix="%" />
-                      </span>
+                <CardContent className="space-y-4 sm:space-y-6">
+                  {/* Nisab Progress */}
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm text-muted-foreground">Nisab Progress</span>
+                      <span className="text-sm font-bold">{nisabProgress.toFixed(0)}%</span>
                     </div>
-                    <Progress 
-                      value={nisabProgress} 
-                      className="h-4 bg-brand-cream/30 group-hover:scale-105 transition-transform duration-300" 
-                    />
-                    <div className="flex justify-between text-xs text-muted-foreground mt-2">
+                    <Progress value={nisabProgress} className="h-3" />
+                    <div className="flex justify-between text-xs text-muted-foreground mt-1">
                       <span>{symbol}0</span>
-                      <span className="font-medium">{symbol}<AnimatedCounter value={nisabThreshold} symbol="" /></span>
+                      <span>{symbol}{fmt(nisabThreshold)}</span>
                     </div>
                   </div>
 
-                  <Separator className="bg-gradient-to-r from-transparent via-brand-teal/20 to-transparent" />
+                  <Separator />
 
-                  {/* Enhanced Totals with animations */}
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center group hover:scale-105 transition-transform duration-200">
-                      <span className="text-sm font-medium text-muted-foreground">Total Assets</span>
-                      <span className="font-semibold text-base text-brand-teal">
-                        {symbol}<AnimatedCounter value={totalAssets} symbol="" />
-                      </span>
+                  {/* Totals */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Total Assets</span>
+                      <span className="font-semibold text-base">{symbol}{fmt(totalAssets)}</span>
                     </div>
                     
                     {totalLiabilities > 0 && (
-                      <div className="flex justify-between items-center group hover:scale-105 transition-transform duration-200">
-                        <span className="text-sm font-medium text-muted-foreground">Total Liabilities</span>
-                        <span className="font-semibold text-base text-red-600">
-                          -{symbol}<AnimatedCounter value={totalLiabilities} symbol="" />
-                        </span>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Total Liabilities</span>
+                        <span className="font-semibold text-base text-red-600">-{symbol}{fmt(totalLiabilities)}</span>
                       </div>
                     )}
                     
-                    <Separator className="bg-gradient-to-r from-transparent via-brand-teal/20 to-transparent" />
+                    <Separator />
                     
-                    <div className="flex justify-between items-center p-3 rounded-lg bg-gradient-to-r from-brand-teal/5 to-brand-gold/5 group hover:scale-105 transition-all duration-300">
-                      <span className="text-base font-bold text-brand-teal">Net Wealth</span>
-                      <span className="font-bold text-2xl bg-gradient-to-r from-brand-teal to-brand-teal-light bg-clip-text text-transparent">
-                        {symbol}<AnimatedCounter value={netWealth} symbol="" />
-                      </span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium">Net Wealth</span>
+                      <span className="font-bold text-xl">{symbol}{fmt(netWealth)}</span>
                     </div>
                   </div>
 
-                  <Separator className="bg-gradient-to-r from-transparent via-brand-teal/20 to-transparent" />
+                  <Separator />
 
-                  {/* Enhanced Zakat Due Result */}
-                  <div className={`text-center p-6 rounded-xl transition-all duration-500 hover:scale-105 ${
-                    meetsNisab 
-                      ? 'bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 shadow-green-100/50' 
-                      : 'bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 shadow-orange-100/50'
-                  } shadow-lg group`}>
-                    <div className="flex items-center justify-center gap-2 mb-3">
-                      {meetsNisab ? (
-                        <CheckCircle className="h-5 w-5 text-green-600 animate-pulse" />
-                      ) : (
-                        <Clock className="h-5 w-5 text-orange-600" />
-                      )}
-                      <span className="text-sm font-medium text-muted-foreground">
-                        {meetsNisab ? "Zakat Due (2.5%)" : "Zakat Status"}
-                      </span>
+                  {/* Zakat Due */}
+                  <div className="text-center p-4 sm:p-6 rounded-lg border-2" style={{
+                    borderColor: meetsNisab ? 'rgb(34, 197, 94)' : 'rgb(249, 115, 22)',
+                    backgroundColor: meetsNisab ? 'rgb(240, 253, 244)' : 'rgb(255, 247, 237)'
+                  }}>
+                    <div className="text-sm text-muted-foreground mb-2">
+                      {meetsNisab ? "Zakat Due (2.5%)" : "Zakat Status"}
                     </div>
-                    <div className={`text-3xl sm:text-4xl font-bold mb-2 ${
-                      meetsNisab ? 'text-green-600' : 'text-orange-600'
-                    } group-hover:scale-110 transition-transform duration-300`}>
-                      {symbol}<AnimatedCounter value={zakatDue} symbol="" />
+                    <div className="text-2xl sm:text-3xl font-bold" style={{
+                      color: meetsNisab ? 'rgb(34, 197, 94)' : 'rgb(249, 115, 22)'
+                    }}>
+                      {symbol}{fmt(zakatDue)}
                     </div>
-                    <div className={`text-sm font-bold ${
-                      meetsNisab ? 'text-green-700' : 'text-orange-700'
-                    } flex items-center justify-center gap-1`}>
-                      {meetsNisab ? (
-                        <>
-                          <Sparkles className="h-4 w-4 animate-pulse" />
-                          Payment Required
-                          <Sparkles className="h-4 w-4 animate-pulse" />
-                        </>
-                      ) : (
-                        "Not Due Yet"
-                      )}
+                    <div className="text-xs mt-2 font-medium" style={{
+                      color: meetsNisab ? 'rgb(34, 197, 94)' : 'rgb(249, 115, 22)'
+                    }}>
+                      {meetsNisab ? "Payment Required" : "Not Due Yet"}
                     </div>
                   </div>
 

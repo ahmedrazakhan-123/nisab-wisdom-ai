@@ -1,13 +1,14 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import type { ChatMessage as ChatMessageType, ChatSuggestion, BotResponse } from '@/lib/chat-types';
-import { knowledgeBase, defaultResponse, initialSuggestions, findBestMatch } from '@/lib/knowledge-base';
+import { chatAPI, type ChatAPIResponse } from '@/lib/chat-api';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sparkles } from 'lucide-react';
+import { Sparkles, AlertCircle } from 'lucide-react';
 import ChatSuggestions from './ChatSuggestions';
 import ChatHeader from './ChatHeader';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface ChatInterfaceProps {
   chatId?: string;
@@ -21,8 +22,18 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
   const [isTyping, setIsTyping] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [queryCount, setQueryCount] = useState(0);
-    const scrollAreaRef = useRef<HTMLDivElement>(null);
-    const sendTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const sendTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Initial suggestions for Islamic Finance
+  const initialSuggestions: ChatSuggestion[] = [
+    { id: '1', text: 'How do I calculate Zakat on my savings?' },
+    { id: '2', text: 'What investments are halal in Islam?' },
+    { id: '3', text: 'Explain Riba in simple terms' },
+    { id: '4', text: 'What is Islamic banking?' }
+  ];
 
     useEffect(() => {
         if (chatId) {
@@ -81,17 +92,28 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
         }, 300);
     }, []);
 
-    const handleSendMessageInternal = useCallback((text: string) => {
-        if (!chatId || isSending) return;
+    const handleSendMessageInternal = useCallback(async (text: string) => {
+        // Ensure we have a chatId - create one if needed
+        let currentChatId = chatId;
+        if (!currentChatId) {
+            currentChatId = `chat-${Date.now()}`;
+            // If we don't have a chatId, this is likely a new chat that needs to be created
+            console.log('Creating new chat with ID:', currentChatId);
+        }
+
+        if (isSending) return;
 
         setIsSending(true);
+        setErrorMessage(null);
 
         try {
+            // Update chat title if this is the first user message
             if (messages.length === 1) {
                 const newTitle = text.length > 40 ? `${text.substring(0, 40)}...` : text;
                 onUpdateChatTitle(newTitle);
             }
 
+            // Create user message
             const userMessage: ChatMessageType = {
                 id: `user-${Date.now()}`,
                 text,
@@ -101,49 +123,82 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
 
             const updatedMessages = [...messages, userMessage];
             setMessages(updatedMessages);
-            localStorage.setItem(`chat-messages-${chatId}`, JSON.stringify(updatedMessages));
+            localStorage.setItem(`chat-messages-${currentChatId}`, JSON.stringify(updatedMessages));
             setSuggestions([]);
             setIsTyping(true);
 
-            const findResponse = (): BotResponse[] => {
-                const matchedEntry = findBestMatch(text, knowledgeBase);
-                return matchedEntry ? matchedEntry.responses : defaultResponse.responses;
-            };
+            try {
+                // Call the AI API (currently using fallback responses)
+                const response = await chatAPI.sendMessage({
+                    message: text,
+                    conversation_id: conversationId || currentChatId,
+                    include_context: true
+                });
 
-            const botResponses = findResponse();
-            
-            const sendBotResponses = async () => {
-                let currentMessages = updatedMessages;
-                for (const res of botResponses) {
-                    const responseText = res.text;
-                    const typingDuration = Math.min(Math.max(responseText.length * 20, 600), 2500);
-                    await new Promise(resolve => setTimeout(resolve, typingDuration));
-
-                    const botMessage: ChatMessageType = {
-                        ...res,
-                        id: `bot-${Date.now()}-${Math.random()}`,
-                        sender: 'bot',
-                        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    };
-                    currentMessages = [...currentMessages, botMessage];
-                    setMessages(currentMessages);
-                    localStorage.setItem(`chat-messages-${chatId}`, JSON.stringify(currentMessages));
+                // Update conversation ID
+                if (!conversationId) {
+                    setConversationId(response.conversation_id);
                 }
-                setIsTyping(false);
-                setIsSending(false);
-            };
-            
-            sendBotResponses().catch(error => {
-                console.error('Error sending bot responses:', error);
-                setIsTyping(false);
-                setIsSending(false);
-            });
+
+                // Create bot response message
+                const botMessage: ChatMessageType = {
+                    id: `bot-${Date.now()}`,
+                    text: response.message,
+                    sender: 'bot',
+                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                };
+
+                // Add actions if suggestions are provided
+                if (response.suggestions && response.suggestions.length > 0) {
+                    botMessage.actions = response.suggestions.map((suggestion, index) => ({
+                        id: `suggestion-${index}`,
+                        text: suggestion
+                    }));
+                }
+
+                const finalMessages = [...updatedMessages, botMessage];
+                setMessages(finalMessages);
+                localStorage.setItem(`chat-messages-${currentChatId}`, JSON.stringify(finalMessages));
+
+            } catch (apiError) {
+                console.error('API Error:', apiError);
+                
+                // Use fallback response
+                const fallbackResponse = chatAPI.getFallbackResponse(text);
+                
+                const botMessage: ChatMessageType = {
+                    id: `bot-fallback-${Date.now()}`,
+                    text: fallbackResponse.message,
+                    sender: 'bot',
+                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                };
+
+                if (fallbackResponse.suggestions.length > 0) {
+                    botMessage.actions = fallbackResponse.suggestions.map((suggestion, index) => ({
+                        id: `fallback-suggestion-${index}`,
+                        text: suggestion
+                    }));
+                }
+
+                const finalMessages = [...updatedMessages, botMessage];
+                setMessages(finalMessages);
+                localStorage.setItem(`chat-messages-${currentChatId}`, JSON.stringify(finalMessages));
+
+                // Show error message
+                if (apiError instanceof Error) {
+                    setErrorMessage(apiError.message);
+                }
+            }
+
         } catch (error) {
-            console.error('Error handling message:', error);
+            console.error('Message handling error:', error);
+            setErrorMessage('An unexpected error occurred. Please try again.');
+        } finally {
             setIsTyping(false);
             setIsSending(false);
+            setQueryCount(prev => prev + 1);
         }
-    }, [chatId, messages, onUpdateChatTitle, isSending]);
+    }, [chatId, messages, conversationId, isSending, onUpdateChatTitle]);
 
     const handleSendMessage = useCallback((text: string) => {
         debouncedSendMessage(text);
@@ -198,7 +253,15 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ chatId, onNewChat, onUpda
                 </div>
             </ScrollArea>
             <div className="max-w-3xl mx-auto w-full px-4 pt-2 pb-4 bg-background">
-                 <ChatInput onSendMessage={handleSendMessage} isSending={isTyping || isSending} />
+                {errorMessage && (
+                    <Alert className="mb-4 border-destructive/50 bg-destructive/10">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertDescription>
+                            {errorMessage}
+                        </AlertDescription>
+                    </Alert>
+                )}
+                <ChatInput onSendMessage={handleSendMessage} isSending={isTyping || isSending} />
             </div>
         </div>
     );
